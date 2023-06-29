@@ -35,7 +35,7 @@ public class Esquadria {
 	private String dsEsquadria;
 	
 	@Column(name = "ST_ATIVO", nullable = false)
-	private boolean stAtivo;
+	private boolean stAtivo = true;
 
 	@CreationTimestamp
 	@Column(name= "DT_RECORD", updatable = false, nullable = false)
@@ -45,9 +45,9 @@ public class Esquadria {
 	@Column(name = "DT_ATUALIZACAO", nullable = false)
 	private Date dtAtualizacao;
 
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "ID_EMPRESA", nullable = false)
-	private Empresa empresa;
+	private Empresa empresa;*/
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_LINHA", nullable = false)

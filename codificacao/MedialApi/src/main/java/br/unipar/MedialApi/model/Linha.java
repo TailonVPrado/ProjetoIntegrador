@@ -35,7 +35,7 @@ public class Linha {
 	private String dsLinha;
 	
 	@Column(name = "ST_ATIVO", nullable = false)
-	private boolean stAtivo;
+	private boolean stAtivo = true;
 
 	@CreationTimestamp
 	@Column(name = "DT_RECORD", updatable = false, nullable = false)
