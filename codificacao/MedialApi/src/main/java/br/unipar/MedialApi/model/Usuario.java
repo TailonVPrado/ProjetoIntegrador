@@ -48,7 +48,7 @@ public class Usuario {
 	private Date dtRecord;
 
 	@UpdateTimestamp
-	@Column(name = "DT_ATUALIZACAO", nullable = false)
+	@Column(name = "DT_ATUALIZACAO")
 	private Date dtAtualizacao;
 	
 	@ManyToOne

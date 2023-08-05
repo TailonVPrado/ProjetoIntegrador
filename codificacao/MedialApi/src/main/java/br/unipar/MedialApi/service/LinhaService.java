@@ -5,6 +5,8 @@ import br.unipar.MedialApi.repository.LinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -47,5 +49,13 @@ public class LinhaService {
         }else if(linha.getDsLinha().trim().length() >20){
             throw new Exception("A descrição da linha deve conter no máximo 20 caracteres.");
         }
+    }
+
+    public List<Linha> findByAll() {
+        return linhaRepository.findAll();
+    }
+
+    public List<Linha> findByDescricao(Long idEmpresa, String dsLinha) {
+        return linhaRepository.findByDesc(idEmpresa, "%"+dsLinha.replace(" ", "%")+"%");
     }
 }

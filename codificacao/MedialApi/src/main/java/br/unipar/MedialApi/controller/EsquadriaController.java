@@ -16,7 +16,7 @@ public class EsquadriaController {
         return esquadriaService.insert(esquadria);
     }
 
-    @PostMapping
+    @PutMapping
     public Esquadria update(@RequestBody Esquadria esquadria) throws Exception{
         return esquadriaService.update(esquadria);
     }

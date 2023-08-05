@@ -43,7 +43,7 @@ public class EsquadriaObra {
 	private Date dtRecord;
 
 	@UpdateTimestamp
-	@Column(name = "DT_ATUALIZACAO", nullable = false)
+	@Column(name = "DT_ATUALIZACAO")
 	private Date dtAtualizacao;
 
 	@Column(name = "DS_COR", length = 20)
