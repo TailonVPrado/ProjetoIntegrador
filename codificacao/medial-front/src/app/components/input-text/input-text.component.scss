@@ -1,0 +1,42 @@
+input{
+  min-width: 100%;
+  border-width: 0.5px;
+  border-color: rgba(0, 0, 0, 0.342);
+  border-radius: 3px;
+}
+
+
+.input-container{
+  box-shadow: 1.5px 5px 5px rgba(82, 82, 82, 0.377);
+  position: relative;
+  display: inline-block;
+}
+
+.item-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  //border: 1px solid #ccc;
+  border-top: none;
+  max-height: 120px;
+  overflow-y: auto;
+  z-index: 1;
+}
+.item {
+  padding: 2px;
+  border-bottom: 1px solid #cccccc57;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+}
+.item.selected {
+  background-color: #f0f0f0;
+  transition: background-color 0.2s;
+
+}
+
+.item:hover {
+  background-color: #f0f0f0;
+}

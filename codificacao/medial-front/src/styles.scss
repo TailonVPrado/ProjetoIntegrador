@@ -1,0 +1,86 @@
+
+
+.window,
+input::placeholder,
+button {
+  font-family: 'Raleway', monospace;
+  line-height:20px;
+  letter-spacing:-0.6px;
+  cursor: pointer;
+}
+
+input,
+label,
+th,
+button{
+  min-height: 27px;
+  font-size: 19px;
+  //box-shadow: 1.5px 5px 5px rgba(82, 82, 82, 0.377);
+}
+
+button:focus,
+button:hover,
+input:focus,
+input:hover {
+  outline: 2px solid #7ab6f7;
+  transition: outline 0.05s;
+}
+
+
+input::placeholder{
+  color:rgba(0, 0, 0, 0.200);
+  font-size: 17px;
+}
+
+
+
+
+
+
+.custom-table {
+  border-collapse: collapse;
+  empty-cells: show;
+  height: 100%;
+  table-layout: fixed;
+}
+
+
+
+
+.custom-table tbody tr {
+  background-color: #b3e4ff57;
+  border: 1px solid #ffffff;
+}
+.custom-table thead tr {
+  background-color: #8AD5FF;
+  border: 1px solid #ffffff;
+}
+
+
+
+
+.custom-table {
+  padding: 10px;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.custom-table td input {
+  border: none;
+  background-color: #b3e4ff00;
+  outline: 0px;
+}
+
+.custom-table span,
+.custom-table td {
+  padding-left  : 10px;
+}
+
+
+.custom-table thead{
+  height: 29px;
+  cursor: default ;
+}
+
+
