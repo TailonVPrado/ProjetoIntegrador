@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-screen-desconto',
+  selector: 'screen-desconto',
   templateUrl: './screen-desconto.component.html',
   styleUrls: ['./screen-desconto.component.scss']
 })

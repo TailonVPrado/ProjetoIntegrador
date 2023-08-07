@@ -17,6 +17,8 @@ import { ButtonSalvarComponent } from './components/button-salvar/button-salvar.
 import { ButtonEditarComponent } from './components/button-editar/button-editar.component';
 import { ButtonCancelarComponent } from './components/button-cancelar/button-cancelar.component';
 import { ButtonDefaultComponent } from './components/button-default/button-default.component';
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
+import { ButtonMenuComponent } from './components/button-menu/button-menu.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ButtonDefaultComponent } from './components/button-default/button-defau
     ButtonEditarComponent,
     ButtonCancelarComponent,
     ButtonDefaultComponent,
+    MenuBarComponent,
+    ButtonMenuComponent
   ],
   imports: [
     BrowserModule,

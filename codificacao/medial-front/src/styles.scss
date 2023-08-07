@@ -2,7 +2,8 @@
 
 .window,
 input::placeholder,
-button {
+button,
+span {
   font-family: 'Raleway', monospace;
   line-height:20px;
   letter-spacing:-0.6px;
@@ -31,7 +32,17 @@ input::placeholder{
   color:rgba(0, 0, 0, 0.200);
   font-size: 17px;
 }
+body {
+  background-image: url("/assets/images/logotipo-medial.png");
+  // background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o fundo */
+  background-repeat: no-repeat; /* Impede a repetição da imagem */
+  background-position:  55% 0%; /* Centraliza a imagem verticalmente e horizontalmente */
+  background-size: 50%; /* Define o tamanho da imagem para 50% da tela */
+  padding-right: calc(100vw - 100%);
+  overflow-y: scroll;
+  background-attachment: fixed;
 
+}
 
 
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-screen-perfil',
+  selector: 'screen-perfil',
   templateUrl: './screen-perfil.component.html',
   styleUrls: ['./screen-perfil.component.scss']
 })

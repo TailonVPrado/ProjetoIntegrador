@@ -5,7 +5,7 @@ import { InputModel } from 'src/app/models/interface/input.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 
 @Component({
-  selector: 'app-screen-linha',
+  selector: 'screen-linha',
   templateUrl: './screen-linha.component.html',
   styleUrls: ['./screen-linha.component.scss']
 })
@@ -19,7 +19,7 @@ export class ScreenLinhaComponent {
   buttonConsultar : ButtonModel = new ButtonModel({label: 'Consultar'});
 
   gridLinhas : Linha[] = [];
-  gridInputDescricao: InputModel = new InputModel({placeholder: " "});
+  gridDsLinhaProperties: InputModel = new InputModel({});
 
   onClickSalvar(): void{
     this.linhaService.createLinha(this.linha).subscribe(

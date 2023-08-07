@@ -22,7 +22,7 @@
   <tbody>
     <tr *ngFor="let x of gridLinhas; let i = index">
        <td style="min-width: 450px;">
-        <input-text [isGrid]="true" [properties]="gridInputDescricao" [(mxModel)]="gridLinhas[i].dsLinha"></input-text>
+        <input-text [isGrid]="true" [properties]="gridDsLinhaProperties" [(mxModel)]="gridLinhas[i].dsLinha"></input-text>
       </td>
       <td style="text-align: center;" >
         <app-button-cancelar></app-button-cancelar>
