@@ -1,0 +1,7 @@
+<button class="button-menu" [ngClass]="{'selecionado': selecionado}">
+  <img class="imagem-principal" [src]="imagem">
+  <span class="texto">{{text}}</span>
+  <img class="imagem-secundaria"
+    src="/assets/images/menu_icon/seta.png" [class.rotated]="selecionado">
+</button>
+<hr>

@@ -1,0 +1,10 @@
+<div class="menu">
+  <img (click)="isCLick(-1)" style="margin-bottom: 15px;" routerLink="/" class="imagem" src="/assets/images/menu_icon/logo-medial.png">
+  <button-menu *ngFor="let botao of botoes; let i = index"
+               [routerLink]="botao.routerLink"
+               [text]="botao.text"
+               [selecionado]="botao.selecionado"
+               [imagem]="botao.imagem"
+               (click)="isCLick(i)">
+  </button-menu>
+</div>
