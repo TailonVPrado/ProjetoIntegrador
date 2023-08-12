@@ -16,6 +16,8 @@ import { InputTextComponent } from './components/input-text/input-text.component
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,13 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      progressAnimation: 'decreasing',
+      positionClass: 'toast-bottom-right',
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

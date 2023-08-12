@@ -5,6 +5,8 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
   selector: 'screen-linha',
@@ -13,7 +15,10 @@ import { Linha } from 'src/app/models/objetos/linha.model';
 })
 export class ScreenLinhaComponent {
 
-  constructor(private linhaService: LinhaService, public tipoBotao: tipoBotao) { }
+  constructor(
+    private linhaService: LinhaService,
+    public tipoBotao: tipoBotao,
+    private generic: GenericService) { }
 
   linha: Linha = new Linha();
   inputDescricao: InputModel = new InputModel({ label: "Descrição", placeholder: "insira a descrição" });
@@ -111,6 +116,10 @@ export class ScreenLinhaComponent {
 
   }
   showMessage(){
-    console.log('testeeeeee');
+    this.generic.showError('titulo');
+    this.generic.showInformation('titulo');
+    this.generic.showSuccess('titulo');
+    this.generic.showWarning('titulo');
+    console.log('teste');
   }
 }

@@ -1,4 +1,4 @@
-
+@import '~ngx-toastr/toastr.css';
 
 .window,
 input::placeholder,
@@ -41,6 +41,13 @@ body {
   overflow-y: scroll;
   background-attachment: fixed;
 
+}
+
+.toast-container {
+  font-family:'Raleway', monospace;
+  // background-color: rgba(0, 123, 255, 0.9);
+  color: white;
+  border-radius: 5px;
 }
 
 
