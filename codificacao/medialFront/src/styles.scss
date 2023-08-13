@@ -1,4 +1,5 @@
 @import '~ngx-toastr/toastr.css';
+@import "~bootstrap/scss/bootstrap";
 
 .window,
 input::placeholder,
@@ -32,37 +33,40 @@ input::placeholder{
   color:rgba(0, 0, 0, 0.200);
   font-size: 17px;
 }
-body {
-  background-image: url("/assets/images/logotipo-medial.png");
-  background-repeat: no-repeat;
-  background-position:  55% 0%;
-  background-size: 50%;
-  padding-right: calc(100vw - 100%);
-  overflow-y: scroll;
-  background-attachment: fixed;
-
-}
-
 .toast-container {
   font-family:'Raleway', monospace;
   // background-color: rgba(0, 123, 255, 0.9);
   color: white;
-  border-radius: 5px;
+}
+.toast-container .ngx-toastr {
+  border-radius: 15px;
 }
 
+body {
+  background-image: url("/assets/images/logotipo-medial.png") ;
+  background-repeat: no-repeat ;
+  background-position:  55% 0% ;
+  background-size: 50% ;
+  padding-right: calc(100vw - 100%) !important;
+  overflow-y: scroll !important;
+  background-attachment: fixed ;
+  margin: 10px;
+}
 
-
-
+//tamanho da modal de alerta
+.modal-sm {
+  max-width: 450px;
+}
+.modal-content{
+  border-radius: 0.8rem;
+}
 
 .custom-table {
-  border-collapse: collapse;
-  empty-cells: show;
-  height: 100%;
-  table-layout: fixed;
+  border-collapse: collapse !important;
+  empty-cells: show !important;
+  height: 100% !important;
+  table-layout: fixed !important;
 }
-
-
-
 
 .custom-table tbody tr {
   background-color: #b3e4ff57;
@@ -77,27 +81,27 @@ body {
 
 
 .custom-table {
-  padding: 10px;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
+  padding: 10px !important;
+  border-collapse: collapse !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
 }
 
 .custom-table td input {
-  border: none;
-  background-color: #b3e4ff00;
-  outline: 0px;
+  border: none !important;
+  background-color: #b3e4ff00 !important;
+  outline: 0px !important;
 }
 
 .custom-table span,
 .custom-table td {
-  padding-left  : 10px;
+  padding-left  : 10px !important;
 }
 
 
 .custom-table thead{
-  height: 29px;
-  cursor: default ;
+  height: 29px !important;
+  cursor: default !important;
 }
 
 

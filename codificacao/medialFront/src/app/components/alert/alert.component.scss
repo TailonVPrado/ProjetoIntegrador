@@ -1,0 +1,57 @@
+
+.main{
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.title {
+  margin: 0; /* Remove margem padrão do h4 */
+  padding-left: 20px;
+  font-size: 22px;
+  display: inline-block; /* Garante que o texto fique em linha com a imagem */
+  vertical-align: middle; /* Alinha verticalmente o texto */
+}
+
+.imagem {
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  border-radius: 5%;
+  width: 35px;
+  height: 35px;
+}
+
+.message{
+  font-size: 20px;
+  word-wrap: break-word;
+}
+
+button{
+  background-color: rgba(0, 0, 0, 0);
+  color: #000000;
+  font-size: 20px;
+  border: 0;
+  transition: background-color 0.3s; /* Adiciona uma transição suave */
+  outline: none;
+  border-radius: 5px;
+  text-transform: uppercase; /* Converte o texto para maiúsculas */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  font-weight: 600;
+  min-width: 50px;
+}
+
+button:focus,
+button:hover {
+  background-color: rgba(2, 2, 2, 0.100); /* Mantém o mesmo fundo transparente quando focado ou ao passar o mouse */
+  outline: none; /* Remove a borda de foco padrão */
+  color: #000000;
+}

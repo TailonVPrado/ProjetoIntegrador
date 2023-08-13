@@ -1,11 +1,14 @@
 <div class="window">
-  <input-text [properties]="inputDescricao"  (consultaItemSimilar)="buscarItensSimilares()" [(mxModel)]="linha.dsLinha"
-     [itensSimilares]="vetItem"></input-text>
+  <div style="margin: 10px;">
+
+    <input-text [properties]="inputDescricao"  (consultaItemSimilar)="buscarItensSimilares()" [(mxModel)]="linha.dsLinha"
+    [itensSimilares]="vetItem"></input-text>
 
 
-  <button-default [properties]="buttonCadastrar" (onClick)="onClickSalvar()"></button-default>
-  <br>
-  <button-default [properties]="buttonConsultar" (onClick)="carregarLinhas()"></button-default>
+    <button-default [properties]="buttonCadastrar" (onClick)="onClickSalvar()"></button-default>
+    <br>
+    <button-default [properties]="buttonConsultar" (onClick)="carregarLinhas()"></button-default>
+  </div>
 
   <br><br>
 

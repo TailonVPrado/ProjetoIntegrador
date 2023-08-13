@@ -14,10 +14,13 @@ import { ButtonIconComponent } from './components/button-icon/button-icon.compon
 import { ButtonMenuComponent } from './components/button-menu/button-menu.component';
 import { InputTextComponent } from './components/input-text/input-text.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AlertComponent } from './components/alert/alert.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { ToastrModule } from 'ngx-toastr';
     ButtonIconComponent,
     ButtonMenuComponent,
     InputTextComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,10 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 4000,
       progressAnimation: 'decreasing',
       positionClass: 'toast-bottom-right',
-    })
+    }),
+    ModalModule.forRoot(),
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

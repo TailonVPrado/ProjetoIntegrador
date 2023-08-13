@@ -115,11 +115,13 @@ export class ScreenLinhaComponent {
     linha.properties.ativo = false;
 
   }
-  showMessage(){
+  async showMessage(){
     this.generic.showError('titulo');
     this.generic.showInformation('titulo');
     this.generic.showSuccess('titulo');
     this.generic.showWarning('titulo');
-    console.log('teste');
+    console.log('antes');
+   console.log('teste: ', await this.generic.showAlert('teste'));
+    console.log('depois ');
   }
 }

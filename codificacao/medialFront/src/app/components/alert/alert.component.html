@@ -1,0 +1,13 @@
+<div class="main" tabindex = 1 (keydown)="onKeyDown($event)" >
+  <div class="header">
+    <img class="imagem" src="/assets/images/geral/alerta.png">
+    <h4 class="title">{{ titulo }}</h4>
+  </div>
+  <div class="message" style="padding: 10px;">
+    {{ mensagem }}
+  </div>
+  <div class="text-right">
+    <button #btn1 class="button-teste" (click)="clickButton(1)">{{ labelBtn1 }}</button>
+    <button #btn2 (click)="clickButton(2)">{{ labelBtn2 }}</button>
+  </div>
+</div>
