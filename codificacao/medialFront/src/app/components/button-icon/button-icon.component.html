@@ -1,3 +1,2 @@
-<button *ngIf="visivel" style="background-image: url('/assets/images/button_icon/{{nomeIcone}}.png');"
-  class="imagem"></button>
-<!-- todo colocar as hints nos botoes -->
+<button class="imagem" *ngIf="visivel" style="background-image: url('/assets/images/button_icon/{{nomeIcone}}.png');"
+  [tooltip]="hint ? hint :''" [delay]="500"></button>

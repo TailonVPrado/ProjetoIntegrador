@@ -1,8 +1,8 @@
 <div class="window">
   <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 10%;">
     <input-text style="width: 60%;" [properties]="inputDescricao" [(mxModel)]="linha.dsLinha"></input-text>
-    <button-default [properties]="buttonConsultar" (onClick)="onClickConsultar()"></button-default>
-    <button-default [properties]="buttonCadastrar" (onClick)="onClickSalvar()"></button-default>
+    <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
+    <button-default hint="Adicionar Linha" [properties]="buttonCadastrar" (click)="onClickSalvar()"></button-default>
   </div>
 
 
@@ -21,12 +21,12 @@
             <input-text [isGrid]="true" [properties]="x.properties" [(mxModel)]="x.dsLinha"></input-text>
           </td>
           <td>
-            <button-icon (click)="onClickExcluir(x, i)"  nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
-            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)"></button-icon>
+            <button-icon (click)="onClickExcluir(x, i)"  nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
           </td>
           <td>
-            <button-icon (click)="onClickEditar(x)"    nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
-            <button-icon (click)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)"></button-icon>
+            <button-icon (click)="onClickEditar(x)"    nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Editar"></button-icon>
+            <button-icon (click)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
           </td>
         </tr>
       </tbody>

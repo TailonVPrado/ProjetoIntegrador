@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 
 @Component({
@@ -9,12 +9,5 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 export class ButtonDefaultComponent {
 
   @Input() properties : ButtonModel | undefined;
-
-  @Output() onClick = new EventEmitter<string>();
-  onClickButton(){
-    this.onClick.emit();
-  }
-
-
-
+  @Input() hint :string | undefined;
 }

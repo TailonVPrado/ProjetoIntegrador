@@ -1,5 +1,6 @@
 @import '~ngx-toastr/toastr.css';
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 .window,
 input::placeholder,
@@ -130,3 +131,4 @@ tbody tr:hover,
 tbody tr:focus-within {
   background-color: #8ad4ff70 !important;/* ou outra cor desejada */
 }
+

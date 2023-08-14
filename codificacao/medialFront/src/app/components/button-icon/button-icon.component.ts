@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class ButtonIconComponent {
   @Input() visivel : boolean|undefined = false;
   @Input() nomeIcone : string | undefined;
+  @Input() hint : string | undefined;
 }

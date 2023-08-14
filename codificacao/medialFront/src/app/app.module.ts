@@ -21,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AlertComponent } from './components/alert/alert.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CommonModule } from '@angular/common';
     }),
     ModalModule.forRoot(),
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
