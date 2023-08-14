@@ -1,1 +1,1 @@
-<button class="main" (click)="onClickButton()">{{properties?.label}}</button>
+<button class="main" [ngClass]="{'imagem': !properties?.label}" (click)="onClickButton()">{{properties?.label}}</button>

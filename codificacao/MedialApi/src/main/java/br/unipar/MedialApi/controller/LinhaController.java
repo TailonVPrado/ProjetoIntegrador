@@ -31,8 +31,14 @@ public class LinhaController {
     }
 
     @GetMapping(path = "/all")
-    public List<Linha> findByAll () throws Exception{
-        return linhaService.findByAll();
+    public List<Linha> findByAll (@RequestParam(required = false) Long idEmpresa,
+                                  @RequestParam(required = false) String dsLinha) throws Exception{
+        return linhaService.findAll(idEmpresa, dsLinha);
+    }
+    
+    @DeleteMapping(path = "/{id}")
+    public Linha delete(@PathVariable Long id) throws Exception{
+        return linhaService.delete(id);
     }
 
     @GetMapping(path = "/descricao")

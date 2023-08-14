@@ -1,42 +1,36 @@
 <div class="window">
-  <div style="margin: 10px;">
-
-    <input-text [properties]="inputDescricao"  (consultaItemSimilar)="buscarItensSimilares()" [(mxModel)]="linha.dsLinha"
-    [itensSimilares]="vetItem"></input-text>
-
-
+  <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 10%;">
+    <input-text style="width: 60%;" [properties]="inputDescricao" [(mxModel)]="linha.dsLinha"></input-text>
+    <button-default [properties]="buttonConsultar" (onClick)="onClickConsultar()"></button-default>
     <button-default [properties]="buttonCadastrar" (onClick)="onClickSalvar()"></button-default>
-    <br>
-    <button-default [properties]="buttonConsultar" (onClick)="carregarLinhas()"></button-default>
   </div>
 
-  <br><br>
 
-<!-- -----------------------------------------  -->
-<table class="custom-table">
-  <thead>
-    <tr>
-      <th style="text-align: left; min-width:450px;"><span>Descrição</span></th>
-      <th style="min-width:30px;"></th>
-      <th style="min-width:30px;"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let x of gridLinhas; let i = index">
-       <td style="min-width: 450px;">
-        <input-text [isGrid]="true" [properties]="x.properties" [(mxModel)]="x.dsLinha"></input-text>
-      </td>
-      <td>
-        <button-icon (click)="onClickExcluir(x)"  nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
-        <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)"></button-icon>
-      </td>
-      <td>
-        <button-icon (click)="onClickEditar(x)"    nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
-        <button-icon (click)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)"></button-icon>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<!-- -----------------------------------------  -->
-<button (click)="showMessage()"></button>
+  <div class="center">
+    <table style="width: 80%;" class="custom-table">
+      <thead>
+        <tr>
+          <th class="padding" style="text-align: left;"><span>Descrição Linha</span></th>
+          <th style="width:30px; "></th>
+          <th style="width:30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of gridLinhas; let i = index">
+          <td class="padding">
+            <input-text [isGrid]="true" [properties]="x.properties" [(mxModel)]="x.dsLinha"></input-text>
+          </td>
+          <td>
+            <button-icon (click)="onClickExcluir(x, i)"  nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
+            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)"></button-icon>
+          </td>
+          <td>
+            <button-icon (click)="onClickEditar(x)"    nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"></button-icon>
+            <button-icon (click)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)"></button-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>

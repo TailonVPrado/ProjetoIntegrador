@@ -1,6 +1,6 @@
 import { tipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { LinhaService } from './../../services/linha.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
@@ -13,16 +13,20 @@ import { GenericService } from 'src/app/services/generic.service';
   templateUrl: './screen-linha.component.html',
   styleUrls: ['./screen-linha.component.scss']
 })
-export class ScreenLinhaComponent {
+export class ScreenLinhaComponent implements OnInit{
 
   constructor(
     private linhaService: LinhaService,
     public tipoBotao: tipoBotao,
     private generic: GenericService) { }
 
+  ngOnInit(): void {
+    this.carregarLinhas();
+  }
+
   linha: Linha = new Linha();
   inputDescricao: InputModel = new InputModel({ label: "Descrição", placeholder: "insira a descrição" });
-  buttonCadastrar: ButtonModel = new ButtonModel({ label: '+ Adicionar Linha' });
+  buttonCadastrar: ButtonModel = new ButtonModel({  });
   buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
 
   gridLinhas: Linha[] = [];
@@ -31,19 +35,24 @@ export class ScreenLinhaComponent {
   onClickSalvar(): void {
     this.linhaService.createLinha(this.linha).subscribe(
       (response) => {
-        console.log("sucess", response);
+        this.generic.showSuccess("Linha ("+this.linha.dsLinha+") cadastrada com sucesso!");
         this.linha.dsLinha = '';
         this.carregarLinhas();
       },
       (error) => {
-        console.log('erro', error.error.errors[0]);
+        this.generic.showError(error.error.errors[0]);
       }
     );
   }
+  onClickConsultar(){
+    this.carregarLinhas();
+  }
 
   carregarLinhas() {
-    this.linhaService.getLinhas().subscribe(
+    //todo alterar o 1 para ser por empresa
+    this.linhaService.getLinhas(1, this.linha.dsLinha).subscribe(
       (linhas) => {
+        this.gridLinhas = []
         linhas.forEach((linha, i) => {
           this.gridLinhas[i] = linha;
           this.gridLinhas[i].properties = new Properties({ ativo: false });
@@ -54,12 +63,16 @@ export class ScreenLinhaComponent {
             [this.tipoBotao.EXCLUIR, true]
           ]);
         });
+        if(this.gridLinhas.length == 0){
+          this.generic.showInformation("Nenhum registro foi encontrado.");
+        }
         // this.gridLinhas = linhas;
       },
       (error) => {
-        console.error('Erro ao carregar linhas:', error);
+        this.generic.showError('Erro ao carregar linhas:', error);
       }
     );
+    this.efetuandoAltercao = false;
   }
 
   vetItem: any[] | any = [];
@@ -86,42 +99,84 @@ export class ScreenLinhaComponent {
     );
   }
 
+  dsLinhaOld : string = '';
+  efetuandoAltercao : boolean = false;
   onClickEditar(linha : Linha){
-    linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
-    linha.properties.ativo = true;
+    if(!this.efetuandoAltercao){
+      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
+      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+      this.dsLinhaOld = linha.dsLinha;
+      linha.properties.ativo = true;
+      this.efetuandoAltercao = true;
+    }else{
+      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+    }
   }
-  onClickExcluir(linha : Linha){
-    linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
-  }
-  onClickCancelar(linha : Linha){
-    linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-    linha.properties.ativo = false;
 
+  async onClickCancelar(linha : Linha){
+    if(linha.dsLinha != this.dsLinhaOld){
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
+        linha.dsLinha = this.dsLinhaOld;
+
+        linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+        linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+        linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+        linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+        linha.properties.ativo = false;
+        this.efetuandoAltercao = false;
+      }
+    }else{
+      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+      linha.properties.ativo = false;
+      this.efetuandoAltercao = false;
+    }
   }
+
   onClickConfirmar(linha : Linha){
-    linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-    linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-    linha.properties.ativo = false;
+    if(linha.dsLinha != this.dsLinhaOld){
+      this.linhaService.updateLinha(linha).subscribe(
+        (response) => {
+          this.generic.showSuccess("Linha ("+linha.dsLinha+") atualizada com sucesso!");
+          linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+          linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+          linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+          linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+          linha.properties.ativo = false;
+          this.efetuandoAltercao = false;
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }else{
+      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+      linha.properties.ativo = false;
+      this.efetuandoAltercao = false;
+    }
+
 
   }
-  async showMessage(){
-    this.generic.showError('titulo');
-    this.generic.showInformation('titulo');
-    this.generic.showSuccess('titulo');
-    this.generic.showWarning('titulo');
-    console.log('antes');
-   console.log('teste: ', await this.generic.showAlert('teste'));
-    console.log('depois ');
+
+  async onClickExcluir(linha : Linha, idx : number){
+    if(await this.generic.showAlert('Deseja realmente remover esta linha?') == 1){
+      this.linhaService.deleteLinha(linha.idLinha).subscribe(
+        (response) => {
+          this.generic.showSuccess("Linha ("+linha.dsLinha+") excluida com sucesso!");
+          this.gridLinhas.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+
+    }
   }
 }

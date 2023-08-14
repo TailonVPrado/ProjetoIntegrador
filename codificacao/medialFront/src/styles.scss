@@ -61,47 +61,72 @@ body {
   border-radius: 0.8rem;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left {
+  display: flex;
+  justify-content: left;
+  align-items: start;
+}
+.right {
+  display: flex;
+  justify-content: right;
+  align-items: end;
+}
+
+
+
+
+
 .custom-table {
-  border-collapse: collapse !important;
-  empty-cells: show !important;
-  height: 100% !important;
-  table-layout: fixed !important;
+  border-collapse: collapse;
+  empty-cells: show ;
+  height: 100% ;
+  table-layout: fixed ;
+  margin-bottom: 100px;
 }
 
 .custom-table tbody tr {
-  background-color: #b3e4ff57;
+  // background-color: #b3e4ff57;
+  background-color: rgb(127, 178, 204, 0.33);
   border: 1px solid #ffffff;
 }
 .custom-table thead tr {
-  background-color: #8AD5FF;
+  background-color: #312B97;
   border: 1px solid #ffffff;
+  color: white;
 }
 
 
 
 
 .custom-table {
-  padding: 10px !important;
-  border-collapse: collapse !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
+  padding: 10px ;
+  border-collapse: collapse ;
+  border-radius: 10px ;
+  overflow: hidden ;
 }
 
 .custom-table td input {
-  border: none !important;
-  background-color: #b3e4ff00 !important;
-  outline: 0px !important;
+  border: none ;
+  background-color: #b3e4ff00 ;
+  outline: 0px ;
+
 }
 
-.custom-table span,
-.custom-table td {
-  padding-left  : 10px !important;
+.padding{
+  padding-left  : 10px ;
 }
-
 
 .custom-table thead{
   height: 29px !important;
-  cursor: default !important;
+  cursor: default ;
 }
 
-
+tbody tr:hover,
+tbody tr:focus-within {
+  background-color: #8ad4ff70 !important;/* ou outra cor desejada */
+}

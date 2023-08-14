@@ -1,12 +1,22 @@
 button{
-  background-color: #7CDCE6;
+  background-color: #312B97;
   text-align: center;
   font-size: 18px;
   font-weight: lighter;
   border: 0px;
   border-radius: 3px;
-  min-width: 130px;
   min-height: 27px;
   box-shadow: 1.5px 5px 5px rgba(82, 82, 82, 0.377);
+  margin: 10px;
+  color: white;
+  font-weight: bold;
+  min-width: 40px;
+}
 
+
+.imagem {
+  background-size: 17px 17px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('/assets/images/geral/add.png');
 }

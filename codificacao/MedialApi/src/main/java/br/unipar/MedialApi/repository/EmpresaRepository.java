@@ -9,5 +9,5 @@ import br.unipar.MedialApi.model.Empresa;
 
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
-	Page<Empresa> findAll(Specification<Empresa> specification, Pageable pageable);
+	//Page<Empresa> findAll(Specification<Empresa> specification, Pageable pageable);
 }
