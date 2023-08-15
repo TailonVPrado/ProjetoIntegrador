@@ -2,7 +2,7 @@ import { Empresa } from './empresa.model';
 import { Linha } from './linha.model';
 import { Properties } from '../interface/properties.model';
 
-export class PerfilService {
+export class Perfil {
   idPerfil: number;
   dsPerfil: string;
   imPerfil: string;

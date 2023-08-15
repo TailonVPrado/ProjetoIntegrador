@@ -6,4 +6,5 @@ import { Injectable } from "@angular/core";
   CONFIRMAR: string = 'CONFIRMAR';
   CANCELAR: string = 'CANCELAR';
   EDITAR:  string = 'EDITAR';
+  IMAGEM: string = 'IMAGEM';
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AlertComponent } from '../components/alert/alert.component';
+import { Empresa } from '../models/objetos/empresa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class GenericService {
   constructor(
     private toastr: ToastrService,
     public modalService: BsModalService
-    ) { }
+  ) { }
+
+  public empresaLogada : Empresa = new Empresa(1);
 
   showSuccess(message : string, title : string = 'Sucesso!') {
     this.toastr.success(message, title);
