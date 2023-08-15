@@ -36,10 +36,12 @@ public class LinhaService {
         validaInsert(linha);
         return linhaRepository.saveAndFlush(linha);
     }
+
     public Linha update(Linha linha) throws Exception{
         validaUpdate(linha);
         return linhaRepository.saveAndFlush(linha);
     }
+
     public Linha findById(Long id) throws Exception{
         Optional<Linha> retorno = linhaRepository.findById(id);
         if(retorno.isPresent()){
@@ -48,12 +50,14 @@ public class LinhaService {
             throw new Exception("Linha com o ID ("+id+") não encontrada");
         }
     }
+
     private void validaUpdate(Linha linha)throws Exception{
         validaDescricao(linha);
         if(linha.getIdLinha() == null || linha.getIdLinha() == 0){
             throw new Exception("Informe o ID para atualizar as informações da linha");
         }
     }
+
     private void validaInsert(Linha linha) throws Exception{
         validaDescricao(linha);
 
@@ -61,7 +65,9 @@ public class LinhaService {
             throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }
+
     private void validaDescricao(Linha linha) throws Exception{
+        linha.setDsLinha(linha.getDsLinha().trim().replaceAll("\\s+", " "));
         if(linha.getDsLinha().trim().length() < 3){
             throw new Exception("A descrição da linha deve conter ao menos 3 caracteres.");
         }else if(linha.getDsLinha().trim().length() >20){
@@ -81,12 +87,6 @@ public class LinhaService {
         spec = spec.and(LinhaSpecification.ativo());
 
         return linhaRepository.findAll(spec, Sort.by("dsLinha").ascending());
-/*
-        Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
-        if(!empresa.isPresent())
-            return new ArrayList<Linha>();
-        return linhaRepository.findByStAtivoIsTrueAndEmpresaOrderByDsLinha(empresa.get());
-*/
     }
 
     public List<Linha> findByDescricao(Long idEmpresa, String dsLinha) {

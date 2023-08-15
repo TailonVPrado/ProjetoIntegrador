@@ -9,7 +9,14 @@ export class Linha{
   properties : Properties;
   visibilidadeBotoes : Map<string, boolean>;
 
-  constructor(idLinha: number = 0, dsLinha: string = '', stAtivo: boolean = true, empresa: Empresa = new Empresa(), properties: Properties = new Properties({}), visibilidadeBotoes : Map <string, boolean> = new Map<string, boolean>()){
+  constructor(
+    idLinha: number = 0,
+    dsLinha: string = '',
+    stAtivo: boolean = true,
+    empresa: Empresa = new Empresa(),
+    properties: Properties = new Properties({}),
+    visibilidadeBotoes : Map <string, boolean> = new Map<string, boolean>()
+  ){
     this.idLinha = idLinha;
     this.dsLinha = dsLinha;
     this.stAtivo = stAtivo;

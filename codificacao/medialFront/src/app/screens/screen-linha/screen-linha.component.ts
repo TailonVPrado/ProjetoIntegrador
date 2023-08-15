@@ -35,7 +35,7 @@ export class ScreenLinhaComponent implements OnInit{
   onClickSalvar(): void {
     this.linhaService.createLinha(this.linha).subscribe(
       (response) => {
-        this.generic.showSuccess("Linha ("+this.linha.dsLinha+") cadastrada com sucesso!");
+        this.generic.showSuccess("Linha ("+this.linha.dsLinha.trim()+") cadastrada com sucesso!");
         this.linha.dsLinha = '';
         this.carregarLinhas();
       },
@@ -141,7 +141,7 @@ export class ScreenLinhaComponent implements OnInit{
     if(linha.dsLinha != this.dsLinhaOld){
       this.linhaService.updateLinha(linha).subscribe(
         (response) => {
-          this.generic.showSuccess("Linha ("+linha.dsLinha+") atualizada com sucesso!");
+          this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") atualizada com sucesso!");
           linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
           linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
           linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
@@ -161,15 +161,13 @@ export class ScreenLinhaComponent implements OnInit{
       linha.properties.ativo = false;
       this.efetuandoAltercao = false;
     }
-
-
   }
 
   async onClickExcluir(linha : Linha, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover esta linha?') == 1){
       this.linhaService.deleteLinha(linha.idLinha).subscribe(
         (response) => {
-          this.generic.showSuccess("Linha ("+linha.dsLinha+") excluida com sucesso!");
+          this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") excluida com sucesso!");
           this.gridLinhas.splice(idx, 1);
         },
         (error) => {
