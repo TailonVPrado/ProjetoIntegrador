@@ -82,23 +82,6 @@ export class ScreenLinhaComponent implements OnInit{
     console.log('teste');
   }
 
-  buscarItensSimilares() {
-    // todo mudar primeiro parametro que é a empresa
-    this.linhaService.getLinhasByDescricao(1, this.linha.dsLinha).subscribe(
-      (linhas) => {
-
-        this.vetItem = [];
-        for (var x of linhas) {
-          this.vetItem.push(x.dsLinha);
-        }
-        console.log(this.vetItem);
-      },
-      (error) => {
-        console.error('Erro ao carregar linhas:', error);
-      }
-    );
-  }
-
   dsLinhaOld : string = '';
   efetuandoAltercao : boolean = false;
   onClickEditar(linha : Linha){

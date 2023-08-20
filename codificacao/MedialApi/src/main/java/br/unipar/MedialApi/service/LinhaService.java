@@ -89,10 +89,6 @@ public class LinhaService {
         return linhaRepository.findAll(spec, Sort.by("dsLinha").ascending());
     }
 
-    public List<Linha> findByDescricao(Long idEmpresa, String dsLinha) {
-        return linhaRepository.findByDesc(idEmpresa, "%"+dsLinha.replace(" ", "%")+"%");
-    }
-
     @Transactional
     public Linha delete(Long id) throws Exception {
         Optional<Linha> optLinha = linhaRepository.findById(id);

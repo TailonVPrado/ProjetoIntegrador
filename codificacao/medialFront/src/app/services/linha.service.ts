@@ -32,11 +32,6 @@ export class LinhaService {
     return this.http.get<Linha[]>(url, {params});
   }
 
-  getLinhasByDescricao(idEmpresa:number, dsLinha: string): Observable<Linha[]> {
-    const url = `${this.apiUrl}/linha/descricao?idEmpresa=`+idEmpresa+`+&dsLinha=`+dsLinha;
-    return this.http.get<Linha[]>(url);
-  }
-
   updateLinha(linha: Linha): Observable<any> {
     const url = `${this.apiUrl}/linha`;
     return this.http.put<any>(url, linha);

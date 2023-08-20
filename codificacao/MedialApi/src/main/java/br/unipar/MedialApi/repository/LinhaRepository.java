@@ -13,7 +13,5 @@ import java.util.List;
 @Repository
 public interface LinhaRepository extends JpaRepository<Linha, Long>, JpaSpecificationExecutor<Linha> {
 	//Page<Linha> findAll(Specification<Linha> specification, Pageable pageable);
-    @Query("SELECT l FROM Linha l where l.empresa.idEmpresa = :idEmpresa AND UPPER(l.dsLinha) like UPPER(:dsLinha)")
-    List<Linha> findByDesc (@Param("idEmpresa") Long idEmpresa, @Param("dsLinha") String dsLinha);
 
 }

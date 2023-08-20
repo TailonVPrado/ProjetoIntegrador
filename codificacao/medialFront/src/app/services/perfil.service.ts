@@ -34,11 +34,6 @@ export class PerfilService {
     return this.http.get<Perfil[]>(url, {params});
   }
 
-  // getLinhasByDescricao(idEmpresa:number, dsLinha: string): Observable<Linha[]> {
-  //   const url = `${this.apiUrl}/linha/descricao?idEmpresa=`+idEmpresa+`+&dsLinha=`+dsLinha;
-  //   return this.http.get<Linha[]>(url);
-  // }
-
   updatePerfil(perfil: Perfil): Observable<any> {
     const url = `${this.apiUrl}/perfil`;
     return this.http.put<any>(url, perfil);

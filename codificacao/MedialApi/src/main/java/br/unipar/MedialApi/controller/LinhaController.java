@@ -41,8 +41,4 @@ public class LinhaController {
         return linhaService.delete(id);
     }
 
-    @GetMapping(path = "/descricao")
-    public List<Linha> findByDescricao(@RequestParam Long idEmpresa, @RequestParam String dsLinha){
-        return linhaService.findByDescricao(idEmpresa, dsLinha);
-    }
 }
