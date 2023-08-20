@@ -117,7 +117,7 @@ export class InputTextComponent implements AfterViewInit{
 
       if(this.actualValue.length == 0){
         this.itemSelecionado.emit(null);
-      }else if(!this.alterouItem && this.oldValue != 0 && this.actualValue.length != this.oldValue.length){
+      }else if(!this.alterouItem && this.actualValue.length != this.oldValue.length){
         this.mxModelChange.emit(this.oldValue);
       }
     }
