@@ -50,8 +50,20 @@ export class ScreenPerfilComponent implements OnInit {
   onClickConsultar(){
     this.carregaPerfil();
   }
+  onClickCadastrar(){
+    this.perfilService.createPerfil(this.perfil).subscribe(
+      (response) => {
+        this.generic.showSuccess("Linha ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
+        this.perfil = new Perfil;
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
+  }
 
   carregaPerfil(){
+    //todo alterar para passar a empresa tbm
     this.perfilService.getPerfil(this.perfil).subscribe(
       (perfis) => {
         this.gridPerfil = [];
@@ -65,7 +77,13 @@ export class ScreenPerfilComponent implements OnInit {
              [this.tipoBotao.EXCLUIR, true],
              [this.tipoBotao.IMAGEM, true]
           ])
-        })
+        });
+        if(this.gridPerfil.length == 0){
+          this.generic.showInformation("Nenhum registro foi encontrado.");
+        }
+      },
+      (error) => {
+        this.generic.showError('Erro ao carregar perfis:', error);
       }
     )
   }

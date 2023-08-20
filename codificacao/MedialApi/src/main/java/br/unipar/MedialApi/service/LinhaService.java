@@ -1,9 +1,6 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.model.Empresa;
-import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.Linha;
-import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.repository.EmpresaRepository;
 import br.unipar.MedialApi.repository.EsquadriaRepository;
 import br.unipar.MedialApi.repository.LinhaRepository;
@@ -15,9 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -61,7 +56,7 @@ public class LinhaService {
     private void validaInsert(Linha linha) throws Exception{
         validaDescricao(linha);
 
-        if(linha.getEmpresa() == null){
+        if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0){
             throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }
