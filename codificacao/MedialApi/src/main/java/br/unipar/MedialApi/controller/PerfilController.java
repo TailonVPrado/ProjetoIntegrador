@@ -20,13 +20,13 @@ public class PerfilController {
                                    @RequestParam(required = false) String dsPerfil) throws Exception{
         return perfilService.findAll(idEmpresa, idLinha, dsPerfil);
     }
-    /*@GetMapping(path = "/all")
-    public List<Linha> findByAll (@RequestParam(required = false) Long idEmpresa,
-                                  @RequestParam(required = false) String dsLinha) throws Exception{
-        return linhaService.findAll(idEmpresa, dsLinha);
-    }*/
+
     @PostMapping
     public Perfil insert (@RequestBody Perfil perfil) throws Exception{
         return perfilService.insert(perfil);
+    }
+    @DeleteMapping(path = "/{id}")
+    public Perfil delete(@PathVariable Long id) throws Exception{
+        return perfilService.delete(id);
     }
 }

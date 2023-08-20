@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.repository.PerfilRepository;
 import br.unipar.MedialApi.specification.PerfilSpecification;
@@ -7,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PerfilService {
@@ -37,20 +40,6 @@ public class PerfilService {
 
         return perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
     }
-    /*
-    public List<Linha> findAll(Long idEmpresa, String dsLinha) {
-        Specification<Linha> spec = Specification.where(null);
-
-        if(idEmpresa != null && idEmpresa != 0){
-            spec = spec.and(LinhaSpecification.pertenceAEmpresa(idEmpresa));
-        }
-        if(dsLinha != null){
-            spec = spec.and(LinhaSpecification.descricaoContains(dsLinha));
-        }
-        spec = spec.and(LinhaSpecification.ativo());
-
-        return linhaRepository.findAll(spec, Sort.by("dsLinha").ascending());
-    }*/
 
     private void validaInsert(Perfil perfil) throws Exception{
         validaDescricao(perfil);
@@ -69,5 +58,19 @@ public class PerfilService {
         }else if(perfil.getDsPerfil().trim().length() >60){
             throw new Exception("A descrição do perfil deve conter no máximo 60 caracteres.");
         }
+    }
+
+    @Transactional
+    public Perfil delete(Long id) throws Exception {
+        Optional<Perfil> optPerfil = perfilRepository.findById(id);
+        Perfil perfil;
+        if(!optPerfil.isPresent())
+            throw new Exception("O perfil com o id ("+ id +") não esta cadastrado.");
+
+        perfil = optPerfil.get();
+        perfil.setStAtivo(false);
+
+        perfilRepository.save(perfil);
+        return perfil;
     }
 }

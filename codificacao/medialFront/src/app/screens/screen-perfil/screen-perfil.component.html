@@ -26,24 +26,19 @@
             <input-text [isGrid]="true" [(mxModel)]="x.dsPerfil" [properties]="x.properties"></input-text>
           </td>
           <td>
-            <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties"
-              [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"></input-text>
+            <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"></input-text>
           </td>
           <td>
             <button-icon nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)"
               hint="Adicionar Imagem"></button-icon>
           </td>
           <td>
-            <button-icon nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)"
-              hint="Excluir"></button-icon>
-            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar"
-              [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+            <button-icon (click)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
           </td>
           <td>
-            <button-icon (click)="onClickEditar(x)" nomeIcone="editar"
-              [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Editar"></button-icon>
-            <button-icon nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)"
-              hint="Confirmar alteração"></button-icon>
+            <button-icon (click)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+            <button-icon nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
           </td>
         </tr>
       </tbody>

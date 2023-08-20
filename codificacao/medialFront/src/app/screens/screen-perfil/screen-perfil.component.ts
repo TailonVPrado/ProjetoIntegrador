@@ -27,7 +27,7 @@ export class ScreenPerfilComponent implements OnInit {
   ngOnInit(): void {
     this.LinhaService.getLinhas(null, null).subscribe(
       (linhas) => {
-        linhas.forEach((linha, i) =>{
+        linhas.forEach((linha) =>{
           this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
         })
       }
@@ -50,6 +50,7 @@ export class ScreenPerfilComponent implements OnInit {
   onClickConsultar(){
     this.carregaPerfil();
   }
+
   onClickCadastrar(){
     this.perfilService.createPerfil(this.perfil).subscribe(
       (response) => {
@@ -88,11 +89,9 @@ export class ScreenPerfilComponent implements OnInit {
     )
   }
 
-
   private perfilOld : Perfil = new Perfil();
   efetuandoAltercao : boolean = false;
   onClickEditar(perfil : Perfil){
-
     this.perfilOld.dsPerfil = perfil.dsPerfil;
     this.perfilOld.linha.idLinha = perfil.linha.idLinha;
     this.perfilOld.linha.dsLinha = perfil.linha.dsLinha;
@@ -143,6 +142,20 @@ export class ScreenPerfilComponent implements OnInit {
         }
   }
 
+  async onClickExcluir(perfil : Perfil, idx : number){
+    if(await this.generic.showAlert('Deseja realmente remover este perfil?') == 1){
+      this.perfilService.deletePerfil(perfil.idPerfil).subscribe(
+        (response) => {
+          this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") excluido com sucesso!");
+          this.gridPerfil.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }
+  }
+
   linhaSelecionada(id: any, perfil : Perfil){
     if(id == null){
       perfil.linha = new Linha();
@@ -152,5 +165,4 @@ export class ScreenPerfilComponent implements OnInit {
         )
     }
   }
-
 }

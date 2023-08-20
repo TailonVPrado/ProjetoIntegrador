@@ -157,7 +157,6 @@ export class ScreenLinhaComponent implements OnInit{
           this.generic.showError(error.error.errors[0]);
         }
       );
-
     }
   }
 }
