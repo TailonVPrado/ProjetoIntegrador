@@ -41,23 +41,9 @@ public class PerfilService {
         return perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
     }
 
-    private void validaInsert(Perfil perfil) throws Exception{
-        validaDescricao(perfil);
-
-        if(perfil.getEmpresa() == null || perfil.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir um perfil no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
-        }
-        if(perfil.getLinha() == null || perfil.getLinha().getIdLinha() == 0){
-            throw new Exception("Não é possivel inserir um perfil sem vinculo com uma linha. Verifique!");
-        }
-    }
-    private void validaDescricao(Perfil perfil) throws Exception{
-        perfil.setDsPerfil(perfil.getDsPerfil().trim().replaceAll("\\s+", " "));
-        if(perfil.getDsPerfil().trim().length() < 3){
-            throw new Exception("A descrição do perfil deve conter ao menos 3 caracteres.");
-        }else if(perfil.getDsPerfil().trim().length() >60){
-            throw new Exception("A descrição do perfil deve conter no máximo 60 caracteres.");
-        }
+    public Perfil update(Perfil perfil) throws Exception{
+        validaUpdate(perfil);
+        return perfilRepository.saveAndFlush(perfil);
     }
 
     @Transactional
@@ -72,5 +58,36 @@ public class PerfilService {
 
         perfilRepository.save(perfil);
         return perfil;
+    }
+
+    private void validaInsert(Perfil perfil) throws Exception{
+        validaDescricao(perfil);
+        validaFks(perfil);
+    }
+
+    private void validaUpdate(Perfil perfil) throws Exception{
+        validaDescricao(perfil);
+        validaFks(perfil);
+        if(perfil.getIdPerfil() == null || perfil.getIdPerfil() == 0){
+            throw new Exception("Informe o ID para atualizar as informações do perfil");
+        }
+    }
+
+    private void validaDescricao(Perfil perfil) throws Exception{
+        perfil.setDsPerfil(perfil.getDsPerfil().trim().replaceAll("\\s+", " "));
+        if(perfil.getDsPerfil().trim().length() < 3){
+            throw new Exception("A descrição do perfil deve conter ao menos 3 caracteres.");
+        }else if(perfil.getDsPerfil().trim().length() >60){
+            throw new Exception("A descrição do perfil deve conter no máximo 60 caracteres.");
+        }
+    }
+
+    private void validaFks(Perfil perfil) throws Exception{
+        if(perfil.getEmpresa() == null || perfil.getEmpresa().getIdEmpresa() == 0){
+            throw new Exception("Não é possivel inserir um perfil no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+        }
+        if(perfil.getLinha() == null || perfil.getLinha().getIdLinha() == 0){
+            throw new Exception("Não é possivel inserir um perfil sem vinculo com uma linha. Verifique!");
+        }
     }
 }

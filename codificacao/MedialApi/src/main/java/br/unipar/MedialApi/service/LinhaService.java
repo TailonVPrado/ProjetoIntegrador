@@ -46,29 +46,6 @@ public class LinhaService {
         }
     }
 
-    private void validaUpdate(Linha linha)throws Exception{
-        validaDescricao(linha);
-        if(linha.getIdLinha() == null || linha.getIdLinha() == 0){
-            throw new Exception("Informe o ID para atualizar as informações da linha");
-        }
-    }
-
-    private void validaInsert(Linha linha) throws Exception{
-        validaDescricao(linha);
-
-        if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
-        }
-    }
-
-    private void validaDescricao(Linha linha) throws Exception{
-        linha.setDsLinha(linha.getDsLinha().trim().replaceAll("\\s+", " "));
-        if(linha.getDsLinha().trim().length() < 3){
-            throw new Exception("A descrição da linha deve conter ao menos 3 caracteres.");
-        }else if(linha.getDsLinha().trim().length() >20){
-            throw new Exception("A descrição da linha deve conter no máximo 20 caracteres.");
-        }
-    }
 
     public List<Linha> findAll(Long idEmpresa, String dsLinha) {
         Specification<Linha> spec = Specification.where(null);
@@ -109,5 +86,33 @@ public class LinhaService {
         esquadriaRepository.saveAll(esquadrias);*/
         linhaRepository.save(linha);
         return linha;
+    }
+
+    private void validaUpdate(Linha linha)throws Exception{
+        validaDescricao(linha);
+        validaFks(linha);
+        if(linha.getIdLinha() == null || linha.getIdLinha() == 0){
+            throw new Exception("Informe o ID para atualizar as informações da linha");
+        }
+    }
+
+    private void validaInsert(Linha linha) throws Exception{
+        validaDescricao(linha);
+        validaFks(linha);
+    }
+
+    private void validaDescricao(Linha linha) throws Exception{
+        linha.setDsLinha(linha.getDsLinha().trim().replaceAll("\\s+", " "));
+        if(linha.getDsLinha().trim().length() < 3){
+            throw new Exception("A descrição da linha deve conter ao menos 3 caracteres.");
+        }else if(linha.getDsLinha().trim().length() >20){
+            throw new Exception("A descrição da linha deve conter no máximo 20 caracteres.");
+        }
+    }
+
+    private void validaFks(Linha linha) throws Exception{
+        if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0){
+            throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+        }
     }
 }

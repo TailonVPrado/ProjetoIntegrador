@@ -29,4 +29,8 @@ public class PerfilController {
     public Perfil delete(@PathVariable Long id) throws Exception{
         return perfilService.delete(id);
     }
+    @PutMapping
+    public Perfil update (@RequestBody Perfil perfil) throws Exception{
+        return perfilService.update(perfil);
+    }
 }

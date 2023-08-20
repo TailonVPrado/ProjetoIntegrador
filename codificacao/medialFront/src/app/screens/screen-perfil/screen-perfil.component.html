@@ -1,7 +1,7 @@
 <div class="window">
 
   <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 7%;">
-    <input-text style="width: 40%;" [(mxModel)]="perfil.dsPerfil" [properties]="inputDsPerfil"></input-text>
+    <input-text style="width: 60%;" [(mxModel)]="perfil.dsPerfil" [properties]="inputDsPerfil"></input-text>
     <input-text [(mxModel)]="perfil.linha.dsLinha" [properties]="inputDsLinha"
       [itensDisponiveis]="this.linhasDisponiveis"
       (itemSelecionado)="linhaSelecionada($event, this.perfil)"></input-text>

@@ -87,6 +87,7 @@ export class ScreenPerfilComponent implements OnInit {
         this.generic.showError('Erro ao carregar perfis:', error);
       }
     )
+    this.efetuandoAltercao = false;
   }
 
   private perfilOld : Perfil = new Perfil();
@@ -149,7 +150,7 @@ export class ScreenPerfilComponent implements OnInit {
   }
 
   onClickConfirmar(perfil : Perfil){
-    if(perfil.dsPerfil != this.perfilOld.dsPerfil || this.perfil.linha.idLinha != this.perfil.linha.idLinha){
+    if(perfil.dsPerfil != this.perfilOld.dsPerfil || this.perfil.linha.idLinha != this.perfilOld.linha.idLinha){
       this.perfilService.updatePerfil(perfil).subscribe(
         (response) => {
           this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") atualizado com sucesso!");
