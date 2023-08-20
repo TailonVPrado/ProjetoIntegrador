@@ -92,14 +92,6 @@ export class ScreenPerfilComponent implements OnInit {
   private perfilOld : Perfil = new Perfil();
   efetuandoAltercao : boolean = false;
   onClickEditar(perfil : Perfil){
-    this.perfilOld.dsPerfil = perfil.dsPerfil;
-    this.perfilOld.linha.idLinha = perfil.linha.idLinha;
-    this.perfilOld.linha.dsLinha = perfil.linha.dsLinha;
-    this.efetuandoAltercao = true;
-
-    perfil.properties.ativo = true;
-
-
     if(!this.efetuandoAltercao){
       perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
       perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
@@ -153,6 +145,32 @@ export class ScreenPerfilComponent implements OnInit {
           this.generic.showError(error.error.errors[0]);
         }
       );
+    }
+  }
+
+  onClickConfirmar(perfil : Perfil){
+    if(perfil.dsPerfil != this.perfilOld.dsPerfil || this.perfil.linha.idLinha != this.perfil.linha.idLinha){
+      this.perfilService.updatePerfil(perfil).subscribe(
+        (response) => {
+          this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") atualizado com sucesso!");
+          perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+          perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+          perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+          perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+          perfil.properties.ativo = false;
+          this.efetuandoAltercao = false;
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }else{
+      perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+      perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+      perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+      perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+      perfil.properties.ativo = false;
+      this.efetuandoAltercao = false;
     }
   }
 

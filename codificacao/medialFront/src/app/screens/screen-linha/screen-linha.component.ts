@@ -5,7 +5,6 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
