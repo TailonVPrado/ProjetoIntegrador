@@ -8,28 +8,11 @@ import { Properties } from 'src/app/models/interface/properties.model';
   styleUrls: ['./input-text.component.scss']
 })
 export class InputTextComponent implements AfterViewInit{
-  ngAfterViewInit(): void {
-    //precisa esse timeout, porque sem ele por algum motivo o INPUT itensSimilares ainda esta sem valores e isso faz com que nao carregue a lista
-    setTimeout(() => {
-      console.log('after');
-      for (const [key, value] of this.itensSimilares?.entries()) {
-        this.itens.push({ id: key, descricao: value });
-      }
-      this.itensExibicao = this.itens;
-    }, 100);
-    // if (this.itens.length > 0 && this.itens.length < 20) {
-    // this.itensExibicao = this.itens;
-    // }
-  }
-  itens: { id: number, descricao: string }[] = [];
-  itensExibicao: { id: number, descricao: string }[] = [];
-  exibeSugestao: boolean = false;
-  selectedItemIndex: number = -1;
 
-  @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() itemSelecionado: EventEmitter<any> = new EventEmitter<any>();
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
-  @Input() itensSimilares: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
+  @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;
   @Input() set mxModel(val: any) {
@@ -39,21 +22,47 @@ export class InputTextComponent implements AfterViewInit{
     return this.actualValue;
   }
 
+  /*variveis*/
+  itens: { id: number, descricao: string }[] = [];
+  itensExibicao: { id: number, descricao: string }[] = [];
+  exibeSugestao: boolean = false;
+  selectedItemIndex: number = -1;
+  oldValue: string | any;
+  alterouItem: boolean = false;
+
+  ngAfterViewInit(): void {
+    //precisa esse timeout, porque sem ele por algum motivo o INPUT itensDisponiveis ainda esta sem valores e isso faz com que nao carregue a lista
+    setTimeout(() => {
+      console.log('after');
+      for (const [key, value] of this.itensDisponiveis?.entries()) {
+        this.itens.push({ id: key, descricao: value });
+      }
+      this.itensExibicao = this.itens;
+      this.filtraItens();
+    }, 200);
+  }
+
   onInput() {
+    this.filtraItens();
+  }
+
+  filtraItens(){
     this.itensExibicao = this.itens.filter(item =>
       item.descricao.toLowerCase().includes(this.actualValue.toLowerCase())
     );
-    console.log(this.itensExibicao);
   }
 
-  selecionarItem(val: any) {
-    console.log('selecionarItem', val);
+  selecionarItem(item : any) {
+    this.itemSelecionado.emit(item.id);
+    this.alterouItem = true;
   }
-
 
   onKeyDown(event: KeyboardEvent) {
     console.log(event.key)
     if (this.itensExibicao?.length > 0) {
+      if(event.key != 'Tab'){
+        this.exibeSugestao = true;
+      }
       switch (event.key) {
         case 'ArrowDown':
           this.selectNextItem();
@@ -64,6 +73,7 @@ export class InputTextComponent implements AfterViewInit{
         case 'Enter':
           if (this.selectedItemIndex >= 0 && this.selectedItemIndex < this.itensExibicao?.length) {
             this.selecionarItem(this.itensExibicao[this.selectedItemIndex]);
+            this.exibeSugestao = false;
           }
           break;
         default:
@@ -85,11 +95,14 @@ export class InputTextComponent implements AfterViewInit{
   }
 
   onFocus() {
-
     if (this.itens.length > 0) {
       setTimeout(() => {
         this.exibeSugestao = true;
+        this.filtraItens();
       }, 300);
+      this.oldValue = this.actualValue;
+      this.alterouItem = false;
+      this.selectedItemIndex = -1;
     }
   }
 
@@ -97,9 +110,16 @@ export class InputTextComponent implements AfterViewInit{
     if (this.itens.length > 0) {
       /*adicionado esse timeout para nao bugar caso o usuario escolha um item com o mouse (isso garente que o evento de click sera executado),
       e para garantir que o campo de sujestao abra sempre que o campo ganhar o foco foi adionado um timeout no on focus tbm*/
+
       setTimeout(() => {
         this.exibeSugestao = false;
       }, 300);
+
+      if(this.actualValue.length == 0){
+        this.itemSelecionado.emit(null);
+      }else if(!this.alterouItem && this.oldValue != 0 && this.actualValue.length != this.oldValue.length){
+        this.mxModelChange.emit(this.oldValue);
+      }
     }
   }
 

@@ -41,4 +41,8 @@ export class LinhaService {
     const url = `${this.apiUrl}/linha/`+id;
     return this.http.delete<any>(url);
   }
+  getLinhaById(id: number): Observable<any>{
+    const url = `${this.apiUrl}/linha/`+id;
+    return this.http.get<Linha>(url);
+  }
 }

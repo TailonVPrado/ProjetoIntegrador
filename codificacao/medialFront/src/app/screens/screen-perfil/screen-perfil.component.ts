@@ -124,4 +124,15 @@ export class ScreenPerfilComponent implements OnInit {
           this.efetuandoAltercao = false;
         }
   }
+
+  linhaSelecionada(id: any, perfil : Perfil){
+    if(id == null){
+      perfil.linha = new Linha();
+    }else{
+      this.LinhaService.getLinhaById(id).subscribe(
+        (linha) => { perfil.linha = linha; }
+        )
+    }
+  }
+
 }
