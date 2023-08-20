@@ -10,8 +10,10 @@ label{
   display: flex;
 }
 
-.input-container{
+.input-container-shadow{
   box-shadow: 1.5px 5px 5px rgba(82, 82, 82, 0.377);
+}
+.input-container{
   position: relative;
   display: inline-block;
   width: 100%;
@@ -24,11 +26,12 @@ label{
   left: 0;
   width: 100%;
   background-color: #fff;
-  //border: 1px solid #ccc;
   border-top: none;
   max-height: 120px;
   overflow-y: auto;
   z-index: 1;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 .item {
   padding: 2px;
@@ -48,9 +51,21 @@ label{
 
 .main{
   display: inline-block;
-  // align-items: center; /* Alinha verticalmente ao centro */
   margin: 10px;
 }
+
 .flex-container {
   display: flex;
+}
+
+.item-list::-webkit-scrollbar {
+  width: 6px; //largura da barra de rolagem
+}
+
+.item-list::-webkit-scrollbar-thumb {
+  background-color: #2f74c4; //Cor da barra de rolagem
+  border-radius: 3px; //arrednda a barra de rolagem
+}
+.item-list::-webkit-scrollbar-track {
+  background-color: #c3d1ff; //cor do fundo da barra de rolagem
 }

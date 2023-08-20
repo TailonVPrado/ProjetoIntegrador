@@ -30,6 +30,5 @@ public class EmpresaController {
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}*/
-
 	
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Properties } from 'src/app/models/interface/properties.model';
 
@@ -7,49 +7,53 @@ import { Properties } from 'src/app/models/interface/properties.model';
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss']
 })
-export class InputTextComponent implements OnChanges{
+export class InputTextComponent implements AfterViewInit{
+  ngAfterViewInit(): void {
+    //precisa esse timeout, porque sem ele por algum motivo o INPUT itensSimilares ainda esta sem valores e isso faz com que nao carregue a lista
+    setTimeout(() => {
+      console.log('after');
+      for (const [key, value] of this.itensSimilares?.entries()) {
+        this.itens.push({ id: key, descricao: value });
+      }
+      this.itensExibicao = this.itens;
+    }, 100);
+    // if (this.itens.length > 0 && this.itens.length < 20) {
+    // this.itensExibicao = this.itens;
+    // }
+  }
+  itens: { id: number, descricao: string }[] = [];
+  itensExibicao: { id: number, descricao: string }[] = [];
+  exibeSugestao: boolean = false;
+  selectedItemIndex: number = -1;
 
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() properties : Properties | undefined;
-  @Input() itensSimilares: any[] = [];
+  @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
-
-  @Output()mxModelChange: EventEmitter<any> = new EventEmitter<any>();
-  actualValue : any;
+  @Input() itensSimilares: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
+  @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
+  actualValue: any;
   @Input() set mxModel(val: any) {
     this.actualValue = val;
-    console.log(val);
     this.mxModelChange.emit(val);
-  }get mxModel() {
+  } get mxModel() {
     return this.actualValue;
   }
 
-
-  @Output() consultaItemSimilar: EventEmitter<any> = new EventEmitter<any>();
-  private timeout: any;
   onInput() {
-    if(this.actualValue){
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        this.consultaItemSimilar.emit();
-      }, 500);
-    }
+    this.itensExibicao = this.itens.filter(item =>
+      item.descricao.toLowerCase().includes(this.actualValue.toLowerCase())
+    );
+    console.log(this.itensExibicao);
   }
 
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.onChange.emit();
+  selecionarItem(val: any) {
+    console.log('selecionarItem', val);
   }
 
-  selecionarItem(val : any){
-    console.log('selecionarItem');
-  }
-  selectedItemIndex: number = -1;
 
   onKeyDown(event: KeyboardEvent) {
     console.log(event.key)
-    if (this.itensSimilares.length > 0) {
+    if (this.itensExibicao?.length > 0) {
       switch (event.key) {
         case 'ArrowDown':
           this.selectNextItem();
@@ -58,8 +62,8 @@ export class InputTextComponent implements OnChanges{
           this.selectPreviousItem();
           break;
         case 'Enter':
-          if (this.selectedItemIndex >= 0 && this.selectedItemIndex < this.itensSimilares.length) {
-            this.selecionarItem(this.itensSimilares[this.selectedItemIndex]);
+          if (this.selectedItemIndex >= 0 && this.selectedItemIndex < this.itensExibicao?.length) {
+            this.selecionarItem(this.itensExibicao[this.selectedItemIndex]);
           }
           break;
         default:
@@ -69,7 +73,7 @@ export class InputTextComponent implements OnChanges{
   }
 
   selectNextItem() {
-    if (this.selectedItemIndex < this.itensSimilares.length - 1) {
+    if (this.selectedItemIndex < this.itensExibicao?.length - 1) {
       this.selectedItemIndex++;
     }
   }
@@ -77,6 +81,25 @@ export class InputTextComponent implements OnChanges{
   selectPreviousItem() {
     if (this.selectedItemIndex > 0) {
       this.selectedItemIndex--;
+    }
+  }
+
+  onFocus() {
+
+    if (this.itens.length > 0) {
+      setTimeout(() => {
+        this.exibeSugestao = true;
+      }, 300);
+    }
+  }
+
+  onBlur() {
+    if (this.itens.length > 0) {
+      /*adicionado esse timeout para nao bugar caso o usuario escolha um item com o mouse (isso garente que o evento de click sera executado),
+      e para garantir que o campo de sujestao abra sempre que o campo ganhar o foco foi adionado um timeout no on focus tbm*/
+      setTimeout(() => {
+        this.exibeSugestao = false;
+      }, 300);
     }
   }
 

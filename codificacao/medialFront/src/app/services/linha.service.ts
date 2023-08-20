@@ -19,7 +19,7 @@ export class LinhaService {
   }
 
   //todo alterar pegar o objeto inteiro da tela
-  getLinhas(idEmpresa : number, dsLinha : string): Observable<Linha[]> {
+  getLinhas(idEmpresa : number | any, dsLinha : string | any): Observable<Linha[]> {
     let params = new HttpParams();
     if(idEmpresa){
       params = params.set('idEmpresa', idEmpresa);

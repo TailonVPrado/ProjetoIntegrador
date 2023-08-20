@@ -1,3 +1,4 @@
+import { LinhaService } from './../../services/linha.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { PerfilService } from './../../services/perfil.service';
 import { tipoBotao } from 'src/app/models/enum/tipoBotao.model';
@@ -6,6 +7,8 @@ import { GenericService } from 'src/app/services/generic.service';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
+import { Linha } from 'src/app/models/objetos/linha.model';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'screen-perfil',
@@ -17,15 +20,25 @@ export class ScreenPerfilComponent implements OnInit {
   constructor(
     private generic : GenericService,
     public tipoBotao: tipoBotao,
-    private perfilService : PerfilService
+    private perfilService : PerfilService,
+    private LinhaService : LinhaService
   ) { }
 
   ngOnInit(): void {
+    this.LinhaService.getLinhas(null, null).subscribe(
+      (linhas) => {
+        linhas.forEach((linha, i) =>{
+          this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
+        })
+      }
+    )
   }
 
   perfil : Perfil = new Perfil();
-  inputDsPerfil = new InputModel({});
-  inputDsLinha = new InputModel({});
+  inputDsPerfil = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
+  inputDsLinha = new InputModel({label: 'Linha', placeholder: 'Linha'});
+
+  linhasDisponiveis : Map<number, string> = new Map<number, string>();
 
   buttonCadastrar: ButtonModel = new ButtonModel({  });
   buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
@@ -61,6 +74,15 @@ export class ScreenPerfilComponent implements OnInit {
   private perfilOld : Perfil = new Perfil();
   efetuandoAltercao : boolean = false;
   onClickEditar(perfil : Perfil){
+
+    this.perfilOld.dsPerfil = perfil.dsPerfil;
+    this.perfilOld.linha.idLinha = perfil.linha.idLinha;
+    this.perfilOld.linha.dsLinha = perfil.linha.dsLinha;
+    this.efetuandoAltercao = true;
+
+    perfil.properties.ativo = true;
+
+
     if(!this.efetuandoAltercao){
       perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
       perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);

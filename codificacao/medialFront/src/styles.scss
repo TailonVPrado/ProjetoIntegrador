@@ -54,7 +54,7 @@ body {
   margin: 10px;
 }
 
-//tamanho da modal de alerta
+//ALTERA TAMANHO DE MODAL DO ALERTA
 .modal-sm {
   max-width: 450px;
 }
@@ -62,6 +62,7 @@ body {
   border-radius: 0.8rem;
 }
 
+/*AJUSTAR ALINHAMENTOS DE ITENAS NA TELA*/
 .center {
   display: flex;
   justify-content: center;
@@ -79,47 +80,31 @@ body {
 }
 
 
-
-
-
+/*INICIO ESTILOS TABELAS*/
 .custom-table {
   border-collapse: collapse;
   empty-cells: show ;
   height: 100% ;
   table-layout: fixed ;
   margin-bottom: 100px;
+  padding: 10px ;
 }
 
-.custom-table tbody tr {
-  // background-color: #b3e4ff57;
-  background-color: rgb(127, 178, 204, 0.33);
-  border: 1px solid #ffffff;
-}
 .custom-table thead tr {
   background-color: #312B97;
   border: 1px solid #ffffff;
   color: white;
 }
 
-
-
-
-.custom-table {
-  padding: 10px ;
-  border-collapse: collapse ;
-  border-radius: 10px ;
-  overflow: hidden ;
+.custom-table tbody tr {
+  background-color: rgb(127, 178, 204, 0.33);
+  border: 1px solid #ffffff;
 }
 
 .custom-table td input {
   border: none ;
   background-color: #b3e4ff00 ;
   outline: 0px ;
-
-}
-
-.padding{
-  padding-left  : 10px ;
 }
 
 .custom-table thead{
@@ -127,8 +112,20 @@ body {
   cursor: default ;
 }
 
+.custom-table th:first-child{//arredonda o head da tabela
+  border-radius: 10px 0 0 0;
+}
+
+.custom-table th:last-child {//arredonda o head da tabela
+  border-radius: 0 10px 0 0;
+}
+
+.padding{
+  padding-left  : 10px ;
+}
+
 tbody tr:hover,
 tbody tr:focus-within {
   background-color: #8ad4ff70 !important;/* ou outra cor desejada */
 }
-
+/*FIM ESTILOS TABELAS*/

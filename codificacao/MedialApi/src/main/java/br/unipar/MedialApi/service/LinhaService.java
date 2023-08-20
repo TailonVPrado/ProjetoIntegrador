@@ -104,7 +104,7 @@ public class LinhaService {
         linha.setStAtivo(false);
 
         //tenho que apagar todos os registros que possuem ligação com a linha
-        List<Perfil> perfis = perfilRepository.findByLinha(linha);
+        /*List<Perfil> perfis = perfilRepository.findByLinha(linha);
         for (Perfil perfil: perfis) {
             perfil.setStAtivo(false);
         }
@@ -115,7 +115,7 @@ public class LinhaService {
         }
 
         perfilRepository.saveAll(perfis);
-        esquadriaRepository.saveAll(esquadrias);
+        esquadriaRepository.saveAll(esquadrias);*/
         linhaRepository.save(linha);
         return linha;
     }

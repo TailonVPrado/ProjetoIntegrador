@@ -1,8 +1,8 @@
 <div class="window">
 
-  <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 10%;">
+  <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 7%;">
     <input-text style="width: 40%;" [properties]="inputDsPerfil" [(mxModel)]="perfil.dsPerfil"></input-text>
-    <input-text></input-text>
+    <input-text [properties]="inputDsLinha" [itensSimilares]="this.linhasDisponiveis"></input-text>
     <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
     <button-default [properties]="buttonCadastrar"></button-default>
   </div>
@@ -24,12 +24,11 @@
             <input-text [isGrid]="true" [properties]="x.properties" [(mxModel)]="x.dsPerfil"></input-text>
           </td>
           <td>
-            <input-text [isGrid]="true" [properties]="x.properties" [(mxModel)]="x.linha.dsLinha"></input-text>
+            <input-text [isGrid]="true" [properties]="x.properties" [itensSimilares]="this.linhasDisponiveis" [(mxModel)]="x.linha.dsLinha"></input-text>
           </td>
           <td>
             <button-icon nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)" hint="Adicionar Imagem"></button-icon>
           </td>
-
           <td>
             <button-icon nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
             <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
