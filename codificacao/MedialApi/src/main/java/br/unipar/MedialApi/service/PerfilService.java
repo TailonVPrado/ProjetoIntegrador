@@ -10,7 +10,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -89,5 +91,30 @@ public class PerfilService {
         if(perfil.getLinha() == null || perfil.getLinha().getIdLinha() == 0){
             throw new Exception("Não é possivel inserir um perfil sem vinculo com uma linha. Verifique!");
         }
+    }
+
+
+    public void addImage(Long id, Map<String, String> imagem) throws Exception {
+        String image = imagem.get("image").replaceAll("data:image/jpeg;base64,", "");
+        image = image.replaceAll("data:image/png;base64,", "");
+        byte[] imageByte = Base64.getDecoder().decode(image);
+
+        Perfil perfil = findById(id);
+        perfil.setImPerfil(imageByte);
+
+        perfilRepository.saveAndFlush(perfil);
+    }
+
+    public Perfil findById(Long id) throws Exception{
+        Optional<Perfil> retorno = perfilRepository.findById(id);
+        if(retorno.isPresent()){
+            return retorno.get();
+        }else{
+            throw new Exception("perfil com o ID ("+id+") não encontrado");
+        }
+    }
+
+    public byte[] getImage(Long id) throws Exception {
+        return findById(id).getImPerfil();
     }
 }

@@ -60,6 +60,7 @@ body {
 }
 .modal-content{
   border-radius: 0.8rem;
+  display: block;
 }
 
 /*AJUSTAR ALINHAMENTOS DE ITENAS NA TELA*/
@@ -129,3 +130,53 @@ tbody tr:focus-within {
   background-color: #8ad4ff70 !important;/* ou outra cor desejada */
 }
 /*FIM ESTILOS TABELAS*/
+
+/*INICIO ESTILOS INSERCAO DE IMAGEM*/
+.custom-image-upload {
+  padding: 2px 2px;
+  background-color: #005aff17;
+  color: red;
+  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.custom-image-input {
+  display: none;
+}
+
+.custom-image-label {
+  margin-left: 15px;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 4px;
+  background-color: #312B97;
+  font-size: 19px;
+  height: 27px;
+  font-family: 'Raleway', monospace;
+  line-height:20px;
+  letter-spacing:-0.6px;
+  color: #fff;
+  box-shadow: 1.5px 5px 5px rgba(82, 82, 82, 0.377);
+  font-weight: bold;
+  text-align: center;
+  user-select: none;
+}
+/*FIM ESTILOS INSERCAO DE IMAGEM*/

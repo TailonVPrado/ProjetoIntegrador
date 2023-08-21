@@ -77,10 +77,6 @@ export class ScreenLinhaComponent implements OnInit{
   vetItem: any[] | any = [];
 
 
-  consultaItemSimilar() {
-    console.log('teste');
-  }
-
   dsLinhaOld : string = '';
   efetuandoAltercao : boolean = false;
   onClickEditar(linha : Linha){
