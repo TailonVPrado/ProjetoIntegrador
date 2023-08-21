@@ -2,6 +2,7 @@ package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Perfil;
+import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +21,9 @@ public class PerfilController {
     private PerfilService perfilService;
 
     @GetMapping(path = "/all")
-    public List<Perfil> findByAll (@RequestParam(required = false) Long idEmpresa,
-                                   @RequestParam(required = false) Long idLinha,
-                                   @RequestParam(required = false) String dsPerfil) throws Exception{
+    public List<PerfilDto> findByAll (@RequestParam(required = false) Long idEmpresa,
+                                      @RequestParam(required = false) Long idLinha,
+                                      @RequestParam(required = false) String dsPerfil) throws Exception{
         return perfilService.findAll(idEmpresa, idLinha, dsPerfil);
     }
 

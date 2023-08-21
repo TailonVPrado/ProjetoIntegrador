@@ -2,6 +2,7 @@ package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Perfil;
+import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.repository.PerfilRepository;
 import br.unipar.MedialApi.specification.PerfilSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PerfilService {
@@ -26,7 +24,7 @@ public class PerfilService {
         return perfilRepository.saveAndFlush(perfil);
     }
 
-    public List<Perfil> findAll(Long idEmpresa, Long idLinha, String dsPerfil){
+    public List<PerfilDto> findAll(Long idEmpresa, Long idLinha, String dsPerfil){
         Specification<Perfil> spec = Specification.where(null);
 
         if(idEmpresa != null && idEmpresa != 0){
@@ -40,7 +38,19 @@ public class PerfilService {
         }
         spec = spec.and(PerfilSpecification.ativo());
 
-        return perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
+        List<Perfil> perfis = perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
+
+        PerfilDto perfilDto = new PerfilDto();
+        List<PerfilDto> perfilDtoList = new ArrayList<>();
+        for (Perfil perfil: perfis) {
+            perfilDto.setIdPerfil(perfil.getIdPerfil());
+            perfilDto.setDsPerfil(perfil.getDsPerfil());
+            perfilDto.setEmpresa(perfil.getEmpresa());
+            perfilDto.setLinha(perfil.getLinha());
+
+            perfilDtoList.add(perfilDto);
+        }
+        return perfilDtoList;
     }
 
     public Perfil update(Perfil perfil) throws Exception{
