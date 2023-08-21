@@ -8,9 +8,7 @@ import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
-import { Subscriber } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'screen-perfil',
@@ -23,13 +21,12 @@ export class ScreenPerfilComponent implements OnInit {
     private generic : GenericService,
     public tipoBotao: tipoBotao,
     private perfilService : PerfilService,
-    private LinhaService : LinhaService,
-    private modalService: BsModalService,
-    private sanitizer: DomSanitizer
+    private linhaService : LinhaService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
-    this.LinhaService.getLinhas(null, null).subscribe(
+    this.linhaService.getLinhas(null, null).subscribe(
       (linhas) => {
         linhas.forEach((linha) =>{
           this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
@@ -59,8 +56,6 @@ export class ScreenPerfilComponent implements OnInit {
   buttonCancelarImg: ButtonModel = new ButtonModel({ label: 'Cancelar' });
 
   gridPerfil: Perfil[] = [];
-  botoesGrid: Map<string, boolean> | undefined;
-
 
   onClickConsultar(){
     this.carregaPerfil();
@@ -194,7 +189,7 @@ export class ScreenPerfilComponent implements OnInit {
     if(id == null){
       perfil.linha = new Linha();
     }else{
-      this.LinhaService.getLinhaById(id).subscribe(
+      this.linhaService.getLinhaById(id).subscribe(
         (linha) => { perfil.linha = linha; }
         )
     }

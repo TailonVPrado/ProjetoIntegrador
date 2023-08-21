@@ -29,7 +29,6 @@ export class ScreenLinhaComponent implements OnInit{
   buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
 
   gridLinhas: Linha[] = [];
-  botoesGrid: Map<string, boolean> | undefined;
 
   onClickSalvar(): void {
     this.linhaService.createLinha(this.linha).subscribe(

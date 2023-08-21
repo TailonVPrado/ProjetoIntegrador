@@ -1,1 +1,41 @@
-<p>screen-esquadria works!</p>
+<div class="window">
+  <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 7%;">
+    <input-text style="width: 60%;" [(mxModel)]="esquadria.dsEsquadria" [properties]="inputDsPerfil"></input-text>
+    <input-text [(mxModel)]="esquadria.linha.dsLinha" [properties]="inputDsLinha"
+      [itensDisponiveis]="this.linhasDisponiveis"
+      (itemSelecionado)="linhaSelecionada($event, this.esquadria)"></input-text>
+    <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
+    <button-default [properties]="buttonCadastrar" (click)="onClickCadastrar()" hint="Adicionar Perfil"></button-default>
+  </div>
+
+  <div class="center">
+    <table style="width: 85%;" class="custom-table">
+      <thead>
+        <tr>
+          <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
+          <th style="text-align: left; width: 25%;"><span>Linha</span></th>
+          <th style="width:30px;"></th>
+          <th style="width:30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of gridEsquadria; let i = index">
+          <td class="padding">
+            <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
+          </td>
+          <td>
+            <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text> <!--[itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"-->
+          </td>
+          <td>
+            <button-icon nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon><!--(click)="onClickExcluir(x, i)"-->
+            <button-icon nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon><!--(click)="onClickCancelar(x)"-->
+          </td>
+          <td>
+            <button-icon nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon><!--(click)="onClickEditar(x)" -->
+            <button-icon nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon><!--(click)="onClickConfirmar(x)"-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -40,9 +40,9 @@ public class PerfilService {
 
         List<Perfil> perfis = perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
 
-        PerfilDto perfilDto = new PerfilDto();
         List<PerfilDto> perfilDtoList = new ArrayList<>();
         for (Perfil perfil: perfis) {
+            PerfilDto perfilDto = new PerfilDto();
             perfilDto.setIdPerfil(perfil.getIdPerfil());
             perfilDto.setDsPerfil(perfil.getDsPerfil());
             perfilDto.setEmpresa(perfil.getEmpresa());
@@ -50,6 +50,7 @@ public class PerfilService {
 
             perfilDtoList.add(perfilDto);
         }
+
         return perfilDtoList;
     }
 
