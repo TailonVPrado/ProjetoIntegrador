@@ -63,12 +63,7 @@ public class LinhaService {
 
     @Transactional
     public Linha delete(Long id) throws Exception {
-        Optional<Linha> optLinha = linhaRepository.findById(id);
-        Linha linha;
-        if(!optLinha.isPresent())
-            throw new Exception("A linha com o id ("+ id +") não esta cadastrada.");
-
-        linha = optLinha.get();
+        Linha linha = findById(id);
         linha.setStAtivo(false);
 
         //tenho que apagar todos os registros que possuem ligação com a linha

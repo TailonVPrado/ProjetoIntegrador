@@ -29,8 +29,8 @@
             <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"></input-text>
           </td>
           <td>
-            <button-icon nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)"
-              hint="Adicionar Imagem"></button-icon>
+            <button-icon (click)="onClickAlterImage(templateAlterImage, x)" nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)"
+              hint="Alterar Imagem"></button-icon>
           </td>
           <td>
             <button-icon (click)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
@@ -45,3 +45,29 @@
     </table>
   </div>
 </div>
+
+<!-- modal para alterar a imagem do perfil -->
+<ng-template #templateAlterImage>
+  <div class="center" style="margin-top: 10px;">
+    <h4>Alterar Imagem do Perfil</h4>
+  </div>
+  <hr>
+  <div>
+    <div class="image-container">
+      <img class="custom-image-upload" [src]="imagePerfilBase64" alt="Nenhuma Imagem foi localizada"  accept="image/*"/>
+    </div>
+
+    <div class="custom-image-label">
+      <label style="cursor: pointer;" for="arquivo">Carregar Imagem</label>
+      <input (change)="onChangeImage($event)" id="arquivo" class="custom-image-input" type="file" accept="image/*" />
+    </div>
+    <span>{{nameImageSelect}}</span>
+    <br><br>
+
+    <div class="right">
+      <button-default (click)="modalRef?.hide()" [properties]="buttonCancelarImg"></button-default>
+      <button-default (click)="imagePerfilBase64 = ''; nameImageSelect='';" [properties]="buttonRemoverImg"></button-default>
+      <button-default (click)="onClickButtonSalvarImg()" [properties]="buttonSalvarImg"></button-default>
+    </div>
+  </div>
+</ng-template>

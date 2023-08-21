@@ -2,13 +2,15 @@ import { LinhaService } from './../../services/linha.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { PerfilService } from './../../services/perfil.service';
 import { tipoBotao } from 'src/app/models/enum/tipoBotao.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GenericService } from 'src/app/services/generic.service';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { Subscriber } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'screen-perfil',
@@ -21,7 +23,9 @@ export class ScreenPerfilComponent implements OnInit {
     private generic : GenericService,
     public tipoBotao: tipoBotao,
     private perfilService : PerfilService,
-    private LinhaService : LinhaService
+    private LinhaService : LinhaService,
+    private modalService: BsModalService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +38,13 @@ export class ScreenPerfilComponent implements OnInit {
     )
   }
 
+  modalRef?: BsModalRef;
+  config = {
+    backdrop: true,
+    ignoreBackdropClick: true,
+    keyboard: false
+  };
+
   perfil : Perfil = new Perfil();
   inputDsPerfil = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
   inputDsLinha = new InputModel({label: 'Linha', placeholder: 'Linha'});
@@ -42,6 +53,10 @@ export class ScreenPerfilComponent implements OnInit {
 
   buttonCadastrar: ButtonModel = new ButtonModel({  });
   buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
+  /*modal de alteração de umagem*/
+  buttonSalvarImg: ButtonModel = new ButtonModel({ label: 'Salvar' });
+  buttonRemoverImg: ButtonModel = new ButtonModel({ label: 'Remover Imagem' });
+  buttonCancelarImg: ButtonModel = new ButtonModel({ label: 'Cancelar' });
 
   gridPerfil: Perfil[] = [];
   botoesGrid: Map<string, boolean> | undefined;
@@ -182,6 +197,49 @@ export class ScreenPerfilComponent implements OnInit {
       this.LinhaService.getLinhaById(id).subscribe(
         (linha) => { perfil.linha = linha; }
         )
+    }
+  }
+
+  nameImageSelect : string = '';//data:image/jpeg;base64,
+  imagePerfilBase64 : string | any = '';
+  idPerfilImage : number = 0;
+  onClickAlterImage(template: TemplateRef<any>, perfil:Perfil) {
+    this.modalRef = this.modalService.show(template, this.config);
+    this.perfilService.getImage(perfil.idPerfil).subscribe(
+      (base64Image: string) => {
+        this.imagePerfilBase64 = base64Image;
+      },
+      (error) => {
+        this.generic.showError("Ocorreu um erro inesperado ao carregar a imagem, entre em contato com um administrador do sistema.");
+      }
+    );
+    this.idPerfilImage = perfil.idPerfil;
+    this.nameImageSelect = '';
+  }
+
+  onClickButtonSalvarImg(){
+    this.perfilService.updateImage(this.idPerfilImage, this.imagePerfilBase64).subscribe(
+      (base64Image: string) => {
+        this.generic.showSuccess("Imagem atualizada com sucesso");
+        this.modalRef?.hide();
+      },
+      (error) => {
+        console.error('Ocorreu um erro inesperado ao salvar a imagem. Erro: ', error);
+      }
+    );
+  }
+
+  onChangeImage(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.nameImageSelect = file.name;
+      const reader = new FileReader();
+      reader.onload = (e) =>{
+        this.imagePerfilBase64 = e.target?.result;
+      }
+      reader.readAsDataURL(file);
+    }else {
+      this.nameImageSelect = '';
     }
   }
 }

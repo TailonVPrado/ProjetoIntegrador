@@ -33,7 +33,6 @@ export class InputTextComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     //precisa esse timeout, porque sem ele por algum motivo o INPUT itensDisponiveis ainda esta sem valores e isso faz com que nao carregue a lista
     setTimeout(() => {
-      console.log('after');
       for (const [key, value] of this.itensDisponiveis?.entries()) {
         this.itens.push({ id: key, descricao: value });
       }
