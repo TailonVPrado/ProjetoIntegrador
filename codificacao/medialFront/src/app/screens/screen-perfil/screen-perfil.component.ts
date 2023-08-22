@@ -64,7 +64,19 @@ export class ScreenPerfilComponent implements OnInit {
   onClickCadastrar(){
     this.perfilService.createPerfil(this.perfil).subscribe(
       (response) => {
-        this.generic.showSuccess("Linha ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
+        this.generic.showSuccess("Perfil ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
+
+        /*adiciona o perfil na primeira linha para facilitar a experiencia do usuário*/
+        this.gridPerfil.splice(0,0,this.perfil);
+        this.gridPerfil[0].properties = new Properties({ativo : false});
+        this.gridPerfil[0].visibilidadeBotoes = new Map <string, boolean>([
+          [this.tipoBotao.CANCELAR, false],
+          [this.tipoBotao.CONFIRMAR, false],
+          [this.tipoBotao.EDITAR, true],
+          [this.tipoBotao.EXCLUIR, true],
+          [this.tipoBotao.IMAGEM, true]
+        ]);
+
         this.perfil = new Perfil;
       },
       (error) => {
@@ -94,7 +106,7 @@ export class ScreenPerfilComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar perfis:', error);
+        this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
       }
     )
     this.efetuandoAltercao = false;

@@ -45,9 +45,9 @@ public class Esquadria {
 	@Column(name = "DT_ATUALIZACAO")
 	private Date dtAtualizacao;
 
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "ID_EMPRESA", nullable = false)
-	private Empresa empresa;*/
+	private Empresa empresa;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_LINHA", nullable = false)

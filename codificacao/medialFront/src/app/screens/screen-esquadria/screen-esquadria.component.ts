@@ -1,3 +1,4 @@
+import { EsquadriaService } from './../../services/esquadria.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { LinhaService } from './../../services/linha.service';
 import { tipoBotao } from './../../models/enum/tipoBotao.model';
@@ -6,6 +7,8 @@ import { Esquadria } from 'src/app/models/objetos/esquadria.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
+import { GenericService } from 'src/app/services/generic.service';
+import { Properties } from 'src/app/models/interface/properties.model';
 
 @Component({
   selector: 'screen-esquadria',
@@ -15,7 +18,9 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 export class ScreenEsquadriaComponent implements OnInit {
 
   constructor(public tipoBotao : tipoBotao,
-              private linhaService: LinhaService) { }
+              private linhaService: LinhaService,
+              private esquadriaService : EsquadriaService,
+              private generic : GenericService) { }
 
   ngOnInit(): void {
     this.linhaService.getLinhas(null, null).subscribe(
@@ -46,11 +51,59 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  onClickConsultar(){
-
-  }
-
   onClickCadastrar(){
+    this.esquadriaService.createEsquadria(this.esquadria).subscribe(
+      (response) => {
+        this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrado com sucesso!");
 
+        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        this.gridEsquadria.splice(0,0,this.esquadria);
+        this.gridEsquadria[0].properties = new Properties({ativo : false});
+        this.gridEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
+          [this.tipoBotao.CANCELAR, false],
+           [this.tipoBotao.CONFIRMAR, false],
+           [this.tipoBotao.EDITAR, true],
+           [this.tipoBotao.EXCLUIR, true]
+        ])
+
+        this.esquadria = new Esquadria;
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
   }
+
+  onClickConsultar(){
+    this.carregaEsquadrias();
+  }
+
+  carregaEsquadrias() {
+    //todo alterar para passar a empresa tbm
+    this.esquadriaService.getEsquadrias(this.esquadria).subscribe(
+      (perfis) => {
+        this.gridEsquadria = [];
+        perfis.forEach((perfil, i) =>{
+          this.gridEsquadria[i] = perfil;
+          this.gridEsquadria[i].properties = new Properties({ativo : false});
+          this.gridEsquadria[i].visibilidadeBotoes = new Map <string, boolean>([
+            [this.tipoBotao.CANCELAR, false],
+             [this.tipoBotao.CONFIRMAR, false],
+             [this.tipoBotao.EDITAR, true],
+             [this.tipoBotao.EXCLUIR, true]
+          ])
+        });
+        if(this.gridEsquadria.length == 0){
+          this.generic.showInformation("Nenhum registro foi encontrado.");
+        }
+      },
+      (error) => {
+        this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
+      }
+    )
+    this.efetuandoAltercao = false;
+  }
+
+  efetuandoAltercao : boolean = false;
+
 }

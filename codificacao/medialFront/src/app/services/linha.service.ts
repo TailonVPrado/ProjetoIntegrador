@@ -21,6 +21,7 @@ export class LinhaService {
   //todo alterar pegar o objeto inteiro da tela
   getLinhas(idEmpresa : number | any, dsLinha : string | any): Observable<Linha[]> {
     let params = new HttpParams();
+    //todo alterar para pegar a empresa logada
     if(idEmpresa){
       params = params.set('idEmpresa', idEmpresa);
     }

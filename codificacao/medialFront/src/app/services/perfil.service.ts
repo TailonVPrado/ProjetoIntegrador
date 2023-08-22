@@ -21,6 +21,7 @@ export class PerfilService {
 
   getPerfil(perfil: Perfil): Observable<Perfil[]> {
     let params = new HttpParams();
+    //todo alterar essa empresa logada aqui
     if(perfil.empresa.idEmpresa){
       params = params.set('idEmpresa', perfil.empresa.idEmpresa);
     }
