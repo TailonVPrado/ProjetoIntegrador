@@ -54,7 +54,7 @@ export class ScreenEsquadriaComponent implements OnInit {
   onClickCadastrar(){
     this.esquadriaService.createEsquadria(this.esquadria).subscribe(
       (response) => {
-        this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrado com sucesso!");
+        this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrada com sucesso!");
 
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridEsquadria.splice(0,0,this.esquadria);
@@ -104,7 +104,6 @@ export class ScreenEsquadriaComponent implements OnInit {
     this.efetuandoAltercao = false;
   }
 
-  efetuandoAltercao : boolean = false;
   async onClickExcluir(esquadria : Esquadria, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover este perfil?') == 1){
       this.esquadriaService.deleteEsquadria(esquadria.idEsquadria).subscribe(
@@ -116,6 +115,77 @@ export class ScreenEsquadriaComponent implements OnInit {
           this.generic.showError(error.error.errors[0]);
         }
       );
+    }
+  }
+
+
+  private esquadriaOld : Esquadria = new Esquadria();
+  efetuandoAltercao : boolean = false;
+  onClickEditar(esquadria : Esquadria){
+    if(!this.efetuandoAltercao){
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+
+      this.esquadriaOld.dsEsquadria = esquadria.dsEsquadria;
+      this.esquadriaOld.linha.idLinha = esquadria.linha.idLinha;
+      this.esquadriaOld.linha.dsLinha = esquadria.linha.dsLinha;
+      this.efetuandoAltercao = true;
+
+      esquadria.properties.ativo = true;
+    }else{
+      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+    }
+  }
+
+  async onClickCancelar(esquadria : Esquadria){
+    if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
+        esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+        esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+        esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+        esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+        esquadria.properties.ativo = false;
+        this.efetuandoAltercao = false;
+
+        esquadria.dsEsquadria = this.esquadriaOld.dsEsquadria;
+        esquadria.linha.idLinha = this.esquadriaOld.linha.idLinha;
+        esquadria.linha.dsLinha = this.esquadriaOld.linha.dsLinha;
+      }
+    }else{
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+      esquadria.properties.ativo = false;
+      this.efetuandoAltercao = false;
+    }
+  }
+
+  onClickConfirmar(esquadria : Esquadria){
+    if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || this.esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
+      this.esquadriaService.updateEsquadria(esquadria).subscribe(
+        (response) => {
+          this.generic.showSuccess("Esquadria ("+ esquadria.dsEsquadria.trim()+") atualizada com sucesso!");
+          esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+          esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+          esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+          esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+          esquadria.properties.ativo = false;
+          this.efetuandoAltercao = false;
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }else{
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+      esquadria.properties.ativo = false;
+      this.efetuandoAltercao = false;
     }
   }
 }

@@ -39,4 +39,9 @@ export class EsquadriaService {
     const url = `${this.apiUrl}/esquadria/`+id;
     return this.http.delete<any>(url);
   }
+
+  updateEsquadria(esquadria: Esquadria): Observable<any> {
+    const url = `${this.apiUrl}/esquadria`;
+    return this.http.put<any>(url, esquadria);
+  }
 }
