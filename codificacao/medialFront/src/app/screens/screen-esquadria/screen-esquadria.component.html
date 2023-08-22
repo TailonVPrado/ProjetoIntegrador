@@ -27,7 +27,7 @@
             <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text> <!--[itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"-->
           </td>
           <td>
-            <button-icon nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon><!--(click)="onClickExcluir(x, i)"-->
+            <button-icon (click)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
             <button-icon nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon><!--(click)="onClickCancelar(x)"-->
           </td>
           <td>

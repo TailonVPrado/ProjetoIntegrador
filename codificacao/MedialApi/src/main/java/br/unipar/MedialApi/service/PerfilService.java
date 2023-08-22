@@ -61,12 +61,8 @@ public class PerfilService {
 
     @Transactional
     public Perfil delete(Long id) throws Exception {
-        Optional<Perfil> optPerfil = perfilRepository.findById(id);
-        Perfil perfil;
-        if(!optPerfil.isPresent())
-            throw new Exception("O perfil com o id ("+ id +") não esta cadastrado.");
+        Perfil perfil = findById(id);
 
-        perfil = optPerfil.get();
         perfil.setStAtivo(false);
 
         perfilRepository.save(perfil);

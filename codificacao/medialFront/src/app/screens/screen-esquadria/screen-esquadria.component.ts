@@ -105,5 +105,17 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
   efetuandoAltercao : boolean = false;
-
+  async onClickExcluir(esquadria : Esquadria, idx : number){
+    if(await this.generic.showAlert('Deseja realmente remover este perfil?') == 1){
+      this.esquadriaService.deleteEsquadria(esquadria.idEsquadria).subscribe(
+        (response) => {
+          this.generic.showSuccess("Perfil ("+esquadria.dsEsquadria.trim()+") excluido com sucesso!");
+          this.gridEsquadria.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }
+  }
 }

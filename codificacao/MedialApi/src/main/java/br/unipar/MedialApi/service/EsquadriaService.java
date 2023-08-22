@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,15 @@ public class EsquadriaService {
         }else {
             throw new Exception("Esquadria com o ID ("+id+") não encontrada");
         }
+    }
+    @Transactional
+    public Esquadria delete(Long id) throws Exception{
+        Esquadria esquadria = findById(id);
+
+        esquadria.setStAtivo(false);
+
+        esquadriaRepository.save(esquadria);
+        return esquadria;
     }
 
     private void validaInsert(Esquadria esquadria) throws Exception{

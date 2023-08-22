@@ -35,4 +35,9 @@ public class EsquadriaController {
                                       @RequestParam(required = false) String dsEsquadria) throws Exception{
         return esquadriaService.findAll(idEmpresa, idLinha, dsEsquadria);
     }
+
+    @DeleteMapping(path = "{id}")
+    public Esquadria delete(@PathVariable Long id) throws Exception{
+        return esquadriaService.delete(id);
+    }
 }
