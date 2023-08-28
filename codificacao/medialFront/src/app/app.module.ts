@@ -22,6 +22,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { InputNumberComponent } from './components/input-number/input-number.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ButtonMenuComponent,
     InputTextComponent,
     MenuBarComponent,
-    AlertComponent
+    AlertComponent,
+    InputNumberComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ModalModule.forRoot(),
     CommonModule,
     ReactiveFormsModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    NgxCurrencyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -204,6 +204,8 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
   inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
-  perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
+  inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
 
+  perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
+  buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
 }
