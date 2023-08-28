@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let x of gridEsquadria; let i = index">
+        <tr *ngFor="let x of gridEsquadria; let i = index" class="click-row" (click)="openModal(templatePerfilEsquadria, x)" >
           <td class="padding">
             <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
           </td>
@@ -27,15 +27,21 @@
             <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
           </td>
           <td>
-            <button-icon (click)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-            <button-icon (click)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+            <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
           </td>
           <td>
-            <button-icon (click)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-            <button-icon (click)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+            <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+            <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
 </div>
+
+
+<ng-template class="modal-body" #templatePerfilEsquadria>
+  <h4>Alterar Imagem do Perfil</h4>
+</ng-template>

@@ -180,3 +180,19 @@ tbody tr:focus-within {
   user-select: none;
 }
 /*FIM ESTILOS INSERCAO DE IMAGEM*/
+
+.click-row input[disabled] {
+  pointer-events: none;
+}
+
+.full-size-modal .modal-content{
+  height  : 94vh;
+}
+
+
+.full-size-modal {
+  margin-left: 17% !important;
+  min-width: 81%;
+  min-height: 100% !important;
+}
+

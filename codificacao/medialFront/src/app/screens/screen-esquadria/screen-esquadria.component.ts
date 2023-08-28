@@ -1,14 +1,15 @@
+import { Esquadria } from './../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../services/esquadria.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { LinhaService } from './../../services/linha.service';
 import { tipoBotao } from './../../models/enum/tipoBotao.model';
-import { Component, OnInit } from '@angular/core';
-import { Esquadria } from 'src/app/models/objetos/esquadria.model';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
 import { Properties } from 'src/app/models/interface/properties.model';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'screen-esquadria',
@@ -20,7 +21,8 @@ export class ScreenEsquadriaComponent implements OnInit {
   constructor(public tipoBotao : tipoBotao,
               private linhaService: LinhaService,
               private esquadriaService : EsquadriaService,
-              private generic : GenericService) { }
+              private generic : GenericService,
+              private modalService: BsModalService,) { }
 
   ngOnInit(): void {
     this.linhaService.getLinhas(null, null).subscribe(
@@ -187,5 +189,16 @@ export class ScreenEsquadriaComponent implements OnInit {
       esquadria.properties.ativo = false;
       this.efetuandoAltercao = false;
     }
+  }
+
+  config = {
+    backdrop: true,
+    ignoreBackdropClick: true,
+    keyboard: false,
+    class: 'full-size-modal'
+  };
+  openModal(template: TemplateRef<any>, esquadria: Esquadria){
+    console.log('openModal');
+    this.modalService.show(template, this.config);
   }
 }
