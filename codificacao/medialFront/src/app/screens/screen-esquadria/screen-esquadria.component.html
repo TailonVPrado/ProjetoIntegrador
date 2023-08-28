@@ -1,11 +1,11 @@
 <div class="window">
   <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 7%;">
-    <input-text style="width: 60%;" [(mxModel)]="esquadria.dsEsquadria" [properties]="inputDsPerfil"></input-text>
+    <input-text style="width: 60%;" [(mxModel)]="esquadria.dsEsquadria" [properties]="inputDsEsquadria"></input-text>
     <input-text [(mxModel)]="esquadria.linha.dsLinha" [properties]="inputDsLinha"
       [itensDisponiveis]="this.linhasDisponiveis"
       (itemSelecionado)="linhaSelecionada($event, this.esquadria)"></input-text>
-    <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
-    <button-default [properties]="buttonCadastrar" (click)="onClickCadastrar()" hint="Adicionar Esquadria"></button-default>
+    <button-default [properties]="buttonConsultarEsquadria" (click)="onClickConsultar()"></button-default>
+    <button-default [properties]="buttonCadastrarEsquadria" (click)="onClickCadastrar()" hint="Adicionar Esquadria"></button-default>
   </div>
 
   <div class="center">
@@ -38,10 +38,48 @@
       </tbody>
     </table>
   </div>
-
 </div>
 
 
 <ng-template class="modal-body" #templatePerfilEsquadria>
-  <h4>Alterar Imagem do Perfil</h4>
+  <input-text style="width: 60%;" [(mxModel)]="perfilEsquadria.perfil.dsPerfil" [properties]="inputDsPerfil"></input-text>
+
+  <div class="center">
+    <table style="width: 95%;" class="custom-table">
+      <thead>
+        <tr>
+          <th class="padding" style="text-align: left;"><span>Descrição Perfil</span></th>
+          <th style="text-align: left; width: 25%;"><span>Desconto</span></th>
+          <th style="text-align: left; width: 25%;"><span>QTDE</span></th>
+          <th style="width:30px;"></th>
+          <th style="width:30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of gridEsquadria; let i = index"  >
+          <td class="padding">
+            <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
+          </td>
+          <td>
+            <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
+          </td>
+          <td>
+            <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
+          </td>
+          <td>
+            <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+          </td>
+          <td>
+            <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+            <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
 </ng-template>

@@ -1,3 +1,4 @@
+import { PerfilEsquadria } from './../../models/objetos/perfilEsquadria.model';
 import { Esquadria } from './../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../services/esquadria.service';
 import { Perfil } from './../../models/objetos/perfil.model';
@@ -22,7 +23,7 @@ export class ScreenEsquadriaComponent implements OnInit {
               private linhaService: LinhaService,
               private esquadriaService : EsquadriaService,
               private generic : GenericService,
-              private modalService: BsModalService,) { }
+              private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.linhaService.getLinhas(null, null).subscribe(
@@ -36,10 +37,10 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   linhasDisponiveis : Map<number, string> = new Map<number, string>();
   esquadria : Esquadria = new Esquadria();
-  inputDsPerfil = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
+  inputDsEsquadria = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
   inputDsLinha = new InputModel({label: 'Linha', placeholder: 'Linha'});
-  buttonCadastrar: ButtonModel = new ButtonModel({  });
-  buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
+  buttonCadastrarEsquadria: ButtonModel = new ButtonModel({  });
+  buttonConsultarEsquadria: ButtonModel = new ButtonModel({ label: 'Consultar' });
 
   gridEsquadria: Esquadria[] = [];
 
@@ -191,6 +192,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
+  /********DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA*/
   config = {
     backdrop: true,
     ignoreBackdropClick: true,
@@ -198,7 +200,10 @@ export class ScreenEsquadriaComponent implements OnInit {
     class: 'full-size-modal'
   };
   openModal(template: TemplateRef<any>, esquadria: Esquadria){
-    console.log('openModal');
     this.modalService.show(template, this.config);
   }
+
+  inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
+  perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
+
 }
