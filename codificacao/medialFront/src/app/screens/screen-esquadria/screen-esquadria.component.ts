@@ -1,3 +1,4 @@
+import { PerfilEsquadriaService} from './../../services/perfilEsquadria.service';
 import { PerfilEsquadria } from './../../models/objetos/perfilEsquadria.model';
 import { Esquadria } from './../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../services/esquadria.service';
@@ -11,6 +12,7 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { PerfilService } from 'src/app/services/perfil.service';
 
 @Component({
   selector: 'screen-esquadria',
@@ -22,10 +24,12 @@ export class ScreenEsquadriaComponent implements OnInit {
   constructor(public tipoBotao : tipoBotao,
               private linhaService: LinhaService,
               private esquadriaService : EsquadriaService,
+              private perfilService : PerfilService,
+              private perfilEsquadriaService : PerfilEsquadriaService,
               private generic : GenericService,
               private modalService: BsModalService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {//todo ver esse null, null
     this.linhaService.getLinhas(null, null).subscribe(
       (linhas) => {
         linhas.forEach((linha) =>{
@@ -200,12 +204,61 @@ export class ScreenEsquadriaComponent implements OnInit {
     class: 'full-size-modal'
   };
   openModal(template: TemplateRef<any>, esquadria: Esquadria){
+    let perfilFilter = new Perfil();
+    perfilFilter.linha = esquadria.linha;
+
+    this.perfilEsquadria.esquadria = esquadria;
+
+    this.perfilService.getPerfil(perfilFilter).subscribe(
+      (response) => {
+        response.forEach((perfil) =>{
+          this.perfilDisponiveis.set(perfil.idPerfil, perfil.dsPerfil);
+        })
+      }
+    );
+
     this.modalService.show(template, this.config);
   }
 
+  perfilDisponiveis : Map<number, string> = new Map<number, string>();
   inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
   inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
+  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: 'Insira o Desconto'});
 
   perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
+
+  perfilSelecionado(id: any, perfilEsquadria : PerfilEsquadria){
+    if(id == null){
+      perfilEsquadria.perfil = new Perfil();
+    }else{
+      this.perfilService.getPerfilById(id).subscribe(
+        (perfil) => { perfilEsquadria.perfil = perfil; }
+        )
+    }
+  }
+
+  onCLickCadastrarPerfilEsquadria(){
+    this.perfilEsquadriaService.createPerfilEsquadria(this.perfilEsquadria).subscribe(
+      (response) => {
+        this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
+
+        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        // this.gridEsquadria.splice(0,0,this.esquadria);
+        // this.gridEsquadria[0].properties = new Properties({ativo : false});
+        // this.gridEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
+        //   [this.tipoBotao.CANCELAR, false],
+        //    [this.tipoBotao.CONFIRMAR, false],
+        //    [this.tipoBotao.EDITAR, true],
+        //    [this.tipoBotao.EXCLUIR, true]
+        // ])
+
+        // this.esquadria = new Esquadria;
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
+  }
+
 }

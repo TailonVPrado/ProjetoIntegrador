@@ -67,4 +67,9 @@ export class PerfilService {
       })
     );
   }
+
+  getPerfilById(id: number): Observable<any>{
+    const url = `${this.apiUrl}/perfil/`+id;
+    return this.http.get<Perfil>(url);
+  }
 }

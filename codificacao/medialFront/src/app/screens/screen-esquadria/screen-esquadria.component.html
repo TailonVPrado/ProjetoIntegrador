@@ -40,13 +40,15 @@
   </div>
 </div>
 
-
 <ng-template class="modal-body" #templatePerfilEsquadria>
   <div class="window">
-    <div class="left" >
-      <input-text style="width: 60%;" [(mxModel)]="perfilEsquadria.perfil.dsPerfil" [properties]="inputDsPerfil"></input-text>
-      <input-number [(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
-      <button-default [properties]="buttonCadastrarPerfilEsquadria"></button-default>
+    <div style="margin-left: 2%;" class="left" >
+      <input-text style="width: 44%;" [(mxModel)]="perfilEsquadria.perfil.dsPerfil" [properties]="inputDsPerfil"
+      [itensDisponiveis]="this.perfilDisponiveis"
+      (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>
+      <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto"></input-text>
+      <input-number style="width: 10%;"[(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
+      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onCLickCadastrarPerfilEsquadria()"></button-default>
     </div>
 
     <div class="center">

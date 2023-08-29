@@ -51,4 +51,10 @@ public class PerfilController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/{id}")
+    public Perfil findById (@PathVariable Long id) throws Exception{
+        return perfilService.findById(id);
+    }
+
 }
