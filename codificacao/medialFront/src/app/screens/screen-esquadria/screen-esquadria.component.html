@@ -42,7 +42,14 @@
 
 <ng-template class="modal-body" #templatePerfilEsquadria>
   <div class="window">
-    <div style="margin-left: 2%;" class="left" >
+    <div class="left" style="margin-top: 12px; margin-left: 12px;" (click)="modalRef?.hide()">
+      <button-icon nomeIcone="voltar" [visivel]="true" hint="Voltar" (onClick)="modalRef?.hide()" ></button-icon>
+      <label style="align-items: center;">TESTE</label>
+      <!-- por degrade -->
+    </div>
+    <hr style="margin-top: -5px;">
+
+    <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
       <input-text style="width: 44%;" [(mxModel)]="perfilEsquadria.perfil.dsPerfil" [properties]="inputDsPerfil"
       [itensDisponiveis]="this.perfilDisponiveis"
       (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>

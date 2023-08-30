@@ -11,7 +11,7 @@ import { Linha } from 'src/app/models/objetos/linha.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
 import { Properties } from 'src/app/models/interface/properties.model';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PerfilService } from 'src/app/services/perfil.service';
 
 @Component({
@@ -219,7 +219,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       }
     );
 
-    this.modalService.show(template, this.config);
+    this.modalRef = this.modalService.show(template, this.config);
   }
 
   perfilDisponiveis : Map<number, string> = new Map<number, string>();
@@ -230,6 +230,7 @@ export class ScreenEsquadriaComponent implements OnInit {
   perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
   gridPerfilEsquadria : PerfilEsquadria[] = [];
+  modalRef?: BsModalRef;
 
   perfilSelecionado(id: any, perfilEsquadria : PerfilEsquadria){
     if(id == null){
