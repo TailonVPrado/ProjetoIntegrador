@@ -73,7 +73,7 @@ export class ScreenEsquadriaComponent implements OnInit {
            [this.tipoBotao.EXCLUIR, true]
         ])
 
-        this.esquadria = new Esquadria;
+        this.esquadria = new Esquadria();
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);
@@ -203,10 +203,12 @@ export class ScreenEsquadriaComponent implements OnInit {
     keyboard: false,
     class: 'full-size-modal'
   };
+
   openModal(template: TemplateRef<any>, esquadria: Esquadria){
+    this.carregaPerfilEsquadrias(esquadria);
+
     let perfilFilter = new Perfil();
     perfilFilter.linha = esquadria.linha;
-
     this.perfilEsquadria.esquadria = esquadria;
 
     this.perfilService.getPerfil(perfilFilter).subscribe(
@@ -227,6 +229,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
+  gridPerfilEsquadria : PerfilEsquadria[] = [];
 
   perfilSelecionado(id: any, perfilEsquadria : PerfilEsquadria){
     if(id == null){
@@ -234,31 +237,59 @@ export class ScreenEsquadriaComponent implements OnInit {
     }else{
       this.perfilService.getPerfilById(id).subscribe(
         (perfil) => { perfilEsquadria.perfil = perfil; }
-        )
+      )
     }
   }
 
-  onCLickCadastrarPerfilEsquadria(){
+  carregaPerfilEsquadrias(esquadria: Esquadria) {
+    let perfilEsquadriaFilter = new PerfilEsquadria();
+    perfilEsquadriaFilter.esquadria = esquadria;
+
+    this.perfilEsquadriaService.getPerfilEsquadrias(perfilEsquadriaFilter).subscribe(
+      (perfilEsquadrias)=>{
+        this.gridPerfilEsquadria = [];
+        perfilEsquadrias.forEach((perfilEsquadria, i) => {
+          this.gridPerfilEsquadria[i] = perfilEsquadria;
+          this.gridPerfilEsquadria[i].properties = new Properties({ativo : false});
+          this.gridPerfilEsquadria[i].visibilidadeBotoes = new Map <string, boolean>([
+            [this.tipoBotao.CANCELAR, false],
+             [this.tipoBotao.CONFIRMAR, false],
+             [this.tipoBotao.EDITAR, true],
+             [this.tipoBotao.EXCLUIR, true]
+          ])
+        });
+
+      }
+    )
+    console.log(this.gridPerfilEsquadria);
+    // this.efetuandoAltercao = false; todo
+  }
+
+
+  onClickCadastrarPerfilEsquadria(){
     this.perfilEsquadriaService.createPerfilEsquadria(this.perfilEsquadria).subscribe(
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
 
-        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
-        // this.gridEsquadria.splice(0,0,this.esquadria);
-        // this.gridEsquadria[0].properties = new Properties({ativo : false});
-        // this.gridEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
-        //   [this.tipoBotao.CANCELAR, false],
-        //    [this.tipoBotao.CONFIRMAR, false],
-        //    [this.tipoBotao.EDITAR, true],
-        //    [this.tipoBotao.EXCLUIR, true]
-        // ])
 
-        // this.esquadria = new Esquadria;
+        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        this.gridPerfilEsquadria.splice(0,0,this.perfilEsquadria);
+        this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});
+        this.gridPerfilEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
+          [this.tipoBotao.CANCELAR, false],
+           [this.tipoBotao.CONFIRMAR, false],
+           [this.tipoBotao.EDITAR, true],
+           [this.tipoBotao.EXCLUIR, true]
+        ])
+
+        this.perfilEsquadria = new PerfilEsquadria();
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
     );
   }
+
+
 
 }

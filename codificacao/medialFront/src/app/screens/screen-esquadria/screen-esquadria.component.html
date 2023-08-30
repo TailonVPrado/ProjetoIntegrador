@@ -48,7 +48,7 @@
       (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>
       <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
-      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onCLickCadastrarPerfilEsquadria()"></button-default>
+      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onClickCadastrarPerfilEsquadria()"></button-default>
     </div>
 
     <div class="center">
@@ -57,29 +57,29 @@
           <tr>
             <th class="padding" style="text-align: left;"><span>Descrição Perfil</span></th>
             <th style="text-align: left; width: 25%;"><span>Desconto</span></th>
-            <th style="text-align: left; width: 25%;"><span>QTDE</span></th>
+            <th style="text-align: left; width: 10%;"><span>QTDE</span></th>
             <th style="width:30px;"></th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of gridEsquadria; let i = index"  >
+          <tr *ngFor="let x of gridPerfilEsquadria; let i = index"  >
             <td class="padding">
-              <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
+              <input-text [isGrid]="true" [(mxModel)]="x.perfil.dsPerfil" [properties]="x.properties" [itensDisponiveis]="this.perfilDisponiveis" (itemSelecionado)="perfilSelecionado($event, x)"></input-text>
             </td>
             <td>
-              <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
+              <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" ></input-text>
             </td>
             <td>
-              <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
+              <input-number [isGrid]="true" [(mxModel)]="x.qtPerfil" [properties]="x.properties" ></input-number>
             </td>
             <td>
-              <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-              <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+              <!-- <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+              <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon> -->
             </td>
             <td>
-              <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-              <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+              <!-- <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+              <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon> -->
             </td>
           </tr>
         </tbody>

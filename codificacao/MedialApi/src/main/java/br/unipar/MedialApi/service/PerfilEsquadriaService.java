@@ -3,13 +3,22 @@ package br.unipar.MedialApi.service;
 import br.unipar.MedialApi.controller.PerfilEsquadriaController;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.PerfilEsquadria;
+import br.unipar.MedialApi.model.dto.PerfilDto;
+import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
+import br.unipar.MedialApi.specification.PerfilEsquadriaSpecification;
+import br.unipar.MedialApi.specification.PerfilSpecification;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.script.ScriptException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PerfilEsquadriaService {
@@ -20,8 +29,44 @@ public class PerfilEsquadriaService {
     public PerfilEsquadria insert(PerfilEsquadria perfilEsquadria) throws Exception {
         validaInsert(perfilEsquadria);
 
-
+        perfilEsquadria.setStAtivo(true);
         return perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
+    }
+
+    public List<PerfilEsquadriaDto> findAll (Long idEsquadria, Long idPerfil){
+        Specification<PerfilEsquadria> spec = Specification.where(null);
+
+        if(idEsquadria != null && idEsquadria != 0){
+            spec = spec.and(PerfilEsquadriaSpecification.pertenceAEsquadria(idEsquadria));
+        }
+        if(idPerfil != null && idPerfil != 0){
+            spec = spec.and(PerfilEsquadriaSpecification.pertenceAOPerfil(idPerfil));
+        }
+        spec = spec.and(PerfilEsquadriaSpecification.ativo());
+
+        List<PerfilEsquadria> perfilEsquadrias = perfilEsquadriaRepository.findAll(spec, Sort.by("perfil.dsPerfil").ascending());
+
+        List<PerfilEsquadriaDto> perfilEsquadriaDtoList = new ArrayList<>();
+        for (PerfilEsquadria perfilEsquadria: perfilEsquadrias) {
+            PerfilEsquadriaDto perfilEsquadriaDto = new PerfilEsquadriaDto();
+            PerfilDto perfilDto = new PerfilDto();
+
+            perfilEsquadriaDto.setIdPerfilesquadria(perfilEsquadria.getIdPerfilesquadria());
+            perfilEsquadriaDto.setQtPerfil(perfilEsquadria.getQtPerfil());
+            perfilEsquadriaDto.setDsDesconto(perfilEsquadria.getDsDesconto());
+            perfilEsquadriaDto.setEsquadria(perfilEsquadria.getEsquadria());
+
+            perfilDto.setIdPerfil(perfilEsquadria.getPerfil().getIdPerfil());
+            perfilDto.setDsPerfil(perfilEsquadria.getPerfil().getDsPerfil());
+            perfilDto.setEmpresa(perfilEsquadria.getPerfil().getEmpresa());
+            perfilDto.setLinha(perfilEsquadria.getPerfil().getLinha());
+
+            perfilEsquadriaDto.setPerfil(perfilDto);
+
+            perfilEsquadriaDtoList.add(perfilEsquadriaDto);
+        }
+
+        return perfilEsquadriaDtoList;
     }
 
     private void validaInsert(PerfilEsquadria perfilEsquadria) throws Exception{
