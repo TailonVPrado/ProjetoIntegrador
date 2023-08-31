@@ -142,7 +142,7 @@ export class ScreenLinhaComponent implements OnInit{
 
   async onClickExcluir(linha : Linha, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover esta linha?') == 1){
-      this.linhaService.deleteLinha(linha.idLinha).subscribe(
+      this.linhaService.deleteLinha(linha).subscribe(
         (response) => {
           this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") excluida com sucesso!");
           this.gridLinhas.splice(idx, 1);

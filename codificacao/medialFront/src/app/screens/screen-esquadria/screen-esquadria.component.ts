@@ -58,7 +58,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  onClickCadastrar(){
+  onClickCadastrarEsquadria(){
     this.esquadriaService.createEsquadria(this.esquadria).subscribe(
       (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrada com sucesso!");
@@ -81,7 +81,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     );
   }
 
-  onClickConsultar(){
+  onClickConsultarEsquadria(){
     this.carregaEsquadrias();
   }
 
@@ -108,12 +108,12 @@ export class ScreenEsquadriaComponent implements OnInit {
         this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
       }
     )
-    this.efetuandoAltercao = false;
+    this.efetuandoAltercaoEsquadria = false;
   }
 
   async onClickExcluir(esquadria : Esquadria, idx : number){
-    if(await this.generic.showAlert('Deseja realmente remover este perfil?') == 1){
-      this.esquadriaService.deleteEsquadria(esquadria.idEsquadria).subscribe(
+    if(await this.generic.showAlert('Deseja realmente remover esta esquadria?') == 1){
+      this.esquadriaService.deleteEsquadria(esquadria).subscribe(
         (response) => {
           this.generic.showSuccess("Perfil ("+esquadria.dsEsquadria.trim()+") excluido com sucesso!");
           this.gridEsquadria.splice(idx, 1);
@@ -127,9 +127,9 @@ export class ScreenEsquadriaComponent implements OnInit {
 
 
   private esquadriaOld : Esquadria = new Esquadria();
-  efetuandoAltercao : boolean = false;
+  efetuandoAltercaoEsquadria : boolean = false;
   onClickEditar(esquadria : Esquadria){
-    if(!this.efetuandoAltercao){
+    if(!this.efetuandoAltercaoEsquadria){
       esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
       esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
       esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
@@ -138,7 +138,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       this.esquadriaOld.dsEsquadria = esquadria.dsEsquadria;
       this.esquadriaOld.linha.idLinha = esquadria.linha.idLinha;
       this.esquadriaOld.linha.dsLinha = esquadria.linha.dsLinha;
-      this.efetuandoAltercao = true;
+      this.efetuandoAltercaoEsquadria = true;
 
       esquadria.properties.ativo = true;
     }else{
@@ -154,7 +154,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
         esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
         esquadria.properties.ativo = false;
-        this.efetuandoAltercao = false;
+        this.efetuandoAltercaoEsquadria = false;
 
         esquadria.dsEsquadria = this.esquadriaOld.dsEsquadria;
         esquadria.linha.idLinha = this.esquadriaOld.linha.idLinha;
@@ -166,7 +166,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
       esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
       esquadria.properties.ativo = false;
-      this.efetuandoAltercao = false;
+      this.efetuandoAltercaoEsquadria = false;
     }
   }
 
@@ -180,7 +180,7 @@ export class ScreenEsquadriaComponent implements OnInit {
           esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
           esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
           esquadria.properties.ativo = false;
-          this.efetuandoAltercao = false;
+          this.efetuandoAltercaoEsquadria = false;
         },
         (error) => {
           this.generic.showError(error.error.errors[0]);
@@ -192,19 +192,30 @@ export class ScreenEsquadriaComponent implements OnInit {
       esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
       esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
       esquadria.properties.ativo = false;
-      this.efetuandoAltercao = false;
+      this.efetuandoAltercaoEsquadria = false;
     }
   }
 
   /********DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA*/
-  config = {
+  configModal = {
     backdrop: true,
     ignoreBackdropClick: true,
     keyboard: false,
     class: 'full-size-modal'
   };
+  efetuandoAltercaoPerfilEsquadria : boolean = false;
 
-  openModal(template: TemplateRef<any>, esquadria: Esquadria){
+  perfilDisponiveis : Map<number, string> = new Map<number, string>();
+  inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
+  inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
+  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: 'Insira o Desconto'});
+
+  perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
+  buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
+  gridPerfilEsquadria : PerfilEsquadria[] = [];
+  modalRef?: BsModalRef;
+
+  openModalPerfilEsquadria(template: TemplateRef<any>, esquadria: Esquadria){
     this.carregaPerfilEsquadrias(esquadria);
 
     let perfilFilter = new Perfil();
@@ -219,18 +230,8 @@ export class ScreenEsquadriaComponent implements OnInit {
       }
     );
 
-    this.modalRef = this.modalService.show(template, this.config);
+    this.modalRef = this.modalService.show(template, this.configModal);
   }
-
-  perfilDisponiveis : Map<number, string> = new Map<number, string>();
-  inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
-  inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
-  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: 'Insira o Desconto'});
-
-  perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
-  buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
-  gridPerfilEsquadria : PerfilEsquadria[] = [];
-  modalRef?: BsModalRef;
 
   perfilSelecionado(id: any, perfilEsquadria : PerfilEsquadria){
     if(id == null){
@@ -262,8 +263,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       }
     )
-    console.log(this.gridPerfilEsquadria);
-    // this.efetuandoAltercao = false; todo
+    this.efetuandoAltercaoPerfilEsquadria = false;
   }
 
 
@@ -272,8 +272,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
 
-
-        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        /*adiciona o perfil no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridPerfilEsquadria.splice(0,0,this.perfilEsquadria);
         this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});
         this.gridPerfilEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
@@ -292,5 +291,29 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
 
+  async onClickExcluirPerfilEsquadria(perfilEsquadria: PerfilEsquadria, idx: number){
+    if(await this.generic.showAlert('Deseja realmente desvincular este perfil?') == 1){
+      this.perfilEsquadriaService.desvinculaPerfil(perfilEsquadria).subscribe(
+        (response) => {
+          this.generic.showSuccess("Perfil ("+perfilEsquadria.perfil.dsPerfil.trim()+") desvinculado com sucesso!");
+          this.gridPerfilEsquadria.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }
+  }
 
+  onClickConfirmarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
+
+  }
+
+  onClickCancelarCancelarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
+
+  }
+
+  onClickEditarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
+
+  }
 }

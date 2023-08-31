@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.controller;
 
+import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
 import br.unipar.MedialApi.service.PerfilEsquadriaService;
@@ -24,5 +25,10 @@ public class PerfilEsquadriaController {
     public List<PerfilEsquadriaDto> findByAll (@RequestParam(required = false) Long idEsquadria,
                                                @RequestParam(required = false) Long idPerfil) throws Exception{
         return perfilEsquadriaService.findAll(idEsquadria, idPerfil);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public PerfilEsquadria delete(@PathVariable Long id) throws Exception{
+        return perfilEsquadriaService.delete(id);
     }
 }

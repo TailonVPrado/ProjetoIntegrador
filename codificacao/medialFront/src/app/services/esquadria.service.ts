@@ -35,8 +35,8 @@ export class EsquadriaService {
     return this.http.get<Esquadria[]>(url, {params});
   }
 
-  deleteEsquadria(id: number): Observable<any> {
-    const url = `${this.apiUrl}/esquadria/`+id;
+  deleteEsquadria(esquadria: Esquadria): Observable<any> {
+    const url = `${this.apiUrl}/esquadria/`+esquadria.idEsquadria;
     return this.http.delete<any>(url);
   }
 

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class PerfilEsquadriaDto {
 
-    private Long idPerfilesquadria;
+    private Long idPerfilEsquadria;
     private Integer qtPerfil;
     private String dsDesconto;
     private Esquadria esquadria;

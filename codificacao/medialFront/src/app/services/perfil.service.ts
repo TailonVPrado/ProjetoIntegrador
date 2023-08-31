@@ -41,8 +41,8 @@ export class PerfilService {
     return this.http.put<any>(url, perfil);
   }
 
-  deletePerfil(id: number): Observable<any> {
-    const url = `${this.apiUrl}/perfil/`+id;
+  deletePerfil(perfil: Perfil): Observable<any> {
+    const url = `${this.apiUrl}/perfil/`+perfil.idPerfil;
     return this.http.delete<any>(url);
   }
 

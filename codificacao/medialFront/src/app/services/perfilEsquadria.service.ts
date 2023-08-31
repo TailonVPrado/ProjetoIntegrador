@@ -31,4 +31,9 @@ export class PerfilEsquadriaService {
     const url = `${this.apiUrl}/perfilesquadria/all`;
     return this.http.get<PerfilEsquadria[]>(url, {params});
   }
+
+  desvinculaPerfil(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria[]>{
+    const url = `${this.apiUrl}/perfilesquadria/`+perfilEsquadria.idPerfilEsquadria;
+    return this.http.delete<any>(url);
+  }
 }

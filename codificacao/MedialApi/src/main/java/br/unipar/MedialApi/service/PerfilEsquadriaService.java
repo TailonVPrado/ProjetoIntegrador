@@ -19,6 +19,7 @@ import javax.script.ScriptException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PerfilEsquadriaService {
@@ -51,7 +52,7 @@ public class PerfilEsquadriaService {
             PerfilEsquadriaDto perfilEsquadriaDto = new PerfilEsquadriaDto();
             PerfilDto perfilDto = new PerfilDto();
 
-            perfilEsquadriaDto.setIdPerfilesquadria(perfilEsquadria.getIdPerfilesquadria());
+            perfilEsquadriaDto.setIdPerfilEsquadria(perfilEsquadria.getIdPerfilEsquadria());
             perfilEsquadriaDto.setQtPerfil(perfilEsquadria.getQtPerfil());
             perfilEsquadriaDto.setDsDesconto(perfilEsquadria.getDsDesconto());
             perfilEsquadriaDto.setEsquadria(perfilEsquadria.getEsquadria());
@@ -67,6 +68,24 @@ public class PerfilEsquadriaService {
         }
 
         return perfilEsquadriaDtoList;
+    }
+
+    public PerfilEsquadria delete (Long idPerfilEsquadria) throws Exception{
+        PerfilEsquadria perfilEsquadria = findById(idPerfilEsquadria);
+
+        perfilEsquadria.setStAtivo(false);
+
+        perfilEsquadriaRepository.save(perfilEsquadria);
+        return perfilEsquadria;
+    }
+
+    public PerfilEsquadria findById(Long id) throws Exception{
+        Optional<PerfilEsquadria> retorno = perfilEsquadriaRepository.findById(id);
+        if(retorno.isPresent()){
+            return retorno.get();
+        }else{
+            throw new Exception("Vinculo com o ID ("+id+") não encontrado");
+        }
     }
 
     private void validaInsert(PerfilEsquadria perfilEsquadria) throws Exception{

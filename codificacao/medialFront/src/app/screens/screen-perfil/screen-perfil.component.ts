@@ -159,7 +159,7 @@ export class ScreenPerfilComponent implements OnInit {
 
   async onClickExcluir(perfil : Perfil, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover este perfil?') == 1){
-      this.perfilService.deletePerfil(perfil.idPerfil).subscribe(
+      this.perfilService.deletePerfil(perfil).subscribe(
         (response) => {
           this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") excluido com sucesso!");
           this.gridPerfil.splice(idx, 1);

@@ -4,8 +4,8 @@
     <input-text [(mxModel)]="esquadria.linha.dsLinha" [properties]="inputDsLinha"
       [itensDisponiveis]="this.linhasDisponiveis"
       (itemSelecionado)="linhaSelecionada($event, this.esquadria)"></input-text>
-    <button-default [properties]="buttonConsultarEsquadria" (click)="onClickConsultar()"></button-default>
-    <button-default [properties]="buttonCadastrarEsquadria" (click)="onClickCadastrar()" hint="Adicionar Esquadria"></button-default>
+    <button-default [properties]="buttonConsultarEsquadria" (click)="onClickConsultarEsquadria()"></button-default>
+    <button-default [properties]="buttonCadastrarEsquadria" (click)="onClickCadastrarEsquadria()" hint="Adicionar Esquadria"></button-default>
   </div>
 
   <div class="center">
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let x of gridEsquadria; let i = index" class="click-row" (click)="openModal(templatePerfilEsquadria, x)" >
+        <tr *ngFor="let x of gridEsquadria; let i = index" class="click-row" (click)="openModalPerfilEsquadria(templatePerfilEsquadria, x)" >
           <td class="padding">
             <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
           </td>
@@ -39,12 +39,12 @@
     </table>
   </div>
 </div>
-
+<!-- modal PERFILESQUADRIA -->
 <ng-template class="modal-body" #templatePerfilEsquadria>
   <div class="window">
-    <div class="left" style="margin-top: 12px; margin-left: 12px;" (click)="modalRef?.hide()">
+    <div class="left" style="margin-top: 12px; margin-left: 12px; display: inline-flex;" (click)="modalRef?.hide()">
       <button-icon nomeIcone="voltar" [visivel]="true" hint="Voltar" (onClick)="modalRef?.hide()" ></button-icon>
-      <label style="align-items: center;">TESTE</label>
+      <label style="cursor: pointer;">TESTE</label>
       <!-- por degrade -->
     </div>
     <hr style="margin-top: -5px;">
@@ -55,7 +55,7 @@
       (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>
       <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
-      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onClickCadastrarPerfilEsquadria()"></button-default>
+      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onClickCadastrarPerfilEsquadria()" hint="Vincular Perfil"></button-default>
     </div>
 
     <div class="center">
@@ -81,12 +81,12 @@
               <input-number [isGrid]="true" [(mxModel)]="x.qtPerfil" [properties]="x.properties" ></input-number>
             </td>
             <td>
-              <!-- <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-              <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon> -->
+              <button-icon (onClick)="onClickExcluirPerfilEsquadria(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+              <button-icon (onClick)="onClickCancelarCancelarPerfilEsquadria(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
             </td>
             <td>
-              <!-- <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-              <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon> -->
+              <button-icon (onClick)="onClickEditarPerfilEsquadria(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+              <button-icon (onClick)="onClickConfirmarPerfilEsquadria(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
             </td>
           </tr>
         </tbody>

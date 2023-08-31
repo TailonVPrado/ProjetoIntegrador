@@ -38,8 +38,8 @@ export class LinhaService {
     return this.http.put<any>(url, linha);
   }
 
-  deleteLinha(id: number): Observable<any> {
-    const url = `${this.apiUrl}/linha/`+id;
+  deleteLinha(linha: Linha): Observable<any> {
+    const url = `${this.apiUrl}/linha/`+linha.idLinha;
     return this.http.delete<any>(url);
   }
   getLinhaById(id: number): Observable<any>{

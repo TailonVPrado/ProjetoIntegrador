@@ -29,7 +29,7 @@ public class PerfilEsquadria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_PERFILESQUADRIA")
-	private Long idPerfilesquadria;
+	private Long idPerfilEsquadria;
 	
 	@Column(name = "QT_PERIL", nullable = false)
 	private Integer qtPerfil;

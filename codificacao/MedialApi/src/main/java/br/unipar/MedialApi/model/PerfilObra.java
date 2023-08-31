@@ -29,7 +29,7 @@ public class PerfilObra {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_PERFILOBRA")
-	private Long idPerfilobra;
+	private Long idPerfilObra;
 	
 	@Column(name = "TM_PERFIL", columnDefinition = "numeric(5,1)", nullable = false)
 	private Double tmPerfil;

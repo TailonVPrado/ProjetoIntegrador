@@ -24,7 +24,7 @@ public class EsquadriaObra {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_ESQUADRIAOBRA")
-	private Long idEsquadriaobra;
+	private Long idEsquadriaObra;
 	
 	@Column(name = "CD_ESQUADRIAOBRA", length = 5, nullable = false)
 	private String cdEsquadriaobra;
