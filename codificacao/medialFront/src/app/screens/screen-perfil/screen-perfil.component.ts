@@ -166,11 +166,8 @@ export class ScreenPerfilComponent implements OnInit {
       this.perfilService.updatePerfil(perfil).subscribe(
         (response) => {
           this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") atualizado com sucesso!");
-          perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-          perfil.properties.ativo = false;
+
+          this.generic.onClickButtonConfirmar(perfil);
           this.efetuandoAltercao = false;
         },
         (error) => {
@@ -178,11 +175,7 @@ export class ScreenPerfilComponent implements OnInit {
         }
       );
     }else{
-      perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-      perfil.properties.ativo = false;
+      this.generic.onClickButtonConfirmar(perfil);
       this.efetuandoAltercao = false;
     }
   }

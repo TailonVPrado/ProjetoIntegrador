@@ -167,11 +167,8 @@ export class ScreenEsquadriaComponent implements OnInit {
       this.esquadriaService.updateEsquadria(esquadria).subscribe(
         (response) => {
           this.generic.showSuccess("Esquadria ("+ esquadria.dsEsquadria.trim()+") atualizada com sucesso!");
-          esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-          esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-          esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-          esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-          esquadria.properties.ativo = false;
+
+          this.generic.onClickButtonConfirmar(esquadria);
           this.efetuandoAltercaoEsquadria = false;
         },
         (error) => {
@@ -179,11 +176,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         }
       );
     }else{
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-      esquadria.properties.ativo = false;
+      this.generic.onClickButtonConfirmar(esquadria);
       this.efetuandoAltercaoEsquadria = false;
     }
   }

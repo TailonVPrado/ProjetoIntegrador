@@ -112,11 +112,8 @@ export class ScreenLinhaComponent implements OnInit{
       this.linhaService.updateLinha(linha).subscribe(
         (response) => {
           this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") atualizada com sucesso!");
-          linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-          linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-          linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-          linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-          linha.properties.ativo = false;
+
+          this.generic.onClickButtonConfirmar(linha);
           this.efetuandoAltercao = false;
         },
         (error) => {
@@ -124,11 +121,7 @@ export class ScreenLinhaComponent implements OnInit{
         }
       );
     }else{
-      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-      linha.properties.ativo = false;
+      this.generic.onClickButtonConfirmar(linha);
       this.efetuandoAltercao = false;
     }
   }
