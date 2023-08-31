@@ -94,21 +94,15 @@ export class ScreenLinhaComponent implements OnInit{
   async onClickCancelar(linha : Linha){
     if(linha.dsLinha != this.dsLinhaOld){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
+        this.generic.onClickButtonCancelar(linha);
+
         linha.dsLinha = this.dsLinhaOld;
 
-        linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-        linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-        linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-        linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-        linha.properties.ativo = false;
         this.efetuandoAltercao = false;
       }
     }else{
-      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-      linha.properties.ativo = false;
+      this.generic.onClickButtonCancelar(linha);
+
       this.efetuandoAltercao = false;
     }
   }

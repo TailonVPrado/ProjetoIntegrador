@@ -64,4 +64,12 @@ export class GenericService {
     obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
     obj.properties.ativo = true;
   }
+
+  onClickButtonCancelar(obj : any){
+    obj.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
+    obj.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
+    obj.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
+    obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
+    obj.properties.ativo = false;
+  }
 }

@@ -146,11 +146,9 @@ export class ScreenEsquadriaComponent implements OnInit {
   async onClickCancelarEsquadria(esquadria : Esquadria){
     if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
-        esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-        esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-        esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-        esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-        esquadria.properties.ativo = false;
+
+        this.generic.onClickButtonCancelar(esquadria);
+
         this.efetuandoAltercaoEsquadria = false;
 
         esquadria.dsEsquadria = this.esquadriaOld.dsEsquadria;
@@ -158,11 +156,8 @@ export class ScreenEsquadriaComponent implements OnInit {
         esquadria.linha.dsLinha = this.esquadriaOld.linha.dsLinha;
       }
     }else{
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-      esquadria.properties.ativo = false;
+      this.generic.onClickButtonCancelar(esquadria);
+
       this.efetuandoAltercaoEsquadria = false;
     }
   }

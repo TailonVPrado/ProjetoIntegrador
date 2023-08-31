@@ -133,11 +133,8 @@ export class ScreenPerfilComponent implements OnInit {
     if(perfil.dsPerfil != this.perfilOld.dsPerfil ||
        perfil.linha.idLinha != this.perfilOld.linha.idLinha){
           if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
-            perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-            perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-            perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-            perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-            perfil.properties.ativo = false;
+            this.generic.onClickButtonCancelar(perfil);
+
             this.efetuandoAltercao = false;
 
             perfil.dsPerfil = this.perfilOld.dsPerfil;
@@ -145,11 +142,7 @@ export class ScreenPerfilComponent implements OnInit {
             perfil.linha.dsLinha = this.perfilOld.linha.dsLinha;
           }
         }else{
-          perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
-          perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-          perfil.properties.ativo = false;
+          this.generic.onClickButtonCancelar(perfil);
           this.efetuandoAltercao = false;
         }
   }
