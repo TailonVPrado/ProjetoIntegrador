@@ -27,12 +27,12 @@
             <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
           </td>
           <td>
-            <button-icon (onClick)="onClickExcluir(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-            <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+            <button-icon (onClick)="onClickExcluirEsquadria(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (onClick)="onClickCancelarEsquadria(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
           </td>
           <td>
-            <button-icon (onClick)="onClickEditar(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-            <button-icon (onClick)="onClickConfirmar(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+            <button-icon (onClick)="onClickEditarEsquadria(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+            <button-icon (onClick)="onClickConfirmarEsquadria(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
           </td>
         </tr>
       </tbody>

@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AlertComponent } from '../components/alert/alert.component';
 import { Empresa } from '../models/objetos/empresa.model';
+import { tipoBotao } from '../models/enum/tipoBotao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class GenericService {
 
   constructor(
     private toastr: ToastrService,
-    public modalService: BsModalService
+    public modalService: BsModalService,
+    private tipoBotao : tipoBotao
   ) { }
 
   public empresaLogada : Empresa = new Empresa(1);
@@ -53,5 +55,13 @@ export class GenericService {
     return new Promise<number>((resolve) => {
       objModal.content.result.subscribe((result: number) => { resolve(result); });
     } );
+  }
+
+  onClickButtonEditar(obj : any){
+    obj.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
+    obj.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
+    obj.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
+    obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+    obj.properties.ativo = true;
   }
 }

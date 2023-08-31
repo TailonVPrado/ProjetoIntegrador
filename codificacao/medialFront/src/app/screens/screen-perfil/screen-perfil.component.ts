@@ -116,17 +116,14 @@ export class ScreenPerfilComponent implements OnInit {
   efetuandoAltercao : boolean = false;
   onClickEditar(perfil : Perfil){
     if(!this.efetuandoAltercao){
-      perfil.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
-      perfil.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+
+      this.generic.onClickButtonEditar(perfil);
 
       this.perfilOld.dsPerfil = perfil.dsPerfil;
       this.perfilOld.linha.idLinha = perfil.linha.idLinha;
       this.perfilOld.linha.dsLinha = perfil.linha.dsLinha;
-      this.efetuandoAltercao = true;
 
-      perfil.properties.ativo = true;
+      this.efetuandoAltercao = true;
     }else{
       this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
     }

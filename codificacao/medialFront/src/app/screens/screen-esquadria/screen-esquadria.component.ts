@@ -111,7 +111,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     this.efetuandoAltercaoEsquadria = false;
   }
 
-  async onClickExcluir(esquadria : Esquadria, idx : number){
+  async onClickExcluirEsquadria(esquadria : Esquadria, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover esta esquadria?') == 1){
       this.esquadriaService.deleteEsquadria(esquadria).subscribe(
         (response) => {
@@ -128,25 +128,22 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   private esquadriaOld : Esquadria = new Esquadria();
   efetuandoAltercaoEsquadria : boolean = false;
-  onClickEditar(esquadria : Esquadria){
+  onClickEditarEsquadria(esquadria : Esquadria){
     if(!this.efetuandoAltercaoEsquadria){
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
-      esquadria.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+
+      this.generic.onClickButtonEditar(esquadria);
 
       this.esquadriaOld.dsEsquadria = esquadria.dsEsquadria;
       this.esquadriaOld.linha.idLinha = esquadria.linha.idLinha;
       this.esquadriaOld.linha.dsLinha = esquadria.linha.dsLinha;
-      this.efetuandoAltercaoEsquadria = true;
 
-      esquadria.properties.ativo = true;
+      this.efetuandoAltercaoEsquadria = true;
     }else{
       this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
     }
   }
 
-  async onClickCancelar(esquadria : Esquadria){
+  async onClickCancelarEsquadria(esquadria : Esquadria){
     if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
         esquadria.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
@@ -170,7 +167,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  onClickConfirmar(esquadria : Esquadria){
+  onClickConfirmarEsquadria(esquadria : Esquadria){
     if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || this.esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
       this.esquadriaService.updateEsquadria(esquadria).subscribe(
         (response) => {
@@ -203,7 +200,6 @@ export class ScreenEsquadriaComponent implements OnInit {
     keyboard: false,
     class: 'full-size-modal'
   };
-  efetuandoAltercaoPerfilEsquadria : boolean = false;
 
   perfilDisponiveis : Map<number, string> = new Map<number, string>();
   inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
@@ -214,6 +210,9 @@ export class ScreenEsquadriaComponent implements OnInit {
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
   gridPerfilEsquadria : PerfilEsquadria[] = [];
   modalRef?: BsModalRef;
+
+  efetuandoAltercaoPerfilEsquadria : boolean = false;
+  private perfilEsquadriaOld : PerfilEsquadria = new PerfilEsquadria();
 
   openModalPerfilEsquadria(template: TemplateRef<any>, esquadria: Esquadria){
     this.carregaPerfilEsquadrias(esquadria);
@@ -305,15 +304,27 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
+  onClickEditarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
+    if(!this.efetuandoAltercaoPerfilEsquadria){
+
+      this.generic.onClickButtonEditar(perfilEsquadria);
+
+      this.perfilEsquadriaOld.perfil.idPerfil = perfilEsquadria.perfil.idPerfil;
+      this.perfilEsquadriaOld.perfil.dsPerfil = perfilEsquadria.perfil.dsPerfil;
+      this.perfilEsquadriaOld.qtPerfil = perfilEsquadria.qtPerfil;
+      this.perfilEsquadriaOld.dsDesconto = perfilEsquadria.dsDesconto;
+
+      this.efetuandoAltercaoPerfilEsquadria = true;
+    }else{
+      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+    }
+  }
+
   onClickConfirmarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
 
   }
 
   onClickCancelarCancelarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
-
-  }
-
-  onClickEditarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
 
   }
 }

@@ -80,12 +80,11 @@ export class ScreenLinhaComponent implements OnInit{
   efetuandoAltercao : boolean = false;
   onClickEditar(linha : Linha){
     if(!this.efetuandoAltercao){
-      linha.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
-      linha.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
-      linha.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
+
+      this.generic.onClickButtonEditar(linha);
+
       this.dsLinhaOld = linha.dsLinha;
-      linha.properties.ativo = true;
+
       this.efetuandoAltercao = true;
     }else{
       this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
