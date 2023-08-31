@@ -79,6 +79,10 @@ public class PerfilEsquadriaService {
         return perfilEsquadria;
     }
 
+    public PerfilEsquadria update(PerfilEsquadria perfilEsquadria) throws Exception{
+        validaUpdate(perfilEsquadria);
+        return perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
+    }
     public PerfilEsquadria findById(Long id) throws Exception{
         Optional<PerfilEsquadria> retorno = perfilEsquadriaRepository.findById(id);
         if(retorno.isPresent()){
@@ -93,7 +97,14 @@ public class PerfilEsquadriaService {
         validaDefault(perfilEsquadria);
         simulaDesconto(perfilEsquadria);
     }
-
+    private void validaUpdate(PerfilEsquadria perfilEsquadria) throws Exception{
+        validaFks(perfilEsquadria);
+        validaDefault(perfilEsquadria);
+        simulaDesconto(perfilEsquadria);
+        if(perfilEsquadria.getIdPerfilEsquadria() == null || perfilEsquadria.getIdPerfilEsquadria() == 0){
+            throw new Exception("Informe o ID para atualizar as informações de vinculo do perfil com esta esquadria");
+        }
+    }
 
     private void validaFks(PerfilEsquadria perfilEsquadria)throws Exception{
         if(perfilEsquadria.getPerfil() == null || perfilEsquadria.getPerfil().getIdPerfil() == 0){
@@ -109,6 +120,7 @@ public class PerfilEsquadriaService {
             throw new Exception("A quantidade minima para vincular um perfil a uma esquadria é 1.");
         }
     }
+
     private void simulaDesconto(PerfilEsquadria perfilEsquadria) throws Exception{
         try {
             String formula = perfilEsquadria.getDsDesconto().toUpperCase();

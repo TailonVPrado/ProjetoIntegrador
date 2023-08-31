@@ -308,11 +308,51 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
+  async onClickCancelarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
+    if( this.perfilEsquadriaOld.perfil.idPerfil != perfilEsquadria.perfil.idPerfil ||
+        this.perfilEsquadriaOld.qtPerfil != perfilEsquadria.qtPerfil ||
+        this.perfilEsquadriaOld.dsDesconto != perfilEsquadria.dsDesconto){
+
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
+
+        this.generic.onClickButtonCancelar(perfilEsquadria);
+
+        this.efetuandoAltercaoPerfilEsquadria = false;
+
+        perfilEsquadria.perfil.idPerfil = this.perfilEsquadriaOld.perfil.idPerfil;
+        perfilEsquadria.perfil.dsPerfil = this.perfilEsquadriaOld.perfil.dsPerfil;
+        perfilEsquadria.qtPerfil = this.perfilEsquadriaOld.qtPerfil;
+        perfilEsquadria.dsDesconto = this.perfilEsquadriaOld.dsDesconto;
+      }
+    }else{
+      this.generic.onClickButtonCancelar(perfilEsquadria);
+
+      this.efetuandoAltercaoPerfilEsquadria = false;
+    }
+
+  }
+
   onClickConfirmarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
 
+    if( this.perfilEsquadriaOld.perfil.idPerfil != perfilEsquadria.perfil.idPerfil ||
+        this.perfilEsquadriaOld.qtPerfil != perfilEsquadria.qtPerfil ||
+        this.perfilEsquadriaOld.dsDesconto != perfilEsquadria.dsDesconto){
+
+      this.perfilEsquadriaService.updatePerfilEsquadria(perfilEsquadria).subscribe(
+        (response) => {
+          this.generic.showSuccess("Vinculo do perfil ("+ perfilEsquadria.perfil.dsPerfil.trim()+") atualizado com sucesso!");
+
+          this.generic.onClickButtonConfirmar(perfilEsquadria);
+          this.efetuandoAltercaoPerfilEsquadria = false;
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }else{
+      this.generic.onClickButtonConfirmar(perfilEsquadria);
+      this.efetuandoAltercaoPerfilEsquadria = false;
+    }
   }
 
-  onClickCancelarCancelarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
-
-  }
 }

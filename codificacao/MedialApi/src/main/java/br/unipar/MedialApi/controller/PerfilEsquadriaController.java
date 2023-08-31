@@ -31,4 +31,9 @@ public class PerfilEsquadriaController {
     public PerfilEsquadria delete(@PathVariable Long id) throws Exception{
         return perfilEsquadriaService.delete(id);
     }
+
+    @PutMapping
+    public PerfilEsquadria update (@RequestBody PerfilEsquadria perfilEsquadria) throws Exception{
+        return perfilEsquadriaService.update(perfilEsquadria);
+    }
 }
