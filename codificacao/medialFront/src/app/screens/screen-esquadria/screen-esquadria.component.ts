@@ -181,7 +181,12 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  /********DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA*/
+  /*      DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA
+   *      DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA
+   *      DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA
+   *      DAQUI PARA BAIXO COMECA A CODIFICAÇÃO REFERENTE AO VINCULO DE UM PERFIL COM UMA ESQUADRIA. tabela: PERFILESQUADRIA
+  */
+
   configModal = {
     backdrop: true,
     ignoreBackdropClick: true,
@@ -201,8 +206,11 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   efetuandoAltercaoPerfilEsquadria : boolean = false;
   private perfilEsquadriaOld : PerfilEsquadria = new PerfilEsquadria();
+  titleModal : string = '';
 
   openModalPerfilEsquadria(template: TemplateRef<any>, esquadria: Esquadria){
+    this.titleModal = esquadria.dsEsquadria + '  (' + esquadria.linha.dsLinha +')'
+
     this.carregaPerfilEsquadrias(esquadria);
 
     let perfilFilter = new Perfil();

@@ -39,14 +39,16 @@
     </table>
   </div>
 </div>
+
 <!-- modal PERFILESQUADRIA -->
 <ng-template class="modal-body" #templatePerfilEsquadria>
   <div class="window">
-    <div class="left" style="margin-top: 12px; margin-left: 12px; display: inline-flex;" (click)="modalRef?.hide()">
+
+    <div class="title-modal" (click)="modalRef?.hide()">
       <button-icon nomeIcone="voltar" [visivel]="true" hint="Voltar" (onClick)="modalRef?.hide()" ></button-icon>
-      <label style="cursor: pointer;">TESTE</label>
-      <!-- por degrade -->
+      <label>{{this.titleModal}}</label>
     </div>
+
     <hr style="margin-top: -5px;">
 
     <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >

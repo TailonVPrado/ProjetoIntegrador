@@ -196,3 +196,19 @@ tbody tr:focus-within {
   min-height: 100% !important;
 }
 
+.title-modal{
+  text-transform: uppercase;
+  margin-top: 5px;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+}
+.title-modal label{
+  display: grid;
+  align-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  flex-grow: 1;
+}
+
