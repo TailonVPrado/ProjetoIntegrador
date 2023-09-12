@@ -13,7 +13,7 @@ export class PerfilEsquadria {
 
   constructor(
     idPerfilEsquadria: number = 0,
-    qtPerfil: number = 0,
+    qtPerfil: number = 1,
     dsDesconto: string = '',
     esquadria: Esquadria = new Esquadria(),
     perfil: Perfil = new Perfil(),

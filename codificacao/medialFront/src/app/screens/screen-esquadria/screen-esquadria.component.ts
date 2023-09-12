@@ -209,23 +209,25 @@ export class ScreenEsquadriaComponent implements OnInit {
   titleModal : string = '';
 
   openModalPerfilEsquadria(template: TemplateRef<any>, esquadria: Esquadria){
-    this.titleModal = esquadria.dsEsquadria + '  (' + esquadria.linha.dsLinha +')'
+    if(!esquadria.properties.ativo){
+      this.titleModal = esquadria.dsEsquadria + '  (' + esquadria.linha.dsLinha +')'
 
-    this.carregaPerfilEsquadrias(esquadria);
+      this.carregaPerfilEsquadrias(esquadria);
 
-    let perfilFilter = new Perfil();
-    perfilFilter.linha = esquadria.linha;
-    this.perfilEsquadria.esquadria = esquadria;
+      let perfilFilter = new Perfil();
+      perfilFilter.linha = esquadria.linha;
+      this.perfilEsquadria.esquadria = esquadria;
 
-    this.perfilService.getPerfil(perfilFilter).subscribe(
-      (response) => {
-        response.forEach((perfil) =>{
-          this.perfilDisponiveis.set(perfil.idPerfil, perfil.dsPerfil);
-        })
-      }
-    );
+      this.perfilService.getPerfil(perfilFilter).subscribe(
+        (response) => {
+          response.forEach((perfil) =>{
+            this.perfilDisponiveis.set(perfil.idPerfil, perfil.dsPerfil);
+          })
+        }
+      );
 
-    this.modalRef = this.modalService.show(template, this.configModal);
+      this.modalRef = this.modalService.show(template, this.configModal);
+    }
   }
 
   perfilSelecionado(id: any, perfilEsquadria : PerfilEsquadria){
@@ -268,7 +270,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
 
         /*adiciona o perfil no topo do grid para manipular alguma coisa, caso o usuario queira*/
-        this.gridPerfilEsquadria.splice(0,0,this.perfilEsquadria);
+        this.gridPerfilEsquadria.splice(0,0,  Object.assign({}, this.perfilEsquadria) );
         this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});
         this.gridPerfilEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
           [this.tipoBotao.CANCELAR, false],
@@ -277,7 +279,10 @@ export class ScreenEsquadriaComponent implements OnInit {
            [this.tipoBotao.EXCLUIR, true]
         ])
 
-        this.perfilEsquadria = new PerfilEsquadria();
+        this.perfilEsquadria.perfil = new Perfil();
+        this.perfilEsquadria.dsDesconto = '';
+        this.perfilEsquadria.qtPerfil = 1;
+
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);
