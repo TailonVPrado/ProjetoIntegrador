@@ -14,7 +14,7 @@
       <thead>
         <tr>
           <th class="padding" style="text-align: left;"><span>Descrição Perfil</span></th>
-          <th style="text-align: left; width: 25%;"><span>Linha</span></th>
+          <th class="pipe" style="text-align: left; width: 25%;"><span>Linha</span></th>
           <th style="width:30px;"></th>
           <th style="width:30px;"></th>
           <th style="width:30px;"></th>
@@ -25,7 +25,7 @@
           <td class="padding">
             <input-text [isGrid]="true" [(mxModel)]="x.dsPerfil" [properties]="x.properties"></input-text>
           </td>
-          <td>
+          <td class="pipe">
             <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"></input-text>
           </td>
           <td>

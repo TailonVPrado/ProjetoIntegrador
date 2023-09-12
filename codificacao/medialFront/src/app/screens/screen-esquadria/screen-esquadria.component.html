@@ -13,7 +13,7 @@
       <thead>
         <tr>
           <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
-          <th style="text-align: left; width: 25%;"><span>Linha</span></th>
+          <th style="text-align: left; width: 25%;" class="pipe"><span>Linha</span></th>
           <th style="width:30px;"></th>
           <th style="width:30px;"></th>
         </tr>
@@ -23,7 +23,7 @@
           <td class="padding">
             <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
           </td>
-          <td>
+          <td class="pipe">
             <input-text [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)" [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" ></input-text>
           </td>
           <td>
@@ -65,8 +65,8 @@
         <thead>
           <tr>
             <th class="padding" style="text-align: left;"><span>Descrição Perfil</span></th>
-            <th style="text-align: left; width: 25%;"><span>Desconto</span></th>
-            <th style="text-align: left; width: 10%;"><span>QTDE</span></th>
+            <th class="pipe" style="text-align: left; width: 25%;"><span>Desconto</span></th>
+            <th class="pipe" style="text-align: left; width: 10%;"><span>QTDE</span></th>
             <th style="width:30px;"></th>
             <th style="width:30px;"></th>
           </tr>
@@ -76,10 +76,10 @@
             <td class="padding">
               <input-text [isGrid]="true" [(mxModel)]="x.perfil.dsPerfil" [properties]="x.properties" [itensDisponiveis]="this.perfilDisponiveis" (itemSelecionado)="perfilSelecionado($event, x)"></input-text>
             </td>
-            <td>
+            <td class="pipe">
               <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" ></input-text>
             </td>
-            <td>
+            <td class="pipe">
               <input-number [isGrid]="true" [(mxModel)]="x.qtPerfil" [properties]="x.properties" ></input-number>
             </td>
             <td>
