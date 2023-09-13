@@ -29,7 +29,6 @@ input:hover {
   transition: outline 0.05s;
 }
 
-
 input::placeholder{
   color:rgba(0, 0, 0, 0.200);
   font-size: 17px;
@@ -49,10 +48,23 @@ body {
   background-position:  55% 0% ;
   background-size: 50% ;
   padding-right: calc(100vw - 100%) !important;
-  overflow-y: scroll !important;
+  overflow-y: scroll;
   background-attachment: fixed ;
   margin: 10px;
 }
+
+/*INICIO de estilos BARRA DE ROLAGEM*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2F74C4;
+}
+::-webkit-scrollbar-track {
+  background-color: #c3d1ff;
+}
+/*FIM de estilos BARRA DE ROLAGEM*/
+
 
 //ALTERA TAMANHO DE MODAL DO ALERTA
 .modal-sm {
@@ -63,7 +75,7 @@ body {
   display: block;
 }
 
-/*AJUSTAR ALINHAMENTOS DE ITENAS NA TELA*/
+/*AJUSTAR ALINHAMENTOS DE ITENS NA TELA*/
 .center {
   display: flex;
   justify-content: center;
@@ -87,8 +99,11 @@ body {
   empty-cells: show ;
   height: 100% ;
   table-layout: fixed ;
-  margin-bottom: 100px;
+  // margin-bottom: 100px;
   padding: 10px ;
+  // display: block;
+  overflow-y: auto;
+  margin-bottom: 10%;
 }
 
 .custom-table thead tr {
@@ -128,6 +143,11 @@ body {
 tbody tr:hover,
 tbody tr:focus-within {
   background-color: #8ad4ff70 !important;/* ou outra cor desejada */
+}
+
+.custom-table tbody td {
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 /*FIM ESTILOS TABELAS*/
 
@@ -181,21 +201,15 @@ tbody tr:focus-within {
 }
 /*FIM ESTILOS INSERCAO DE IMAGEM*/
 
-.click-row input[disabled] {
-  pointer-events: none;
-}
-
+/*INICIO estilos MODAIS*/
 .full-size-modal .modal-content{
-  height  : 94vh;
+  min-height  : 94vh;
 }
-
-
 .full-size-modal {
   margin-left: 17% !important;
   min-width: 81%;
   min-height: 100% !important;
 }
-
 .title-modal{
   text-transform: uppercase;
   margin-top: 5px;
@@ -211,4 +225,23 @@ tbody tr:focus-within {
   text-align: center;
   flex-grow: 1;
 }
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/*FIM estilos MODAIS*/
 
+//evita click em linhas para abrir modais caso o campo esteja aberto para edição
+.click-row input[disabled] {
+  pointer-events: none;
+}
+
+//pipe de separação usado em grids
+.pipe::before {
+  content: "|";
+  float: left;
+  margin-left: -7px;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 50;
+  opacity: 30%;
+}
