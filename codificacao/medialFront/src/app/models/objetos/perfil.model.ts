@@ -7,6 +7,7 @@ export class Perfil {
   dsPerfil: string;
   imPerfil: string;
   stAtivo: boolean;
+  stNotContemImg: boolean;
   empresa: Empresa;
   linha: Linha;
   properties: Properties;
@@ -17,6 +18,7 @@ export class Perfil {
     dsPerfil: string = '',
     imPerfil: string = '',
     stAtivo: boolean = true,
+    stNotContemImg: boolean = false,
     empresa: Empresa = new Empresa(),
     linha: Linha = new Linha(), properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
@@ -25,6 +27,7 @@ export class Perfil {
     this.dsPerfil = dsPerfil;
     this.imPerfil = imPerfil;
     this.stAtivo = stAtivo;
+    this.stNotContemImg = stNotContemImg;
     this.empresa = empresa;
     this.linha = linha;
     this.properties = properties;

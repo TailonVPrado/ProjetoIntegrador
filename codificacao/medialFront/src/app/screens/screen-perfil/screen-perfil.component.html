@@ -29,7 +29,7 @@
             <input-text [isGrid]="true" [(mxModel)]="x.linha.dsLinha" [properties]="x.properties" [itensDisponiveis]="this.linhasDisponiveis" (itemSelecionado)="linhaSelecionada($event, x)"></input-text>
           </td>
           <td>
-            <button-icon (onClick)="onClickAlterImage(templateAlterImage, x)" nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)"
+            <button-icon (onClick)="onClickAlterImage(templateAlterImage, x)" nomeIcone="addImagem" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMAGEM)" [notContainImageAtAddImagem]="x.stNotContemImg"
               hint="Alterar Imagem"></button-icon>
           </td>
           <td>

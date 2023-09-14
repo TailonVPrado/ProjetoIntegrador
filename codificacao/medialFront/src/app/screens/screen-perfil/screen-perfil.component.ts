@@ -192,7 +192,7 @@ export class ScreenPerfilComponent implements OnInit {
 
   nameImageSelect : string = '';//data:image/jpeg;base64,
   imagePerfilBase64 : string | any = '';
-  idPerfilImage : number = 0;
+  perfilImage : Perfil = new Perfil();
   onClickAlterImage(template: TemplateRef<any>, perfil:Perfil) {
     this.modalRef = this.modalService.show(template, this.config);
     this.perfilService.getImage(perfil.idPerfil).subscribe(
@@ -203,15 +203,20 @@ export class ScreenPerfilComponent implements OnInit {
         this.generic.showError("Ocorreu um erro inesperado ao carregar a imagem, entre em contato com um administrador do sistema.");
       }
     );
-    this.idPerfilImage = perfil.idPerfil;
+    this.perfilImage = perfil;
     this.nameImageSelect = '';
   }
 
   onClickButtonSalvarImg(){
-    this.perfilService.updateImage(this.idPerfilImage, this.imagePerfilBase64).subscribe(
+    this.perfilService.updateImage(this.perfilImage.idPerfil, this.imagePerfilBase64).subscribe(
       (base64Image: string) => {
         this.generic.showSuccess("Imagem atualizada com sucesso");
         this.modalRef?.hide();
+        if(this.imagePerfilBase64){
+          this.perfilImage.stNotContemImg = false;
+        }else{
+          this.perfilImage.stNotContemImg = true;
+        }
       },
       (error) => {
         console.error('Ocorreu um erro inesperado ao salvar a imagem. Erro: ', error);
