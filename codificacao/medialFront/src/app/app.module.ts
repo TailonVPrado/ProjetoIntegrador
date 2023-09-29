@@ -24,6 +24,12 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { InputDateComponent } from './components/input-date/input-date.component';3
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+
+defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
 @NgModule({
   declarations: [
@@ -40,7 +46,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     InputTextComponent,
     MenuBarComponent,
     AlertComponent,
-    InputNumberComponent
+    InputNumberComponent,
+    InputDateComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     CommonModule,
     ReactiveFormsModule,
     TooltipModule.forRoot(),
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

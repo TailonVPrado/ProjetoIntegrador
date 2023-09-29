@@ -2,28 +2,32 @@ import { Empresa } from './empresa.model';
 import { Linha } from './linha.model';
 import { Properties } from '../interface/properties.model';
 
-export class Esquadria {
-  idEsquadria: number;
-  dsEsquadria: string;
+export class Obra {
+  idObra: number;
+  dsObra: string;
   empresa: Empresa;
-  linha: Linha;
+  dtLancamento : Date | any;
+  stAtivo: boolean;
+  stImpresso : boolean;
   properties: Properties;
   visibilidadeBotoes: Map<string, boolean>;
 
   constructor(
-    idEsquadria: number = 0,
-    dsEsquadria: string = '',
-    imPerfil: string = '',
-    stAtivo: boolean = true,
+    idObra: number = 0,
+    dsObra: string = '',
     empresa: Empresa = new Empresa(),
-    linha: Linha = new Linha(),
+    dtLancamento : Date = new Date(),
+    stAtivo: boolean = true,
+    stImpresso: boolean = false,
     properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
-    this.idEsquadria = idEsquadria;
-    this.dsEsquadria = dsEsquadria;
+    this.idObra = idObra;
+    this.dsObra = dsObra;
     this.empresa = empresa;
-    this.linha = linha;
+    this.dtLancamento = dtLancamento;
+    this.stAtivo = stAtivo;
+    this.stImpresso = stImpresso;
     this.properties = properties;
     this.visibilidadeBotoes = visibilidadeBotoes;
   }

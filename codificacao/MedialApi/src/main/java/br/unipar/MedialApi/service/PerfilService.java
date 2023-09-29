@@ -1,6 +1,5 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.repository.PerfilRepository;

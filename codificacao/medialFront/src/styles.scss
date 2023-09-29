@@ -1,12 +1,14 @@
 @import '~ngx-toastr/toastr.css';
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
 
 .window,
 input::placeholder,
 button,
 span {
-  font-family: 'Raleway', monospace;
+  font-family: 'Nunito', monospace;
   line-height:20px;
   letter-spacing:-0.6px;
   cursor: pointer;
@@ -34,7 +36,7 @@ input::placeholder{
   font-size: 17px;
 }
 .toast-container {
-  font-family:'Raleway', monospace;
+  font-family:'Nunito';
   // background-color: rgba(0, 123, 255, 0.9);
   color: white;
 }
@@ -190,7 +192,7 @@ tbody tr:focus-within {
   background-color: #312B97;
   font-size: 19px;
   height: 27px;
-  font-family: 'Raleway', monospace;
+  font-family: 'Nunito';
   line-height:20px;
   letter-spacing:-0.6px;
   color: #fff;
