@@ -1,6 +1,6 @@
-import { tipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { LinhaService } from './../../services/linha.service';
 import { Component, OnInit } from '@angular/core';
+import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
@@ -16,7 +16,7 @@ export class ScreenLinhaComponent implements OnInit{
 
   constructor(
     private linhaService: LinhaService,
-    public tipoBotao: tipoBotao,
+    public tipoBotao: TipoBotao,
     private generic: GenericService) { }
 
   ngOnInit(): void {

@@ -3,7 +3,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AlertComponent } from '../components/alert/alert.component';
 import { Empresa } from '../models/objetos/empresa.model';
-import { tipoBotao } from '../models/enum/tipoBotao.model';
+import { TipoBotao } from '../models/enum/tipoBotao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class GenericService {
   constructor(
     private toastr: ToastrService,
     public modalService: BsModalService,
-    private tipoBotao : tipoBotao
+    private tipoBotao : TipoBotao
   ) { }
 
   public empresaLogada : Empresa = new Empresa(1);

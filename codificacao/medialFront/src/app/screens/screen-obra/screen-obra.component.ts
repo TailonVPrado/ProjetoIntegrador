@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Obra } from 'src/app/models/objetos/obra.model';
@@ -10,7 +11,7 @@ import { Obra } from 'src/app/models/objetos/obra.model';
 })
 export class ScreenObraComponent implements OnInit {
 
-  constructor() { }
+  constructor(public tipoBotao : TipoBotao) { }
 
   ngOnInit(): void {
   }
@@ -22,12 +23,24 @@ export class ScreenObraComponent implements OnInit {
   buttonCadastrarObra: ButtonModel = new ButtonModel({  });
   buttonConsultarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
 
+  gridObras: Obra[] = [];
 
   onClickConsultarObra(){
-
   }
 
   onClickCadastrarObra(){
-
   }
+
+  onClickExcluirObra(obra : Obra, idx : number){
+  }
+
+  onClickCancelarObra(obra : Obra){
+  }
+
+  onClickEditarObra(obra : Obra){
+  }
+
+  onClickConfirmarObra(obra : Obra){
+  }
+
 }

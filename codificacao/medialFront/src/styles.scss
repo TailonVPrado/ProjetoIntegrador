@@ -247,3 +247,14 @@ tbody tr:focus-within {
   font-weight: 50;
   opacity: 30%;
 }
+
+/*estilos para mudar a cor do datapicker*/
+.theme-green .bs-datepicker-head{
+  background-color: #312B97;
+}
+.theme-green .bs-datepicker-body table td.week span {
+  color:#312B97;
+}
+.theme-green .bs-datepicker-body table td span.selected{
+  background: #312B97;
+}

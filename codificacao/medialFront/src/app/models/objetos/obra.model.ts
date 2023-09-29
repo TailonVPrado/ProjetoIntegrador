@@ -9,6 +9,7 @@ export class Obra {
   dtLancamento : Date | any;
   stAtivo: boolean;
   stImpresso : boolean;
+  nrVersao: number;
   properties: Properties;
   visibilidadeBotoes: Map<string, boolean>;
 
@@ -19,6 +20,7 @@ export class Obra {
     dtLancamento : Date = new Date(),
     stAtivo: boolean = true,
     stImpresso: boolean = false,
+    nrVersao: number = 0,
     properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
@@ -28,6 +30,7 @@ export class Obra {
     this.dtLancamento = dtLancamento;
     this.stAtivo = stAtivo;
     this.stImpresso = stImpresso;
+    this.nrVersao = nrVersao;
     this.properties = properties;
     this.visibilidadeBotoes = visibilidadeBotoes;
   }

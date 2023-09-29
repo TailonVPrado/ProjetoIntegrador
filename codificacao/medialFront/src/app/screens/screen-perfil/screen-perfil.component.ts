@@ -1,7 +1,6 @@
 import { LinhaService } from './../../services/linha.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { PerfilService } from './../../services/perfil.service';
-import { tipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GenericService } from 'src/app/services/generic.service';
 import { InputModel } from 'src/app/models/interface/input.model';
@@ -9,6 +8,7 @@ import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 
 @Component({
   selector: 'screen-perfil',
@@ -19,7 +19,7 @@ export class ScreenPerfilComponent implements OnInit {
 
   constructor(
     private generic : GenericService,
-    public tipoBotao: tipoBotao,
+    public tipoBotao: TipoBotao,
     private perfilService : PerfilService,
     private linhaService : LinhaService,
     private modalService: BsModalService

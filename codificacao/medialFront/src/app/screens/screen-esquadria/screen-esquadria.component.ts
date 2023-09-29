@@ -4,7 +4,7 @@ import { Esquadria } from './../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../services/esquadria.service';
 import { Perfil } from './../../models/objetos/perfil.model';
 import { LinhaService } from './../../services/linha.service';
-import { tipoBotao } from './../../models/enum/tipoBotao.model';
+import { TipoBotao } from './../../models/enum/tipoBotao.model';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
@@ -21,7 +21,7 @@ import { PerfilService } from 'src/app/services/perfil.service';
 })
 export class ScreenEsquadriaComponent implements OnInit {
 
-  constructor(public tipoBotao : tipoBotao,
+  constructor(public tipoBotao : TipoBotao,
               private linhaService: LinhaService,
               private esquadriaService : EsquadriaService,
               private perfilService : PerfilService,
