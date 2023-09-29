@@ -1,8 +1,11 @@
+import { ObraService } from './../../services/obra.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
+import { Properties } from 'src/app/models/interface/properties.model';
 import { Obra } from 'src/app/models/objetos/obra.model';
+import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
   selector: 'screen-obra',
@@ -11,7 +14,9 @@ import { Obra } from 'src/app/models/objetos/obra.model';
 })
 export class ScreenObraComponent implements OnInit {
 
-  constructor(public tipoBotao : TipoBotao) { }
+  constructor(public tipoBotao : TipoBotao,
+              public obraService : ObraService,
+              private generic : GenericService) { }
 
   ngOnInit(): void {
   }
@@ -25,10 +30,30 @@ export class ScreenObraComponent implements OnInit {
 
   gridObras: Obra[] = [];
 
-  onClickConsultarObra(){
+  onClickCadastrarObra(){
+    this.obraService.createObra(this.obra).subscribe(
+      (response) => {
+        this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
+
+        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        this.gridObras.splice(0,0,this.obra);
+        this.gridObras[0].properties = new Properties({ativo : false});
+        this.gridObras[0].visibilidadeBotoes = new Map <string, boolean>([
+          [this.tipoBotao.CANCELAR, false],
+           [this.tipoBotao.CONFIRMAR, false],
+           [this.tipoBotao.EDITAR, true],
+           [this.tipoBotao.EXCLUIR, true]
+        ])
+
+        this.obra = new Obra();
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
   }
 
-  onClickCadastrarObra(){
+  onClickConsultarObra(){
   }
 
   onClickExcluirObra(obra : Obra, idx : number){
