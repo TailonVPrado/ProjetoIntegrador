@@ -34,7 +34,7 @@ public class ObraService {
 
     private void validaDataLancamento(Obra obra) throws Exception{
         if(obra.getDtLancamento().compareTo(new Date()) > 0){
-            throw new Exception("A data de lançamento da obra nao pode ser superior a data atual");
+            throw new Exception("A data de lançamento da obra não pode ser superior a data atual.");
         }
     }
     private void validaFks(Obra obra) throws Exception{
