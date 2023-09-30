@@ -14,7 +14,8 @@ const routes: Routes = [
   {path: 'esquadrias', component: ScreenEsquadriaComponent},
   {path: 'descontos', component: ScreenDescontoComponent},
   {path: 'obras/cadastro', component: ScreenObraCadastroComponent},
-  {path: 'obras/consulta', component: ScreenObraConsultaComponent}
+  {path: 'obras/consulta', component: ScreenObraConsultaComponent},
+  {path: 'cortes', component: ScreenCorteComponent},
 
 ];
 

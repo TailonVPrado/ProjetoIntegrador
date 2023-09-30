@@ -7,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuBarComponent implements OnInit{
   botoes : Map<string, any> = new Map<string, any>([
-      ['botaoLinha', { imagem: 'linhas-menu', text: 'Linha', routerLink: '/linha', selecionado: false, principal: '' }],
-      ['botaoPerfil', { imagem: 'perfil-menu', text: 'Perfil', routerLink: '/perfil', selecionado: false, principal: '' }],
-      ['botaoEsquadria', { imagem: 'esquadrias-menu', text: 'Esquadrias', routerLink: '/esquadrias', selecionado: false, principal: '' }],
-      ['botaoObra', { imagem: 'obras-menu', text: 'Obras', routerLink: '/obras', selecionado: false, principal: '' }],
-      ['botaoObraCadastro', { imagem: 'adicionar', text: 'Cadastrar', routerLink: '/obras/cadastro', selecionado: false, principal: 'botaoObra' }],
-      ['botaoObraConsulta', { imagem: 'consultar', text: 'Consultar', routerLink: '/obras/consulta', selecionado: false, principal: 'botaoObra' }],
-      ['botaoCorte', { imagem: 'cortes-menu', text: 'Cortes', routerLink: '/cortes', selecionado: false, principal: '' }]
+      ['botaoLinha', { imagem: 'linhas-menu', text: 'Linha', routerLink: '/linha', selecionado: false, childs: [] }],
+      ['botaoPerfil', { imagem: 'perfil-menu', text: 'Perfil', routerLink: '/perfil', selecionado: false, childs: [] }],
+      ['botaoEsquadria', { imagem: 'esquadrias-menu', text: 'Esquadrias', routerLink: '/esquadrias', selecionado: false, childs: [] }],
+      ['botaoObra', { imagem: 'obras-menu', text: 'Obras', routerLink: '/obras', selecionado: false, childs: ['botaoObraCadastro', 'botaoObraConsulta'] }],
+      ['botaoObraCadastro', { imagem: 'adicionar', text: 'Cadastrar', routerLink: '/obras/cadastro', selecionado: false, childs: []}],
+      ['botaoObraConsulta', { imagem: 'consultar', text: 'Consultar', routerLink: '/obras/consulta', selecionado: false, childs: [] }],
+      ['botaoCorte', { imagem: 'cortes-menu', text: 'Cortes', routerLink: '/cortes', selecionado: false, childs: [] }]
   ]);
 
   constructor() {}
@@ -22,7 +22,7 @@ export class MenuBarComponent implements OnInit{
 
   onClick(buttonName: string) {
     for (const [chave, valor] of this.botoes.entries()) {
-      if(chave == buttonName){
+      if(chave == buttonName || valor.childs.includes(buttonName)){
         valor.selecionado = true;
       }else{
         valor.selecionado = false;

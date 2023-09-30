@@ -5,13 +5,9 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './button-menu.component.html',
   styleUrls: ['./button-menu.component.scss']
 })
-export class ButtonMenuComponent implements OnInit{
-  @Input() text : string | undefined;
-  @Input() imagem: string | undefined = '';
-  @Input() selecionado: boolean = false;
-  @Input() notHr: boolean = false;
+export class ButtonMenuComponent{
 
-  ngOnInit(){
-    this.imagem = '/assets/images/menu_icon/' + this.imagem + '.png';
-  }
+  @Input() notHr: boolean = false;
+  @Input() properties : any;
+
 }
