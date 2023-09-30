@@ -1,10 +1,49 @@
 <div class="menu">
-  <img (click)="isCLick(-1)" style="margin-bottom: 15px;" routerLink="/" class="imagem" src="/assets/images/menu_icon/logo-medial.png">
-  <button-menu *ngFor="let botao of botoes; let i = index"
-               [routerLink]="botao.routerLink"
-               [text]="botao.text"
-               [selecionado]="botao.selecionado"
-               [imagem]="botao.imagem"
-               (click)="isCLick(i)">
+  <img (click)="onClick('')" style="margin-bottom: 15px;" routerLink="/" class="imagem" src="/assets/images/menu_icon/logo-medial.png">
+  <button-menu [routerLink]="botoes.get('botaoLinha').routerLink"
+               [text]="botoes.get('botaoLinha').text"
+               [selecionado]="botoes.get('botaoLinha').selecionado"
+               [imagem]="botoes.get('botaoLinha').imagem"
+               (click)="onClick('botaoLinha')">
+  </button-menu>
+  <button-menu [routerLink]="botoes.get('botaoPerfil').routerLink"
+               [text]="botoes.get('botaoPerfil').text"
+               [selecionado]="botoes.get('botaoPerfil').selecionado"
+               [imagem]="botoes.get('botaoPerfil').imagem"
+               (click)="onClick('botaoPerfil')">
+  </button-menu>
+  <button-menu [routerLink]="botoes.get('botaoEsquadria').routerLink"
+              [text]="botoes.get('botaoEsquadria').text"
+              [selecionado]="botoes.get('botaoEsquadria').selecionado"
+              [imagem]="botoes.get('botaoEsquadria').imagem"
+              (click)="onClick('botaoEsquadria')">
+  </button-menu>
+
+  <button-menu [text]="botoes.get('botaoObra').text"
+               [selecionado]="botoes.get('botaoObra').selecionado"
+               [imagem]="botoes.get('botaoObra').imagem"
+               (click)="onClick('botaoObra')">
+  </button-menu>
+  <div style="padding-left: 15px;">
+    <button-menu [routerLink]="botoes.get('botaoObraCadastro').routerLink"
+                [text]="botoes.get('botaoObraCadastro').text"
+                [selecionado]="botoes.get('botaoObraCadastro').selecionado"
+                [imagem]="botoes.get('botaoObraCadastro').imagem"
+                [notHr]="true"
+                *ngIf="botoes.get(botoes.get('botaoObraCadastro').principal).selecionado">
+    </button-menu>
+    <button-menu [routerLink]="botoes.get('botaoObraConsulta').routerLink"
+                [text]="botoes.get('botaoObraConsulta').text"
+                [selecionado]="botoes.get('botaoObraConsulta').selecionado"
+                [imagem]="botoes.get('botaoObraConsulta').imagem"
+                [notHr]="true"
+                *ngIf="botoes.get(botoes.get('botaoObraConsulta').principal).selecionado">
+    </button-menu>
+  </div>
+  <button-menu [routerLink]="botoes.get('botaoCorte').routerLink"
+              [text]="botoes.get('botaoCorte').text"
+              [selecionado]="botoes.get('botaoCorte').selecionado"
+              [imagem]="botoes.get('botaoCorte').imagem"
+              (click)="onClick('botaoCorte')">
   </button-menu>
 </div>

@@ -9,6 +9,7 @@ export class ButtonMenuComponent implements OnInit{
   @Input() text : string | undefined;
   @Input() imagem: string | undefined = '';
   @Input() selecionado: boolean = false;
+  @Input() notHr: boolean = false;
 
   ngOnInit(){
     this.imagem = '/assets/images/menu_icon/' + this.imagem + '.png';

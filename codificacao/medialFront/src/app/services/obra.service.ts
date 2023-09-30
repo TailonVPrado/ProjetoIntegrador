@@ -17,6 +17,6 @@ export class ObraService {
   createObra(obra: Obra): Observable<any> {
     const url = `${this.apiUrl}/obra`;
     return this.http.post<any>(url, obra);
-  }
+}
 
 }

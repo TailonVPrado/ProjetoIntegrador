@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ScreenCorteComponent } from './screens/screen-corte/screen-corte.component';
 import { ScreenPerfilComponent } from './screens/screen-perfil/screen-perfil.component';
-import { ScreenObraComponent } from './screens/screen-obra/screen-obra.component';
 import { ScreenLinhaComponent } from './screens/screen-linha/screen-linha.component';
 import { ScreenEsquadriaComponent } from './screens/screen-esquadria/screen-esquadria.component';
 import { ScreenDescontoComponent } from './screens/screen-desconto/screen-desconto.component';
@@ -28,6 +27,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { InputDateComponent } from './components/input-date/input-date.component';3
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { ScreenObraConsultaComponent } from './screens/screen-obra/screen-obra-consulta/screen-obra-consulta.component';
+import { ScreenObraCadastroComponent } from './screens/screen-obra/screen-obra-cadastro/screen-obra-cadastro.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -38,7 +39,6 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     ScreenDescontoComponent,
     ScreenEsquadriaComponent,
     ScreenLinhaComponent,
-    ScreenObraComponent,
     ScreenPerfilComponent,
     ButtonDefaultComponent,
     ButtonIconComponent,
@@ -47,7 +47,9 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     MenuBarComponent,
     AlertComponent,
     InputNumberComponent,
-    InputDateComponent
+    InputDateComponent,
+    ScreenObraConsultaComponent,
+    ScreenObraCadastroComponent
   ],
   imports: [
     BrowserModule,

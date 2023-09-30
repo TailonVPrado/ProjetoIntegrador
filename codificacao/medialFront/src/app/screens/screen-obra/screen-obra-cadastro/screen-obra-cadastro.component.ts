@@ -1,18 +1,19 @@
-import { ObraService } from './../../services/obra.service';
-import { Component, OnInit } from '@angular/core';
-import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
-import { ButtonModel } from 'src/app/models/interface/button.model';
-import { InputModel } from 'src/app/models/interface/input.model';
-import { Properties } from 'src/app/models/interface/properties.model';
-import { Obra } from 'src/app/models/objetos/obra.model';
-import { GenericService } from 'src/app/services/generic.service';
+import { Component, OnInit } from "@angular/core";
+import { TipoBotao } from "src/app/models/enum/tipoBotao.model";
+import { ButtonModel } from "src/app/models/interface/button.model";
+import { InputModel } from "src/app/models/interface/input.model";
+import { Properties } from "src/app/models/interface/properties.model";
+import { Obra } from "src/app/models/objetos/obra.model";
+import { GenericService } from "src/app/services/generic.service";
+import { ObraService } from "src/app/services/obra.service";
+
 
 @Component({
-  selector: 'screen-obra',
-  templateUrl: './screen-obra.component.html',
-  styleUrls: ['./screen-obra.component.scss']
+  selector: 'screen-obra-cadastro',
+  templateUrl: './screen-obra-cadastro.component.html',
+  styleUrls: ['./screen-obra-cadastro.component.scss']
 })
-export class ScreenObraComponent implements OnInit {
+export class ScreenObraCadastroComponent implements OnInit {
 
   constructor(public tipoBotao : TipoBotao,
               public obraService : ObraService,
