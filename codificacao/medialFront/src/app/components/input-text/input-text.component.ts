@@ -57,7 +57,6 @@ export class InputTextComponent implements AfterViewInit{
   }
 
   onKeyDown(event: KeyboardEvent) {
-    console.log(event.key)
     if (this.itensExibicao?.length > 0) {
       if(event.key != 'Tab'){
         this.exibeSugestao = true;

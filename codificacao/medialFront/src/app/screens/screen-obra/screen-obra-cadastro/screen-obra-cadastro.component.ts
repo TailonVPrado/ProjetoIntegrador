@@ -26,8 +26,7 @@ export class ScreenObraCadastroComponent implements OnInit {
   obra : Obra = new Obra();
   inputDsObra = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
   inputDtLancamento = new InputModel({label: 'Data Lcto', placeholder: 'Insira a data'});
-  buttonCadastrarObra: ButtonModel = new ButtonModel({  });
-  buttonConsultarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
+  buttonCadastrarObra: ButtonModel = new ButtonModel({ label: 'Cadastrar' });
 
   gridObras: Obra[] = [];
 
@@ -37,6 +36,7 @@ export class ScreenObraCadastroComponent implements OnInit {
         this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
 
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        this.obra.nrVersao = response.nrVersao;
         this.gridObras.splice(0,0,this.obra);
         this.gridObras[0].properties = new Properties({ativo : false});
         this.gridObras[0].visibilidadeBotoes = new Map <string, boolean>([
@@ -44,7 +44,7 @@ export class ScreenObraCadastroComponent implements OnInit {
            [this.tipoBotao.CONFIRMAR, false],
            [this.tipoBotao.EDITAR, true],
            [this.tipoBotao.EXCLUIR, true]
-        ])
+        ]);
 
         this.obra = new Obra();
       },
@@ -52,9 +52,6 @@ export class ScreenObraCadastroComponent implements OnInit {
         this.generic.showError(error.error.errors[0]);
       }
     );
-  }
-
-  onClickConsultarObra(){
   }
 
   onClickExcluirObra(obra : Obra, idx : number){

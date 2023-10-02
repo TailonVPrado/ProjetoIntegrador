@@ -2,11 +2,15 @@ package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.Perfil;
+import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.repository.ObraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ObraService {
@@ -15,6 +19,7 @@ public class ObraService {
 
     public Obra insert(Obra obra) throws Exception{
         validaInsert(obra);
+        obra.setNrVersao(1);
         return obraRepository.saveAndFlush(obra);
     }
 
@@ -42,4 +47,14 @@ public class ObraService {
             throw new Exception("Não é possivel inserir ua obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }
+
+    /*
+    public List<PerfilDto> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim) {
+
+        return new List<new PerfilDto()>();
+    }
+
+    public Page<Obra> findAll(Pageable pageable) {
+        return obraRepository.findAll(pageable);
+    }*/
 }
