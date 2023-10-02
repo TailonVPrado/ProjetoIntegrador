@@ -2,11 +2,8 @@ package br.unipar.MedialApi;
 
 import br.unipar.MedialApi.model.Empresa;
 import br.unipar.MedialApi.model.Linha;
-import br.unipar.MedialApi.repository.EmpresaRepository;
-import br.unipar.MedialApi.service.EmpresaService;
 import br.unipar.MedialApi.service.LinhaService;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
