@@ -29,7 +29,7 @@ public class Linha {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_LINHA")
-	private Long idLinha;
+	private Long idLinha = (long) 0;
 	
 	@Column(name = "DS_LINHA", length = 20, nullable = false)
 	private String dsLinha;

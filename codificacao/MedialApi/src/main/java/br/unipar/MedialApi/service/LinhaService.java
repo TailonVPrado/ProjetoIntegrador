@@ -91,7 +91,7 @@ public class LinhaService {
         }
     }
 
-    private void validaInsert(Linha linha) throws Exception{
+    public void validaInsert(Linha linha) throws Exception{
         validaDescricao(linha);
         validaFks(linha);
     }
@@ -106,7 +106,7 @@ public class LinhaService {
     }
 
     private void validaFks(Linha linha) throws Exception{
-        if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0){
+        if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0 ){
             throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }

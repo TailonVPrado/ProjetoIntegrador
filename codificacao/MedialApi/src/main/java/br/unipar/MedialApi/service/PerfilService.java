@@ -74,7 +74,7 @@ public class PerfilService {
         return perfil;
     }
 
-    private void validaInsert(Perfil perfil) throws Exception{
+    public void validaInsert(Perfil perfil) throws Exception{
         validaDescricao(perfil);
         validaFks(perfil);
     }
