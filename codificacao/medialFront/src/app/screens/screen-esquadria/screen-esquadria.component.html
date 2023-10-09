@@ -4,8 +4,8 @@
     <input-text [(mxModel)]="esquadria.linha.dsLinha" [properties]="inputDsLinha"
       [itensDisponiveis]="this.linhasDisponiveis"
       (itemSelecionado)="linhaSelecionada($event, this.esquadria)"></input-text>
-    <button-default [properties]="buttonConsultarEsquadria" (click)="onClickConsultarEsquadria()"></button-default>
-    <button-default [properties]="buttonCadastrarEsquadria" (click)="onClickCadastrarEsquadria()" hint="Adicionar Esquadria"></button-default>
+    <button-default [properties]="buttonConsultarEsquadria" (onClick)="onClickConsultarEsquadria()"></button-default>
+    <button-default [properties]="buttonCadastrarEsquadria" (onClick)="onClickCadastrarEsquadria()" hint="Adicionar Esquadria"></button-default>
   </div>
 
   <div class="center">
@@ -57,7 +57,7 @@
       (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>
       <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
-      <button-default [properties]="buttonCadastrarPerfilEsquadria" (click)="onClickCadastrarPerfilEsquadria()" hint="Vincular Perfil"></button-default>
+      <button-default [properties]="buttonCadastrarPerfilEsquadria" (onClick)="onClickCadastrarPerfilEsquadria()" hint="Vincular Perfil"></button-default>
     </div>
 
     <div class="center" style="width: 95%; margin-left: 3%;">

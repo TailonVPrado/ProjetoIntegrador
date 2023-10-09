@@ -5,8 +5,8 @@
     <input-text [(mxModel)]="perfil.linha.dsLinha" [properties]="inputDsLinha"
       [itensDisponiveis]="this.linhasDisponiveis"
       (itemSelecionado)="linhaSelecionada($event, this.perfil)"></input-text>
-    <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
-    <button-default [properties]="buttonCadastrar" (click)="onClickCadastrar()" hint="Adicionar Perfil"></button-default>
+    <button-default [properties]="buttonConsultar" (onClick)="onClickConsultar()"></button-default>
+    <button-default [properties]="buttonCadastrar" (onClick)="onClickCadastrar()" hint="Adicionar Perfil"></button-default>
   </div>
 
   <div class="center">
@@ -65,9 +65,9 @@
     <br><br>
 
     <div class="right">
-      <button-default (click)="modalRef?.hide()" [properties]="buttonCancelarImg"></button-default>
-      <button-default (click)="imagePerfilBase64 = ''; nameImageSelect='';" [properties]="buttonRemoverImg"></button-default>
-      <button-default (click)="onClickButtonSalvarImg()" [properties]="buttonSalvarImg"></button-default>
+      <button-default (onClick)="modalRef?.hide()" [properties]="buttonCancelarImg"></button-default>
+      <button-default (onClick)="imagePerfilBase64 = ''; nameImageSelect='';" [properties]="buttonRemoverImg"></button-default>
+      <button-default (onClick)="onClickButtonSalvarImg()" [properties]="buttonSalvarImg"></button-default>
     </div>
   </div>
 </ng-template>

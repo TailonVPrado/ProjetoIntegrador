@@ -12,8 +12,17 @@ export class ButtonIconComponent {
   @Input() notContainImageAtAddImagem : boolean = false;//usado para customizar botao de adicionar imagem na tela de PERFIL
   @Output() onClick : EventEmitter<any> = new EventEmitter<any>();
 
+  allowClick : boolean = true;
+
   click(event: Event){
-    event.stopPropagation();
-    this.onClick.emit();
+    if(this.allowClick){
+      event.stopPropagation();
+      this.onClick.emit();
+
+      this.allowClick = false;
+      setTimeout(() => {//timeOut para impedir que o usuário fique espamando clicks nos botoes (esta configurado para no maximo 1 click por segundo)
+        this.allowClick = true;
+      }, 1000);
+    }
   }
 }

@@ -40,17 +40,19 @@ public class PerfilService {
         List<Perfil> perfis = perfilRepository.findAll(spec, Sort.by("dsPerfil").ascending());
 
         List<PerfilDto> perfilDtoList = new ArrayList<>();
+
         for (Perfil perfil: perfis) {
             PerfilDto perfilDto = new PerfilDto();
             perfilDto.setIdPerfil(perfil.getIdPerfil());
             perfilDto.setDsPerfil(perfil.getDsPerfil());
             perfilDto.setEmpresa(perfil.getEmpresa());
             perfilDto.setLinha(perfil.getLinha());
+            perfilDto.setStAtivo(perfil.isStAtivo());
 
-            if(perfil.getImPerfil().length != 0){
+            if(perfil.getImPerfil() != null && perfil.getImPerfil().length != 0){
                 perfilDto.setStNotContemImg(false);
             }else{
-               perfilDto.setStNotContemImg(true);
+                perfilDto.setStNotContemImg(true);
             }
 
             perfilDtoList.add(perfilDto);
@@ -61,6 +63,7 @@ public class PerfilService {
 
     public Perfil update(Perfil perfil) throws Exception{
         validaUpdate(perfil);
+        perfil.setImPerfil(getImage(perfil.getIdPerfil()));
         return perfilRepository.saveAndFlush(perfil);
     }
 

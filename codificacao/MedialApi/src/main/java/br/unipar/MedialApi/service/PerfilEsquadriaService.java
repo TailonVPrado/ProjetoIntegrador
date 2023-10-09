@@ -61,6 +61,7 @@ public class PerfilEsquadriaService {
             perfilDto.setDsPerfil(perfilEsquadria.getPerfil().getDsPerfil());
             perfilDto.setEmpresa(perfilEsquadria.getPerfil().getEmpresa());
             perfilDto.setLinha(perfilEsquadria.getPerfil().getLinha());
+            perfilDto.setStAtivo(perfilEsquadria.getPerfil().isStAtivo());
 
             perfilEsquadriaDto.setPerfil(perfilDto);
 

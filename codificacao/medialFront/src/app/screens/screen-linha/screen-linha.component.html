@@ -1,8 +1,8 @@
 <div class="window">
   <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 10%;">
     <input-text style="width: 60%;" [properties]="inputDescricao" [(mxModel)]="linha.dsLinha"></input-text>
-    <button-default [properties]="buttonConsultar" (click)="onClickConsultar()"></button-default>
-    <button-default hint="Adicionar Linha" [properties]="buttonCadastrar" (click)="onClickSalvar()"></button-default>
+    <button-default [properties]="buttonConsultar" (onClick)="onClickConsultar()"></button-default>
+    <button-default hint="Adicionar Linha" [properties]="buttonCadastrar" (onClick)="onClickSalvar()"></button-default>
   </div>
 
   <div class="center">

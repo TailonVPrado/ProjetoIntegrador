@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ButtonMenuComponent{
 
-  @Input() notHr: boolean = false;
+  @Input() notHr: boolean = false;// notHr faz referencia a tag <HR>
   @Input() properties : any;
 
 }
