@@ -80,4 +80,15 @@ export class GenericService {
     obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
     obj.properties.ativo = false;
   }
+
+  formataData(date : any){
+    if(date){
+      let data : string[] = date.split('-');
+      const ano = parseInt(data[0]);
+      const mes = parseInt(data[1]) - 1;
+      const dia = parseInt(data[2]);
+      return new Date(ano, mes, dia);
+    }
+    return null;
+  }
 }

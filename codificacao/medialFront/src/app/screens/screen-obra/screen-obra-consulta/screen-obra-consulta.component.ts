@@ -36,9 +36,10 @@ export class ScreenObraConsultaComponent implements OnInit {
   onClickConsultarObra() {
     //todo alterar para passar a empresa tbm
     this.obraService.getObras(this.obra).subscribe(
-      (perfis) => {
+      (obras) => {
         this.gridObra = [];
-        perfis.forEach((obra, i) =>{
+        obras.forEach((obra, i) =>{
+          obra.dtLancamento = this.generic.formataData(obra.dtLancamento);
           this.gridObra[i] = obra;
           this.gridObra[i].properties = new Properties({ativo : false});
           this.gridObra[i].visibilidadeBotoes = new Map <string, boolean>([
