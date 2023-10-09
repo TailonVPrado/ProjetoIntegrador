@@ -34,7 +34,7 @@ export class ScreenObraCadastroComponent implements OnInit {
     this.obraService.createObra(this.obra).subscribe(
       (response) => {
         this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
-
+        this.obra.idObra = response.idObra;
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.obra.nrVersao = response.nrVersao;
         this.gridObras.splice(0,0,this.obra);

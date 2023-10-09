@@ -98,10 +98,10 @@ public class PerfilService {
 
     private void validaFks(Perfil perfil) throws Exception{
         if(perfil.getEmpresa() == null || perfil.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir um perfil no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new Exception("Não é possível inserir um perfil no sistema sem vínculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
         if(perfil.getLinha() == null || perfil.getLinha().getIdLinha() == 0){
-            throw new Exception("Não é possivel inserir um perfil sem vinculo com uma linha. Verifique!");
+            throw new Exception("Não é possível inserir um perfil sem vínculo com uma linha. Verifique!");
         }
     }
 

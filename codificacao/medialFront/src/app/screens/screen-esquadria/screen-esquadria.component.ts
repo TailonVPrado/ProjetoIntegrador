@@ -62,7 +62,7 @@ export class ScreenEsquadriaComponent implements OnInit {
     this.esquadriaService.createEsquadria(this.esquadria).subscribe(
       (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrada com sucesso!");
-
+        this.esquadria.idEsquadria = response.idEsquadria;
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridEsquadria.splice(0,0,this.esquadria);
         this.gridEsquadria[0].properties = new Properties({ativo : false});
@@ -225,7 +225,7 @@ export class ScreenEsquadriaComponent implements OnInit {
           })
         }
       );
-
+      this.perfilEsquadria.perfil = new Perfil();
       this.modalRef = this.modalService.show(template, this.configModal);
     }
   }
@@ -269,6 +269,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
 
+        this.perfilEsquadria.idPerfilEsquadria = response.idPerfilEsquadria;
         /*adiciona o perfil no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridPerfilEsquadria.splice(0,0,  Object.assign({}, this.perfilEsquadria) );
         this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});
@@ -280,6 +281,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         ])
 
         this.perfilEsquadria.perfil = new Perfil();
+        this.perfilEsquadria.idPerfilEsquadria = 0;
         this.perfilEsquadria.dsDesconto = '';
         this.perfilEsquadria.qtPerfil = 1;
 

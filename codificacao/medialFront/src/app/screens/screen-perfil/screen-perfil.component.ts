@@ -65,7 +65,8 @@ export class ScreenPerfilComponent implements OnInit {
     this.perfilService.createPerfil(this.perfil).subscribe(
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
-
+        this.perfil.idPerfil = response.idPerfil;
+        this.perfil.stNotContemImg = true;
         /*adiciona o perfil na primeira linha para facilitar a experiencia do usuário*/
         this.gridPerfil.splice(0,0,this.perfil);
         this.gridPerfil[0].properties = new Properties({ativo : false});
