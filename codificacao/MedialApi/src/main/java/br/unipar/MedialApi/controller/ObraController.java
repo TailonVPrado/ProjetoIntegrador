@@ -24,6 +24,12 @@ public class ObraController {
     public Obra insert (@RequestBody Obra obra) throws Exception{
         return obraService.insert(obra);
     }
+
+    @GetMapping(path = "/all")
+    public List<Obra> findByAll (@RequestParam(required = false) Long idEmpresa,
+                                      @RequestParam(required = false) String dsObra) throws Exception{
+        return obraService.findAll(idEmpresa, dsObra);
+    }
 /*
     @GetMapping(path = "/all")
     public ResponseEntity<Page<Obra>> findByAll (@RequestParam(defaultValue = "0") int page,

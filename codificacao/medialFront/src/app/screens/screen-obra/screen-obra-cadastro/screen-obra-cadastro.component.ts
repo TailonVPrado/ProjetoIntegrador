@@ -28,7 +28,7 @@ export class ScreenObraCadastroComponent implements OnInit {
   inputDtLancamento = new InputModel({label: 'Data Lcto', placeholder: 'Insira a data'});
   buttonCadastrarObra: ButtonModel = new ButtonModel({ label: 'Cadastrar' });
 
-  gridObras: Obra[] = [];
+  gridObra: Obra[] = [];
 
   onClickCadastrarObra(){
     this.obraService.createObra(this.obra).subscribe(
@@ -37,9 +37,9 @@ export class ScreenObraCadastroComponent implements OnInit {
         this.obra.idObra = response.idObra;
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.obra.nrVersao = response.nrVersao;
-        this.gridObras.splice(0,0,this.obra);
-        this.gridObras[0].properties = new Properties({ativo : false});
-        this.gridObras[0].visibilidadeBotoes = new Map <string, boolean>([
+        this.gridObra.splice(0,0,this.obra);
+        this.gridObra[0].properties = new Properties({ativo : false});
+        this.gridObra[0].visibilidadeBotoes = new Map <string, boolean>([
           [this.tipoBotao.CANCELAR, false],
            [this.tipoBotao.CONFIRMAR, false],
            [this.tipoBotao.EDITAR, true],

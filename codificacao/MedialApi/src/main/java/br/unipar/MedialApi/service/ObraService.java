@@ -4,11 +4,16 @@ import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.repository.ObraRepository;
+import br.unipar.MedialApi.specification.ObraSpecification;
+import br.unipar.MedialApi.specification.PerfilSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +26,20 @@ public class ObraService {
         validaInsert(obra);
         obra.setNrVersao(1);
         return obraRepository.saveAndFlush(obra);
+    }
+
+    public List<Obra> findAll(Long idEmpresa, String dsObra){
+        Specification<Obra> spec = Specification.where(null);
+
+        if(idEmpresa != null && idEmpresa != 0){
+            spec = spec.and(ObraSpecification.pertenceAEmpresa(idEmpresa));
+        }
+        if(dsObra != null){
+            spec = spec.and(ObraSpecification.descricaoContains(dsObra));
+        }
+        spec = spec.and(ObraSpecification.ativo());
+
+        return obraRepository.findAll(spec, Sort.by("dtLancamento").descending());
     }
 
     private void validaInsert(Obra obra) throws Exception{
