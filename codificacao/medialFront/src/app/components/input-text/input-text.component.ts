@@ -13,10 +13,16 @@ export class InputTextComponent implements AfterViewInit{
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
-  @Input() onlyUpper : boolean = false;
+  @Input() campoFormula : boolean = false;
+
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;
   @Input() set mxModel(val: any) {
+    //usado para o campo de formula do sistema
+    if(this.campoFormula){
+      val = val.split(".").join(",");
+    }
+
     this.actualValue = val;
     this.mxModelChange.emit(val);
   } get mxModel() {

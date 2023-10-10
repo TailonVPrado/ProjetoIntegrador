@@ -55,7 +55,7 @@
       <input-text style="width: 44%;" [(mxModel)]="perfilEsquadria.perfil.dsPerfil" [properties]="inputDsPerfil"
       [itensDisponiveis]="this.perfilDisponiveis"
       (itemSelecionado)="perfilSelecionado($event, this.perfilEsquadria)"></input-text>
-      <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto" [onlyUpper]="true"></input-text>
+      <input-text style="width: 40%;" [(mxModel)]="perfilEsquadria.dsDesconto" [properties]="inputDsDesconto" [campoFormula]="true"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="perfilEsquadria.qtPerfil" [properties]="inputQtdePerfil"></input-number>
       <button-default [properties]="buttonCadastrarPerfilEsquadria" (onClick)="onClickCadastrarPerfilEsquadria()" hint="Vincular Perfil"></button-default>
     </div>
@@ -77,7 +77,7 @@
               <input-text [isGrid]="true" [(mxModel)]="x.perfil.dsPerfil" [properties]="x.properties" [itensDisponiveis]="this.perfilDisponiveis" (itemSelecionado)="perfilSelecionado($event, x)"></input-text>
             </td>
             <td class="pipe">
-              <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" [onlyUpper]="true"></input-text>
+              <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" [campoFormula]="true"></input-text>
             </td>
             <td class="pipe">
               <input-number [isGrid]="true" [(mxModel)]="x.qtPerfil" [properties]="x.properties" ></input-number>

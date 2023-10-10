@@ -117,18 +117,21 @@ public class PerfilEsquadriaService {
         if(perfilEsquadria.getQtPerfil() == null || perfilEsquadria.getQtPerfil() <= 0){
             throw new Exception("A quantidade minima para vincular um perfil a uma esquadria é 1.");
         }
+    }
 
+    private void simulaDesconto(PerfilEsquadria perfilEsquadria) throws Exception{
         perfilEsquadria.setDsDesconto(perfilEsquadria.getDsDesconto().trim().replaceAll("\\s+", " "));
         if(perfilEsquadria.getDsDesconto().trim().length() > 50){
             throw new Exception("A formula informada é muito grande. Verifique!.");
         }
-    }
+        perfilEsquadria.setDsDesconto(perfilEsquadria.getDsDesconto().replaceAll(",", "."));
 
-    private void simulaDesconto(PerfilEsquadria perfilEsquadria) throws Exception{
         try {
             String formula = perfilEsquadria.getDsDesconto().toUpperCase();
 
             validaCaracteresFormula(formula);
+
+
 
             if(formula.trim() != null && !formula.equals("")){
                 formula = formula.replaceAll("LT", String.valueOf(new BigDecimal(100.0)));

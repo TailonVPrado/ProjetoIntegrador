@@ -7,7 +7,7 @@
     [placeholder]="properties?.placeholder"
     [(ngModel)]="mxModel"
     [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
-    [ngClass]="{'uppercase-input': onlyUpper}"
+    [ngClass]="{'uppercase-input': campoFormula}"
     (keydown)="onKeyDown($event)"
     (focus)="onFocus()"
     (blur)="onBlur()"/>
