@@ -52,7 +52,7 @@ public class ObraService {
         if(obra.getDsObra().trim().length() < 3){
             throw new Exception("A descrição da obra deve conter ao menos 3 caracteres.");
         }else if(obra.getDsObra().trim().length() >60){
-            throw new Exception("A descrição da ovra deve conter no máximo 60 caracteres.");
+            throw new Exception("A descrição da obra deve conter no máximo 60 caracteres.");
         }
     }
 

@@ -197,7 +197,7 @@ export class ScreenEsquadriaComponent implements OnInit {
   perfilDisponiveis : Map<number, string> = new Map<number, string>();
   inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
   inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
-  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: 'Insira o Desconto'});
+  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: ''});
 
   perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });
@@ -270,6 +270,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
 
         this.perfilEsquadria.idPerfilEsquadria = response.idPerfilEsquadria;
+        this.perfilEsquadria.dsDesconto = response.dsDesconto;
         /*adiciona o perfil no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridPerfilEsquadria.splice(0,0,  Object.assign({}, this.perfilEsquadria) );
         this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});

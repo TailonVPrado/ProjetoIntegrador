@@ -1,25 +1,22 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.controller.PerfilEsquadriaController;
-import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
 import br.unipar.MedialApi.specification.PerfilEsquadriaSpecification;
-import br.unipar.MedialApi.specification.PerfilSpecification;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.script.ScriptException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class PerfilEsquadriaService {
@@ -56,12 +53,12 @@ public class PerfilEsquadriaService {
             perfilEsquadriaDto.setQtPerfil(perfilEsquadria.getQtPerfil());
             perfilEsquadriaDto.setDsDesconto(perfilEsquadria.getDsDesconto());
             perfilEsquadriaDto.setEsquadria(perfilEsquadria.getEsquadria());
+            perfilEsquadriaDto.setStAtivo(perfilEsquadria.isStAtivo());
 
             perfilDto.setIdPerfil(perfilEsquadria.getPerfil().getIdPerfil());
             perfilDto.setDsPerfil(perfilEsquadria.getPerfil().getDsPerfil());
             perfilDto.setEmpresa(perfilEsquadria.getPerfil().getEmpresa());
             perfilDto.setLinha(perfilEsquadria.getPerfil().getLinha());
-            perfilDto.setStAtivo(perfilEsquadria.getPerfil().isStAtivo());
 
             perfilEsquadriaDto.setPerfil(perfilDto);
 
@@ -120,11 +117,18 @@ public class PerfilEsquadriaService {
         if(perfilEsquadria.getQtPerfil() == null || perfilEsquadria.getQtPerfil() <= 0){
             throw new Exception("A quantidade minima para vincular um perfil a uma esquadria é 1.");
         }
+
+        perfilEsquadria.setDsDesconto(perfilEsquadria.getDsDesconto().trim().replaceAll("\\s+", " "));
+        if(perfilEsquadria.getDsDesconto().trim().length() > 50){
+            throw new Exception("A formula informada é muito grande. Verifique!.");
+        }
     }
 
     private void simulaDesconto(PerfilEsquadria perfilEsquadria) throws Exception{
         try {
             String formula = perfilEsquadria.getDsDesconto().toUpperCase();
+
+            validaCaracteresFormula(formula);
 
             if(formula.trim() != null && !formula.equals("")){
                 formula = formula.replaceAll("LT", String.valueOf(new BigDecimal(100.0)));
@@ -132,10 +136,49 @@ public class PerfilEsquadriaService {
 
                 NumericExpressionEngine.resolve(formula);
             }
-
-        } catch (ScriptException ex) {
+        } catch (Exception ex) {
             System.out.println("erro formula: "+ex);
             throw new Exception("Formula inválida, verifique!");
         }
     }
+    private void validaCaracteresFormula(String formula)throws Exception{
+        String formulaSimulacao = "";
+        String regex = "";
+        /*
+            Aqui valida se há caracteres diferentes de:
+            "+", "-", "*", "/", "(", ")", "AT", "LT"
+        */
+        formulaSimulacao = formula;
+        formulaSimulacao = formulaSimulacao.replaceAll("AT", "");
+        formulaSimulacao = formulaSimulacao.replaceAll("LT", "");
+        formulaSimulacao = formulaSimulacao.replaceAll(",", ".");
+        formulaSimulacao = formulaSimulacao.replaceAll(" ", "");
+        regex = "^[0-9()+\\-*/.]*$";
+        if(!formulaSimulacao.matches(regex)){
+            throw new Exception();
+        };
+
+        /* Aqui valida se os pre fixos "AT" e "LT" não estao sem um separador ARITIMETICO entre eles. */
+        formulaSimulacao = formula;
+        formulaSimulacao = formulaSimulacao.replaceAll("[0-9()]", "");
+        if(formulaSimulacao.contains("AT")||formulaSimulacao.contains("LT")){
+            regex = "AT\\s*[+\\-*/]\\s*LT";
+
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(formulaSimulacao);
+            if (matcher.find()) {
+                throw new Exception();//retorna erro porque encontrou algum caracter sem separador aritimetico
+            }
+        }
+
+        /* Aqui valida se os pre fixos "AT" ou "LT" nao foram informados JUNTOS*/
+        formulaSimulacao = formula;
+        regex = "(AT|LT)(?!\\s*[-+*/])(AT|LT)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(formulaSimulacao);
+        if (matcher.find()) {
+            throw new Exception();//retorna erro porque encontrou algum pre fixo grudado
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ export class InputTextComponent implements AfterViewInit{
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
+  @Input() onlyUpper : boolean = false;
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;
   @Input() set mxModel(val: any) {
