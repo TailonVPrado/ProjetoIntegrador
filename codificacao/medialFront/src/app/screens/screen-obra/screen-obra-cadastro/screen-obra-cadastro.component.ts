@@ -20,6 +20,33 @@ export class ScreenObraCadastroComponent implements OnInit {
               private generic : GenericService) { }
 
   ngOnInit(): void {
+    this.carregaTela();
+  }
+
+  carregaTela(){
+    //todo alterar para passar a empresa tbm
+    this.obraService.getObras(new Obra(), 50).subscribe(
+      (obras) => {
+        this.gridObra = [];
+        obras.forEach((obra, i) =>{
+          obra.dtLancamento = this.generic.formataData(obra.dtLancamento);
+          this.gridObra[i] = obra;
+          this.gridObra[i].properties = new Properties({ativo : false});
+          this.gridObra[i].visibilidadeBotoes = new Map <string, boolean>([
+            [this.tipoBotao.CANCELAR, false],
+             [this.tipoBotao.CONFIRMAR, false],
+             [this.tipoBotao.EDITAR, true],
+             [this.tipoBotao.EXCLUIR, true]
+          ])
+        });
+        if(this.gridObra.length == 0){
+          this.generic.showInformation("Nenhum registro foi encontrado.");
+        }
+      },
+      (error) => {
+        this.generic.showError('Erro ao carregar obras:', error.error.error[0]);
+      }
+    )
   }
 
 

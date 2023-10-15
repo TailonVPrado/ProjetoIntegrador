@@ -19,7 +19,7 @@ export class ObraService {
     return this.http.post<any>(url, obra);
   }
 
-  getObras(obra: Obra): Observable<Obra[]> {
+  getObras(obra: Obra, limit : number = 0): Observable<Obra[]> {
     let params = new HttpParams();
     //todo alterar essa empresa logada aqui
     if(obra.empresa.idEmpresa){
@@ -28,6 +28,7 @@ export class ObraService {
     if(obra.dsObra){
       params = params.set('dsObra', obra.dsObra);
     }
+    params = params.set('limit', limit);
 
     //todo fazer a parada para mandar a data ini e data fim no filtro
 

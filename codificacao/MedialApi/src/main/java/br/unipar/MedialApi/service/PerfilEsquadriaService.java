@@ -173,7 +173,7 @@ public class PerfilEsquadriaService {
                 throw new Exception();//retorna erro porque encontrou algum caracter sem separador aritimetico
             }
         }
-
+    
         /* Aqui valida se os pre fixos "AT" ou "LT" nao foram informados JUNTOS*/
         formulaSimulacao = formula;
         regex = "(AT|LT)(?!\\s*[-+*/])(AT|LT)";

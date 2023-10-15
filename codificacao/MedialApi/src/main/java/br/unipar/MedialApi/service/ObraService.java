@@ -8,6 +8,7 @@ import br.unipar.MedialApi.specification.ObraSpecification;
 import br.unipar.MedialApi.specification.PerfilSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,7 +29,7 @@ public class ObraService {
         return obraRepository.saveAndFlush(obra);
     }
 
-    public List<Obra> findAll(Long idEmpresa, String dsObra){
+    public List<Obra> findAll(Long idEmpresa, String dsObra, Long limit){
         Specification<Obra> spec = Specification.where(null);
 
         if(idEmpresa != null && idEmpresa != 0){
@@ -39,7 +40,17 @@ public class ObraService {
         }
         spec = spec.and(ObraSpecification.ativo());
 
-        return obraRepository.findAll(spec, Sort.by("dtLancamento").descending());
+        Pageable pageable;
+        if (limit != null && limit > 0) {
+            pageable = PageRequest.of(0, limit.intValue(), Sort.by(Sort.Order.desc("dtLancamento")));
+        } else {
+            pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by(Sort.Order.desc("dtLancamento")));
+        }
+
+        Page<Obra> page = obraRepository.findAll(spec, pageable);
+        List<Obra> obras = page.getContent();
+        return obras;
+
     }
 
     private void validaInsert(Obra obra) throws Exception{

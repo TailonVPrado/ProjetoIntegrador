@@ -27,8 +27,9 @@ public class ObraController {
 
     @GetMapping(path = "/all")
     public List<Obra> findByAll (@RequestParam(required = false) Long idEmpresa,
-                                      @RequestParam(required = false) String dsObra) throws Exception{
-        return obraService.findAll(idEmpresa, dsObra);
+                                 @RequestParam(required = false) String dsObra,
+                                 @RequestParam(defaultValue = "0") Long limit) throws Exception{
+        return obraService.findAll(idEmpresa, dsObra, limit);
     }
 /*
     @GetMapping(path = "/all")
