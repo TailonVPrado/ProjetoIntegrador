@@ -81,16 +81,4 @@ export class ScreenObraCadastroComponent implements OnInit {
     );
   }
 
-  onClickExcluirObra(obra : Obra, idx : number){
-  }
-
-  onClickCancelarObra(obra : Obra){
-  }
-
-  onClickEditarObra(obra : Obra){
-  }
-
-  onClickConfirmarObra(obra : Obra){
-  }
-
 }

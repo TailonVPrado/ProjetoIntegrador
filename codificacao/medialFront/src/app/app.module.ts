@@ -29,6 +29,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ScreenObraConsultaComponent } from './screens/screen-obra/screen-obra-consulta/screen-obra-consulta.component';
 import { ScreenObraCadastroComponent } from './screens/screen-obra/screen-obra-cadastro/screen-obra-cadastro.component';
+import { GridObraComponent } from './screens/screen-obra/grid-obra/grid-obra.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -49,7 +50,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     InputNumberComponent,
     InputDateComponent,
     ScreenObraConsultaComponent,
-    ScreenObraCadastroComponent
+    ScreenObraCadastroComponent,
+    GridObraComponent
   ],
   imports: [
     BrowserModule,

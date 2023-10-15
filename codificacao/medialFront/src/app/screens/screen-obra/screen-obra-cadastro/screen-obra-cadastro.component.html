@@ -5,39 +5,5 @@
     <button-default [properties]="buttonCadastrarObra" (onClick)="onClickCadastrarObra()" hint="Adicionar Obra"></button-default>
   </div>
 
-
-  <div class="center" style="width: 95%; margin-left: 3%;">
-    <table class="custom-table" style="width: 95%;" >
-      <thead>
-        <tr>
-          <th class="padding" style="text-align: left;"><span>Descrição Obra</span></th>
-          <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Data Lcto</span></th>
-          <th class="pipe" style="text-align: left; width: 3%;"><span>V.</span></th>
-          <th style="width:30px;"></th>
-          <th style="width:30px;"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let x of gridObra; let i = index"  >
-          <td class="padding">
-            <input-text [isGrid]="true" [(mxModel)]="x.dsObra" [properties]="x.properties" ></input-text>
-          </td>
-          <td class="pipe">
-            <input-date [isGrid]="true" [(mxModel)]="x.dtLancamento" [properties]="x.properties" ></input-date>
-          </td>
-          <td class="pipe">
-            <input-number [isGrid]="true" [(mxModel)]="x.nrVersao" [properties]="x.properties" ></input-number>
-          </td>
-          <td>
-            <button-icon (onClick)="onClickExcluirObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-            <button-icon (onClick)="onClickCancelarObra(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
-          </td>
-          <td>
-            <button-icon (onClick)="onClickEditarObra(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-            <button-icon (onClick)="onClickConfirmarObra(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <grid-obra [gridObra]="gridObra"></grid-obra>
 </div>

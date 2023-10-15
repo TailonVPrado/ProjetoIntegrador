@@ -60,16 +60,4 @@ export class ScreenObraConsultaComponent implements OnInit {
     this.efetuandoAltercaoObra = false;
   }
 
-  onClickExcluirObra(obra: Obra, idx: number) {
-  }
-
-  onClickCancelarObra(obra: Obra) {
-  }
-
-  onClickEditarObra(obra: Obra) {
-  }
-
-  onClickConfirmarObra(obra: Obra) {
-  }
-
 }
