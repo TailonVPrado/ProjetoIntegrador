@@ -28,8 +28,10 @@ public class ObraController {
     @GetMapping(path = "/all")
     public List<Obra> findByAll (@RequestParam(required = false) Long idEmpresa,
                                  @RequestParam(required = false) String dsObra,
+                                 @RequestParam(required = false) Date dtLctoIni,
+                                 @RequestParam(required = false) Date dtLctoFim,
                                  @RequestParam(defaultValue = "0") Long limit) throws Exception{
-        return obraService.findAll(idEmpresa, dsObra, limit);
+        return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim, limit);
     }
 /*
     @GetMapping(path = "/all")

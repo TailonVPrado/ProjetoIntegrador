@@ -30,6 +30,7 @@ import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ScreenObraConsultaComponent } from './screens/screen-obra/screen-obra-consulta/screen-obra-consulta.component';
 import { ScreenObraCadastroComponent } from './screens/screen-obra/screen-obra-cadastro/screen-obra-cadastro.component';
 import { GridObraComponent } from './screens/screen-obra/grid-obra/grid-obra.component';
+import { InputDateRangeComponent } from './components/input-date-range/input-date-range.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -51,7 +52,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     InputDateComponent,
     ScreenObraConsultaComponent,
     ScreenObraCadastroComponent,
-    GridObraComponent
+    GridObraComponent,
+    InputDateRangeComponent
   ],
   imports: [
     BrowserModule,

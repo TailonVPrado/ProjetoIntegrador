@@ -1,0 +1,14 @@
+<div [ngClass]="{'main' : !isGrid, 'flex-container': !isGrid}">
+  <label *ngIf="!isGrid">{{properties?.label}}</label>
+  <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
+    <input type="text"
+          style="text-align: center;"
+          [disabled]="!properties?.ativo"
+          [placeholder]="properties?.placeholder"
+          [(ngModel)]="mxModel"
+          [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
+          bsDaterangepicker
+          #drp="bsDaterangepicker"
+          [bsConfig]="{ isAnimated: true }">
+  </div>
+</div>

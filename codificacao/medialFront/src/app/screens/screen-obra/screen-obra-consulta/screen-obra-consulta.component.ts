@@ -14,13 +14,19 @@ import { ObraService } from 'src/app/services/obra.service';
   styleUrls: ['./screen-obra-consulta.component.scss']
 })
 export class ScreenObraConsultaComponent implements OnInit {
-
+  bsValue = new Date();
+  bsRangeValue: Date[];
+  maxDate = new Date();
 
   constructor(public tipoBotao: TipoBotao,
     public obraService: ObraService,
-    private generic: GenericService) { }
+    private generic: GenericService) {
+      this.maxDate.setDate(this.maxDate.getDate() + 7);
+      this.bsRangeValue = [this.bsValue, this.maxDate];
+    }
 
   ngOnInit(): void {
+   this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 15);
   }
 
 
@@ -28,14 +34,14 @@ export class ScreenObraConsultaComponent implements OnInit {
   gridObra: Obra[] = [];
 
   inputDsObra = new InputModel({ label: 'Descrição', placeholder: 'Insira a descrição' });
-  // inputDtLancamento = new InputModel({ label: 'Data Lcto', placeholder: 'Insira a data' });
+  inputDtLancamento = new InputModel({ label: 'Data Lcto', placeholder: 'Insira a data' });
   buttonCadastrarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
-
+  datasFiltro : Date[] = [new Date(), new Date()];
   efetuandoAltercaoObra : boolean = false;
 
   onClickConsultarObra() {
     //todo alterar para passar a empresa tbm
-    this.obraService.getObras(this.obra).subscribe(
+    this.obraService.getObras(this.obra, this.datasFiltro).subscribe(
       (obras) => {
         this.gridObra = [];
         obras.forEach((obra, i) =>{

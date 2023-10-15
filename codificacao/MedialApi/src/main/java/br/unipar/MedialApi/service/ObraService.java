@@ -29,7 +29,7 @@ public class ObraService {
         return obraRepository.saveAndFlush(obra);
     }
 
-    public List<Obra> findAll(Long idEmpresa, String dsObra, Long limit){
+    public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit){
         Specification<Obra> spec = Specification.where(null);
 
         if(idEmpresa != null && idEmpresa != 0){
@@ -38,6 +38,15 @@ public class ObraService {
         if(dsObra != null){
             spec = spec.and(ObraSpecification.descricaoContains(dsObra));
         }
+        if (dtLctoIni != null) {
+            spec = spec.and(ObraSpecification.lancamentoMaiorQue(dtLctoIni));
+        }
+
+        if (dtLctoFim != null) {
+            spec = spec.and(ObraSpecification.lancamentoMenorQue(dtLctoFim));
+        }
+
+
         spec = spec.and(ObraSpecification.ativo());
 
         Pageable pageable;

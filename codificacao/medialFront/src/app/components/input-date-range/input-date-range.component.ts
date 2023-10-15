@@ -3,12 +3,11 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Properties } from 'src/app/models/interface/properties.model';
 
 @Component({
-  selector: 'input-date',
-  templateUrl: './input-date.component.html',
-  styleUrls: ['./input-date.component.scss']
+  selector: 'input-date-range',
+  templateUrl: './input-date-range.component.html',
+  styleUrls: ['./input-date-range.component.scss']
 })
-export class InputDateComponent implements OnInit {
-
+export class InputDateRangeComponent implements OnInit {
 
   ngOnInit(): void {
   }
@@ -19,20 +18,18 @@ export class InputDateComponent implements OnInit {
   actualValue: any;
 
 
-  constructor(private localeService: BsLocaleService) { this.localeService.use('pt-br');  }
+  constructor(private localeService: BsLocaleService) {
+    this.localeService.use('pt-br');
+    this.mxModel = [new Date(), new Date()];
+  }
 
 
-  @Input() set mxModel(val: any) {
+  @Input() set mxModel(val: any[]) {
     this.actualValue = val;
     this.mxModelChange.emit(val);
   } get mxModel() {
     return this.actualValue;
   }
 
-  onBlur(){
-    if(this.actualValue == "Invalid Date"){
-      this.actualValue = new Date();
-    }
-  }
 
 }
