@@ -44,4 +44,9 @@ export class EsquadriaService {
     const url = `${this.apiUrl}/esquadria`;
     return this.http.put<any>(url, esquadria);
   }
+
+  getEsquadriaById(id: number): Observable<any>{
+    const url = `${this.apiUrl}/esquadria/`+id;
+    return this.http.get<Esquadria>(url);
+  }
 }

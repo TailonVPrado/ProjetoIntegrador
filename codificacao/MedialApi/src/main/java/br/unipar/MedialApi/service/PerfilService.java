@@ -125,7 +125,7 @@ public class PerfilService {
         if(retorno.isPresent()){
             return retorno.get();
         }else{
-            throw new Exception("perfil com o ID ("+id+") não encontrado");
+            throw new Exception("Perfil com o ID ("+id+") não encontrado");
         }
     }
 
