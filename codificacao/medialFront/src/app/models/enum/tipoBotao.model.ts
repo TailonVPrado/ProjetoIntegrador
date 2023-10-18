@@ -7,4 +7,5 @@ import { Injectable } from "@angular/core";
   CANCELAR: string = 'CANCELAR';
   EDITAR:  string = 'EDITAR';
   IMAGEM: string = 'IMAGEM';
+  DUPLICAR: string = 'DUPLICAR';
 }

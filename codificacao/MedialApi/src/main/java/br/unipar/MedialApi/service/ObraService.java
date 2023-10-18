@@ -83,7 +83,7 @@ public class ObraService {
     }
     private void validaFks(Obra obra) throws Exception{
         if(obra.getEmpresa() == null || obra.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir ua obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new Exception("Não é possivel inserir uma obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }
 
