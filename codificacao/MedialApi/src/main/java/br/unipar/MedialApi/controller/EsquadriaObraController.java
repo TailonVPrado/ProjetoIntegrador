@@ -1,10 +1,24 @@
 package br.unipar.MedialApi.controller;
 
+import br.unipar.MedialApi.model.EsquadriaObra;
+import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
+import br.unipar.MedialApi.service.EsquadriaObraService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/esquadriaobra")
 public class EsquadriaObraController {
-
+    @Autowired
+    private EsquadriaObraService esquadriaObraService;
+    @GetMapping(path = "/all")
+    public List<EsquadriaObra> findByAll (@RequestParam(required = false) Long idObra,
+                                          @RequestParam(required = false) Long idEsquadria) throws Exception{
+        return esquadriaObraService.findAll(idObra, idEsquadria);
+    }
 }
