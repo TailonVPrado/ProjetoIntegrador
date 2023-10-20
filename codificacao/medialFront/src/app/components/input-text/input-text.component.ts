@@ -14,6 +14,7 @@ export class InputTextComponent implements AfterViewInit{
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
   @Input() campoFormula : boolean = false;
+  @Input() align : string = '';
 
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;

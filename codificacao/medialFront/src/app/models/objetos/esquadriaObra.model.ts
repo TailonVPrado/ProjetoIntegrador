@@ -3,7 +3,7 @@ import { Esquadria } from "./esquadria.model";
 import { Obra } from "./obra.model";
 
 export class EsquadriaObra {
-  idPerfilEsquadria : number;
+  idEsquadriaObra : number;
   cdEsquadriaObra : string;
   dsCor : string;
   tmAltura : number;
@@ -14,7 +14,7 @@ export class EsquadriaObra {
   visibilidadeBotoes: Map<string, boolean>;
 
   constructor(
-    idPerfilEsquadria: number = 0,
+    idEsquadriaObra: number = 0,
     cdEsquadriaObra: string = '',
     dsCor: string = '',
     tmAltura : number = 0,
@@ -24,7 +24,7 @@ export class EsquadriaObra {
     properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
-    this.idPerfilEsquadria = idPerfilEsquadria;
+    this.idEsquadriaObra = idEsquadriaObra;
     this.cdEsquadriaObra = cdEsquadriaObra;
     this.dsCor = dsCor;
     this.tmAltura = tmAltura;

@@ -27,7 +27,7 @@ public class EsquadriaObra {
 	private Long idEsquadriaObra;
 	
 	@Column(name = "CD_ESQUADRIAOBRA", length = 5, nullable = false)
-	private String cdEsquadriaobra;
+	private String cdEsquadriaObra;
 	
 	@Column(name = "TM_LARGURA", columnDefinition = "numeric(5,1)", nullable = false)
 	private BigDecimal  tmLargura;
@@ -48,7 +48,7 @@ public class EsquadriaObra {
 
 	@Column(name = "DS_COR", length = 20)
 	@Enumerated(EnumType.STRING)
-	private CorEnum corEnum;
+	private CorEnum dsCor;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_OBRA", nullable = false)

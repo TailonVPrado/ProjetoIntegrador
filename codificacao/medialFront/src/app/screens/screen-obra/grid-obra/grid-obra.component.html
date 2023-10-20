@@ -51,7 +51,7 @@
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
       <!-- select de cor TODO -->
       <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
-      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura"></input-number>
+      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [align]="'right'"></input-number>
       <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura"></input-number>
       <button-default [properties]="buttonCadastrarEsquadriaObra" (onClick)="onClickCadastrarEsquadriaObra()" hint="Vincular Perfil"></button-default>
     </div>
@@ -61,11 +61,11 @@
         <thead>
           <tr>
             <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
-            <!-- <th class="pipe" style="text-align: left; width: 25%;"><span>Cor</span></th> select de cor TODO -->
-            <th class="pipe" style="text-align: left; width: 8%;"><span>Cód</span></th>
-            <th class="pipe" style="text-align: left; width: 8%;"><span>Altura</span></th>
-            <th class="pipe" style="text-align: left; width: 10px;"><span>X</span></th>
-            <th class="pipe" style="text-align: left; width: 8%;"><span>Largura</span></th>
+            <!-- <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Cor</span></th> select de cor TODO -->
+            <th class="pipe" style="text-align: left; width: 8%; text-align: center;"><span>Cód</span></th>
+            <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
+            <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
+            <th style="text-align: left; width: 8%;"><span>Largura</span></th>
             <th style="width:30px;"></th><!--botao-->
             <th style="width:30px;"></th><!--botao-->
             <th style="width:30px;"></th><!--botao-->
@@ -80,15 +80,15 @@
               <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" [campoFormula]="true"></input-text>
             </td> select de cor TODO -->
             <td class="pipe">
-              <input-number [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" ></input-number>
+              <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
             </td>
             <td class="pipe">
-              <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" ></input-number>
+              <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [align]="'right'"></input-number>
             </td>
-            <td class="pipe">
-              <span>X</span>
+            <td>
+              <span style="text-align: center;">X</span>
             </td>
-            <td class="pipe">
+            <td>
               <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" ></input-number>
             </td>
             <td>

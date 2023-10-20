@@ -6,7 +6,7 @@
     (input)="onInput()"
     [placeholder]="properties?.placeholder"
     [(ngModel)]="mxModel"
-    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
+    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '', 'text-align': align }"
     [ngClass]="{'uppercase-input': campoFormula}"
     (keydown)="onKeyDown($event)"
     (focus)="onFocus()"

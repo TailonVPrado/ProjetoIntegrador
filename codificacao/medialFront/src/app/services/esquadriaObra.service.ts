@@ -1,9 +1,8 @@
+import { EsquadriaObra } from 'src/app/models/objetos/esquadriaObra.model';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PerfilEsquadria } from '../models/objetos/perfilEsquadria.model';
 import { Observable } from 'rxjs';
-import { EsquadriaObra } from '../models/objetos/esquadriaObra.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +25,14 @@ export class EsquadriaObraService {
 
     const url = `${this.apiUrl}/esquadriaobra/all`;
     return this.http.get<EsquadriaObra[]>(url, {params});
+  }
+
+  createEsquadriaObra(esquadriaObra : EsquadriaObra): Observable<any>{
+    const url = `${this.apiUrl}/esquadriaobra`;
+
+    //todo tirar a cor da esquadria aqui
+    esquadriaObra.dsCor = 'Preto';
+    return this.http.post<EsquadriaObra[]>(url, esquadriaObra);
   }
 
 }

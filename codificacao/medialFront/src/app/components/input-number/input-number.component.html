@@ -5,7 +5,7 @@
     [disabled]="!properties?.ativo"
     [placeholder]="properties?.placeholder"
     [(ngModel)]="mxModel"
-    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
+    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '', 'text-align': align }"
     currencyMask [options]="{'prefix': '',
                              'thousands': '',
                              'decimal': ',',

@@ -9,6 +9,7 @@ import { Properties } from 'src/app/models/interface/properties.model';
 import { EsquadriaObra } from 'src/app/models/objetos/esquadriaObra.model';
 import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
+import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
   selector: 'grid-obra',
@@ -20,7 +21,8 @@ export class GridObraComponent implements OnInit {
   constructor(public tipoBotao : TipoBotao,
               private esquadriaService : EsquadriaService,
               private modalService: BsModalService,
-              private esquadriaObraService : EsquadriaObraService) { }
+              private esquadriaObraService : EsquadriaObraService,
+              private generic : GenericService,) { }
 
   ngOnInit(): void {
   }
@@ -118,34 +120,31 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickCadastrarEsquadriaObra(){
-    // todo
-    // this.perfilEsquadriaService.createPerfilEsquadria(this.perfilEsquadria).subscribe(
-    //   (response) => {
-    //     this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
+    this.esquadriaObraService.createEsquadriaObra(this.esquadriaObra).subscribe(
+      (response) => {
+        this.generic.showSuccess("Esquadria ("+this.esquadriaObra.esquadria.dsEsquadria+") vinculada a obra ("+ this.esquadriaObra.obra.dsObra +") com sucesso!");
 
-    //     this.perfilEsquadria.idPerfilEsquadria = response.idPerfilEsquadria;
-    //     this.perfilEsquadria.dsDesconto = response.dsDesconto;
-    //     /*adiciona o perfil no topo do grid para manipular alguma coisa, caso o usuario queira*/
-    //     this.gridPerfilEsquadria.splice(0,0,  Object.assign({}, this.perfilEsquadria) );
-    //     this.gridPerfilEsquadria[0].properties = new Properties({ativo : false});
-    //     this.gridPerfilEsquadria[0].visibilidadeBotoes = new Map <string, boolean>([
-    //       [this.tipoBotao.CANCELAR, false],
-    //        [this.tipoBotao.CONFIRMAR, false],
-    //        [this.tipoBotao.EDITAR, true],
-    //        [this.tipoBotao.EXCLUIR, true],
-    //        [this.tipoBotao.DUPLICAR, true]
-    //     ])
-    //     //todo ver como o generic daz para mudar o duplicar
-    //     this.perfilEsquadria.perfil = new Perfil();
-    //     this.perfilEsquadria.idPerfilEsquadria = 0;
-    //     this.perfilEsquadria.dsDesconto = '';
-    //     this.perfilEsquadria.qtPerfil = 1;
+        this.esquadriaObra.idEsquadriaObra = response.idEsquadriaObra;
 
-    //   },
-    //   (error) => {
-    //     this.generic.showError(error.error.errors[0]);
-    //   }
-    // );
+        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+        this.gridEsquadriaObra.splice(0,0,  Object.assign({}, this.esquadriaObra) );
+        this.gridEsquadriaObra[0].properties = new Properties({ativo : false});
+        this.gridEsquadriaObra[0].visibilidadeBotoes = new Map <string, boolean>([
+          [this.tipoBotao.CANCELAR, false],
+           [this.tipoBotao.CONFIRMAR, false],
+           [this.tipoBotao.EDITAR, true],
+           [this.tipoBotao.EXCLUIR, true],
+           [this.tipoBotao.DUPLICAR, true]
+        ])
+        //todo ver como o generic daz para mudar o duplicar
+        this.esquadriaObra.esquadria = new Esquadria();
+        this.esquadriaObra.idEsquadriaObra = 0;
+
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
   }
 
   onClickDuplicarEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){

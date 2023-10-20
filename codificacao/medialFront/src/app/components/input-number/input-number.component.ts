@@ -17,6 +17,8 @@ export class InputNumberComponent implements OnInit {
   @Input() isGrid: boolean = false;
   @Input() decimal : boolean = false;
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Input() align : string = '';
+
   actualValue: any;
 
   @Input() set mxModel(val: any) {
