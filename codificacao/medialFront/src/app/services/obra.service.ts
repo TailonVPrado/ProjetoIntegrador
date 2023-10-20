@@ -40,4 +40,10 @@ export class ObraService {
     const url = `${this.apiUrl}/obra/all`;
     return this.http.get<Obra[]>(url, {params});
   }
+
+  deleteObra(obra : Obra) : Observable<any> {
+    const url = `${this.apiUrl}/obra/`+obra.idObra;
+    return this.http.delete<any>(url);
+  }
+
 }

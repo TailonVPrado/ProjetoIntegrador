@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.controller;
 
+import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.service.ObraService;
@@ -32,6 +33,11 @@ public class ObraController {
                                  @RequestParam(required = false) Date dtLctoFim,
                                  @RequestParam(defaultValue = "0") Long limit) throws Exception{
         return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim, limit);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public Obra delete(@PathVariable Long id) throws Exception{
+        return obraService.delete(id);
     }
 /*
     @GetMapping(path = "/all")

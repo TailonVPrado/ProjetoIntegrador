@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ObraService {
@@ -60,6 +62,24 @@ public class ObraService {
         List<Obra> obras = page.getContent();
         return obras;
 
+    }
+
+    public Obra delete(Long id) throws Exception{
+        Obra obra = findById(id);
+
+        obra.setStAtivo(false);
+
+        obraRepository.saveAndFlush(obra);
+        return obra;
+    }
+
+    public Obra findById(Long id) throws Exception{
+        Optional<Obra> retorno = obraRepository.findById(id);
+        if(retorno.isPresent()){
+            return retorno.get();
+        }else {
+            throw new Exception("Obra com o ID ("+id+") não encontrada");
+        }
     }
 
     private void validaInsert(Obra obra) throws Exception{

@@ -1,3 +1,4 @@
+import { ObraService } from './../../../services/obra.service';
 import { Esquadria } from './../../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../../services/esquadria.service';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
@@ -22,7 +23,8 @@ export class GridObraComponent implements OnInit {
               private esquadriaService : EsquadriaService,
               private modalService: BsModalService,
               private esquadriaObraService : EsquadriaObraService,
-              private generic : GenericService,) { }
+              private generic : GenericService,
+              private obraService : ObraService) { }
 
   ngOnInit(): void {
   }
@@ -31,7 +33,18 @@ export class GridObraComponent implements OnInit {
   @Input() efetuandoAltercaoObra : boolean = false;
 
 
-  onClickExcluirObra(obra : Obra, idx : number){
+  async onClickExcluirObra(obra : Obra, idx : number){
+    if(await this.generic.showAlert('Deseja realmente remover esta obra?') == 1){
+      this.obraService.deleteObra(obra).subscribe(
+        (response) => {
+          this.generic.showSuccess("Obra ("+obra.dsObra.trim()+") excluido com sucesso!");
+          this.gridObra.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }
   }
 
   onClickCancelarObra(obra : Obra){
