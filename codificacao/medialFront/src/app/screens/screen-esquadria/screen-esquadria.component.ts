@@ -125,7 +125,6 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-
   private esquadriaOld : Esquadria = new Esquadria();
   efetuandoAltercaoEsquadria : boolean = false;
   onClickEditarEsquadria(esquadria : Esquadria){
@@ -263,7 +262,6 @@ export class ScreenEsquadriaComponent implements OnInit {
     this.efetuandoAltercaoPerfilEsquadria = false;
   }
 
-
   onClickCadastrarPerfilEsquadria(){
     this.perfilEsquadriaService.createPerfilEsquadria(this.perfilEsquadria).subscribe(
       (response) => {
@@ -292,7 +290,6 @@ export class ScreenEsquadriaComponent implements OnInit {
       }
     );
   }
-
 
   async onClickExcluirPerfilEsquadria(perfilEsquadria: PerfilEsquadria, idx: number){
     if(await this.generic.showAlert('Deseja realmente desvincular este perfil?') == 1){

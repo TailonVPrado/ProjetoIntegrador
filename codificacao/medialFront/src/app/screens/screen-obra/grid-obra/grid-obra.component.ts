@@ -55,6 +55,8 @@ export class GridObraComponent implements OnInit {
 
   onClickConfirmarObra(obra : Obra){
   }
+
+
   esquadriaObra : EsquadriaObra = new EsquadriaObra();
   esquadriasDisponiveis : Map<number, string> = new Map<number, string>();
 
@@ -76,6 +78,11 @@ export class GridObraComponent implements OnInit {
     keyboard: false,
     class: 'full-size-modal'
   };
+
+
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
 
   openModalEsquadriaObra(template: TemplateRef<any>, obra: Obra){
     if(!obra.properties.ativo){
@@ -160,11 +167,18 @@ export class GridObraComponent implements OnInit {
     );
   }
 
-  onClickDuplicarEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
-
-  }
-
-  onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
+  async onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
+    if(await this.generic.showAlert('Deseja realmente desvincular esta esquadria?') == 1){
+      this.esquadriaObraService.desvinculaEsquadria(esquadriaObra).subscribe(
+        (response) => {
+          this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
+          this.gridEsquadriaObra.splice(idx, 1);
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }
   }
 
   onClickCancelarEsquadriaObra(esquadriaObra : EsquadriaObra){
@@ -174,5 +188,8 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickConfirmarEsquadriaObra(esquadriaObra : EsquadriaObra){
+  }
+
+  onClickDuplicarEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
   }
 }

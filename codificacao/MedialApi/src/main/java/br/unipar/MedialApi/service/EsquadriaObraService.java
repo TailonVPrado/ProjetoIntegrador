@@ -1,6 +1,7 @@
 package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
+import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.specification.EsquadriaObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EsquadriaObraService {
@@ -37,6 +39,23 @@ public class EsquadriaObraService {
 
         esquadriaObra.setStAtivo(true);
         return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+    }
+
+    public EsquadriaObra delete (Long idEsquadriaObra) throws Exception{
+        EsquadriaObra esquadriaObra = findById(idEsquadriaObra);
+
+        esquadriaObra.setStAtivo(false);
+
+        return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+    }
+
+    public EsquadriaObra findById(Long id) throws Exception{
+        Optional<EsquadriaObra> retorno = esquadriaObraRepository.findById(id);
+        if(retorno.isPresent()){
+            return retorno.get();
+        }else{
+            throw new Exception("Vinculo com o ID ("+id+") não encontrado");
+        }
     }
 
     private void validaInsert(EsquadriaObra esquadriaObra) throws Exception{

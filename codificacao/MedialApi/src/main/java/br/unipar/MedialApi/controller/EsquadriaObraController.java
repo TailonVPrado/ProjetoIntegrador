@@ -23,4 +23,9 @@ public class EsquadriaObraController {
     public EsquadriaObra insert (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
         return esquadriaObraService.insert(esquadriaObra);
     }
+
+    @DeleteMapping(path = "/{id}")
+    public EsquadriaObra delete(@PathVariable Long id) throws Exception{
+        return esquadriaObraService.delete(id);
+    }
 }
