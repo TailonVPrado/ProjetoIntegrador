@@ -51,8 +51,8 @@
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
       <!-- select de cor TODO -->
       <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
-      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [align]="'right'"></input-number>
-      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura"></input-number>
+      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
+      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>
       <button-default [properties]="buttonCadastrarEsquadriaObra" (onClick)="onClickCadastrarEsquadriaObra()" hint="Vincular Perfil"></button-default>
     </div>
 
@@ -83,13 +83,13 @@
               <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
             </td>
             <td class="pipe">
-              <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [align]="'right'"></input-number>
+              <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [decimal]="true" [align]="'right'"></input-number>
             </td>
             <td>
               <span style="text-align: center;">X</span>
             </td>
             <td>
-              <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" ></input-number>
+              <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true"></input-number>
             </td>
             <td>
               <button-icon (onClick)="onClickDuplicarEsquadriaObra(x, i)" nomeIcone="duplicar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.DUPLICAR)" hint="Duplicar"></button-icon>
