@@ -24,6 +24,7 @@ public class LinhaTest {
     void setUp(){
         empresa.setIdEmpresa((long) -999);
         empresa.setNmEmpresa("Empresa para teste unitário");
+        linha.setDsLinha("Nome da Linha");
     }
 
     @Test
