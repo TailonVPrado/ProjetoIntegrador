@@ -20,12 +20,6 @@ public class LinhaService {
 
     @Autowired
     private LinhaRepository linhaRepository;
-    @Autowired
-    private PerfilRepository perfilRepository;
-    @Autowired
-    private EsquadriaRepository esquadriaRepository;
-    @Autowired
-    private EmpresaRepository empresaRepository;
 
     public Linha insert(Linha linha) throws Exception{
         validaInsert(linha);

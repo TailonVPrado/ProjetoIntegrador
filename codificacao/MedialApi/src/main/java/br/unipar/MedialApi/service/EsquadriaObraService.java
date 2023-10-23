@@ -2,6 +2,7 @@ package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
+import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.specification.EsquadriaObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,10 @@ public class EsquadriaObraService {
         }else{
             throw new Exception("Vinculo com o ID ("+id+") não encontrado");
         }
+    }
+
+    public List<CorEnum> getCotes() {
+        return List.of(CorEnum.values());
     }
 
     private void validaInsert(EsquadriaObra esquadriaObra) throws Exception{

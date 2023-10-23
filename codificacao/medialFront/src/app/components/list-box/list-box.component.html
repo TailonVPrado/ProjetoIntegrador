@@ -1,0 +1,9 @@
+<div [ngClass]="{'main' : !isGrid, 'flex-container': !isGrid}">
+  <label *ngIf="!isGrid">{{properties?.label}}</label>
+  <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
+    <select>
+      <option value=""></option>
+      <option *ngFor="let item of list" value={{item}}>{{item}}</option>
+    </select>
+  </div>
+</div>

@@ -8,6 +8,7 @@
 .window,
 input::placeholder,
 button,
+select,
 span {
   font-family: 'Nunito', monospace;
   line-height:20px;
@@ -16,6 +17,7 @@ span {
 }
 
 input,
+select,
 label,
 th,
 button{
@@ -26,6 +28,8 @@ button{
 
 button:focus,
 button:hover,
+select:focus,
+select:hover,
 input:focus,
 input:hover {
   outline: 2px solid #7ab6f7;
@@ -36,6 +40,12 @@ input::placeholder{
   color:rgba(0, 0, 0, 0.200);
   font-size: 17px;
 }
+
+select::placeholder{
+  color:rgba(0, 0, 0, 0.200);
+  font-size: 17px;
+}
+
 .toast-container {
   font-family:'Nunito';
   // background-color: rgba(0, 123, 255, 0.9);
@@ -121,6 +131,11 @@ body {
 }
 
 .custom-table td input {
+  border: none ;
+  background-color: #b3e4ff00 ;
+  outline: 0px ;
+}
+.custom-table td select {
   border: none ;
   background-color: #b3e4ff00 ;
   outline: 0px ;
@@ -235,6 +250,10 @@ tbody tr:focus-within {
 
 //evita click em linhas para abrir modais caso o campo esteja aberto para edição
 .click-row input[disabled] {
+  pointer-events: none;
+}
+//evita click em linhas para abrir modais caso o campo esteja aberto para edição
+.click-row select[disabled] {
   pointer-events: none;
 }
 

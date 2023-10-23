@@ -27,11 +27,20 @@ export class GridObraComponent implements OnInit {
               private obraService : ObraService) { }
 
   ngOnInit(): void {
+    this.carregaCores();
   }
 
   @Input() gridObra: Obra[] = [];
   @Input() efetuandoAltercaoObra : boolean = false;
 
+  cores : string[] = [];
+  carregaCores(){
+    this.esquadriaObraService.getCores().subscribe(
+      (response) => {
+        this.cores = response;
+      }
+    )
+  }
 
   async onClickExcluirObra(obra : Obra, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover esta obra?') == 1){

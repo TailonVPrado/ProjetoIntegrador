@@ -50,6 +50,7 @@
       [itensDisponiveis]="this.esquadriasDisponiveis"
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
       <!-- select de cor TODO -->
+      <list-box [list]="cores"></list-box>
       <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
       <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>

@@ -31,6 +31,7 @@ import { ScreenObraConsultaComponent } from './screens/screen-obra/screen-obra-c
 import { ScreenObraCadastroComponent } from './screens/screen-obra/screen-obra-cadastro/screen-obra-cadastro.component';
 import { GridObraComponent } from './screens/screen-obra/grid-obra/grid-obra.component';
 import { InputDateRangeComponent } from './components/input-date-range/input-date-range.component';
+import { ListBoxComponent } from './components/list-box/list-box.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -53,7 +54,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     ScreenObraConsultaComponent,
     ScreenObraCadastroComponent,
     GridObraComponent,
-    InputDateRangeComponent
+    InputDateRangeComponent,
+    ListBoxComponent
   ],
   imports: [
     BrowserModule,

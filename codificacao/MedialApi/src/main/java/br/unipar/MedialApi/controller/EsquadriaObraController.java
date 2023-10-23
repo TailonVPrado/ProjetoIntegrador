@@ -2,6 +2,7 @@ package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
+import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.service.EsquadriaObraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,5 +28,10 @@ public class EsquadriaObraController {
     @DeleteMapping(path = "/{id}")
     public EsquadriaObra delete(@PathVariable Long id) throws Exception{
         return esquadriaObraService.delete(id);
+    }
+
+    @GetMapping(path = "/cores")
+    private List<CorEnum> getCores(){
+        return esquadriaObraService.getCotes();
     }
 }

@@ -41,4 +41,10 @@ export class EsquadriaObraService {
     const url = `${this.apiUrl}/esquadriaobra/`+esquadriaObra.idEsquadriaObra;
     return this.http.delete<any>(url);
   }
+
+  getCores() : Observable<string[]>{
+    const url = `${this.apiUrl}/esquadriaobra/cores`;
+    return this.http.get<string[]>(url);
+  }
+
 }

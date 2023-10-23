@@ -7,6 +7,8 @@ public enum CorEnum {
     PRETO,
     @JsonProperty("Branco")
     BRANCO,
+    @JsonProperty("Bronze")
+    BRONZE,
     @JsonProperty("Amadeirado")
     AMADEIRADO,
     @JsonProperty("Marrom")
@@ -15,7 +17,5 @@ public enum CorEnum {
     @JsonProperty("Prata")
     PRATA,
     @JsonProperty("Cinza")
-    CINZA,
-    @JsonProperty("Beonze")
-    BRONZE
+    CINZA
 }
