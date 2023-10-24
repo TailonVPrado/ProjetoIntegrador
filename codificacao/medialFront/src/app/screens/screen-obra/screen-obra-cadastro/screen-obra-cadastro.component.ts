@@ -58,6 +58,7 @@ export class ScreenObraCadastroComponent implements OnInit {
   gridObra: Obra[] = [];
 
   onClickCadastrarObra(){
+    this.buttonCadastrarObra.isRequesting = true;
     this.obraService.createObra(this.obra).subscribe(
       (response) => {
         this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
@@ -78,7 +79,9 @@ export class ScreenObraCadastroComponent implements OnInit {
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrarObra.isRequesting = false;
+    });
   }
 
 }

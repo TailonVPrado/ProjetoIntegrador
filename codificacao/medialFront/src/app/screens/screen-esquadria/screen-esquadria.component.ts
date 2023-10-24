@@ -59,6 +59,7 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
   onClickCadastrarEsquadria(){
+    this.buttonCadastrarEsquadria.isRequesting = true;
     this.esquadriaService.createEsquadria(this.esquadria).subscribe(
       (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadria.dsEsquadria.trim()+") cadastrada com sucesso!");
@@ -78,7 +79,9 @@ export class ScreenEsquadriaComponent implements OnInit {
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrarEsquadria.isRequesting = false;
+    });
   }
 
   onClickConsultarEsquadria(){
@@ -87,6 +90,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   carregaEsquadrias() {
     //todo alterar para passar a empresa tbm
+    this.buttonConsultarEsquadria.isRequesting = true;
     this.esquadriaService.getEsquadrias(this.esquadria).subscribe(
       (perfis) => {
         this.gridEsquadria = [];
@@ -107,7 +111,9 @@ export class ScreenEsquadriaComponent implements OnInit {
       (error) => {
         this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
       }
-    )
+    ).add(() =>{
+      this.buttonConsultarEsquadria.isRequesting = false;
+    });
     this.efetuandoAltercaoEsquadria = false;
   }
 
@@ -263,6 +269,7 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
   onClickCadastrarPerfilEsquadria(){
+    this.buttonCadastrarPerfilEsquadria.isRequesting = true;
     this.perfilEsquadriaService.createPerfilEsquadria(this.perfilEsquadria).subscribe(
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfilEsquadria.perfil.dsPerfil+") vinculado a esquadria ("+ this.perfilEsquadria.esquadria.dsEsquadria +") com sucesso!");
@@ -288,7 +295,9 @@ export class ScreenEsquadriaComponent implements OnInit {
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrarPerfilEsquadria.isRequesting = false;
+    });
   }
 
   async onClickExcluirPerfilEsquadria(perfilEsquadria: PerfilEsquadria, idx: number){

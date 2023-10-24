@@ -149,6 +149,7 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickCadastrarEsquadriaObra(){
+    this.buttonCadastrarEsquadriaObra.isRequesting = true;
     this.esquadriaObraService.createEsquadriaObra(this.esquadriaObra).subscribe(
       (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadriaObra.esquadria.dsEsquadria+") vinculada a obra ("+ this.esquadriaObra.obra.dsObra +") com sucesso!");
@@ -173,7 +174,9 @@ export class GridObraComponent implements OnInit {
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrarEsquadriaObra.isRequesting = false;
+    });;
   }
 
   async onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){

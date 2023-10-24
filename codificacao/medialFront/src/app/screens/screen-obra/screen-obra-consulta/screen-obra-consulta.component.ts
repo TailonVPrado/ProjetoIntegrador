@@ -35,12 +35,13 @@ export class ScreenObraConsultaComponent implements OnInit {
 
   inputDsObra = new InputModel({ label: 'Descrição', placeholder: 'Insira a descrição' });
   inputDtLancamento = new InputModel({ label: 'Data Lcto', placeholder: 'Insira a data' });
-  buttonCadastrarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
+  buttonConsultarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
   datasFiltro : Date[] = [new Date(), new Date()];
   efetuandoAltercaoObra : boolean = false;
 
   onClickConsultarObra() {
     //todo alterar para passar a empresa tbm
+    this.buttonConsultarObra.isRequesting = true;
     this.obraService.getObras(this.obra, this.datasFiltro).subscribe(
       (obras) => {
         this.gridObra = [];
@@ -62,7 +63,9 @@ export class ScreenObraConsultaComponent implements OnInit {
       (error) => {
         this.generic.showError('Erro ao carregar obras:', error.error.error[0]);
       }
-    )
+    ).add(() =>{
+      this.buttonConsultarObra.isRequesting = false;
+    });
     this.efetuandoAltercaoObra = false;
   }
 

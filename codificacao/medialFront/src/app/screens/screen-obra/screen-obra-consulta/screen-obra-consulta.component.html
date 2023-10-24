@@ -2,7 +2,7 @@
   <div class="left" style="margin-bottom: 50px; margin-top: 30px; margin-left: 7%; margin-right: 7%;">
     <input-text style="width: 60%;" [(mxModel)]="obra.dsObra" [properties]="inputDsObra"></input-text>
     <input-date-range [(mxModel)]="datasFiltro" style="width: 40%;" [properties]="inputDtLancamento"></input-date-range>
-    <button-default [properties]="buttonCadastrarObra" (onClick)="onClickConsultarObra()" hint="Consultar Obras"></button-default>
+    <button-default [properties]="buttonConsultarObra" (onClick)="onClickConsultarObra()" hint="Consultar Obras"></button-default>
   </div>
 
   <grid-obra [gridObra]="gridObra" [efetuandoAltercaoObra]="efetuandoAltercaoObra"> </grid-obra>

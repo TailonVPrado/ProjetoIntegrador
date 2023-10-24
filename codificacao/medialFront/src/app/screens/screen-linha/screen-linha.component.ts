@@ -31,6 +31,7 @@ export class ScreenLinhaComponent implements OnInit{
   gridLinhas: Linha[] = [];
 
   onClickSalvar(): void {
+    this.buttonCadastrar.isRequesting = true;
     this.linhaService.createLinha(this.linha).subscribe(
       (response) => {
         this.generic.showSuccess("Linha ("+this.linha.dsLinha.trim()+") cadastrada com sucesso!");
@@ -40,7 +41,9 @@ export class ScreenLinhaComponent implements OnInit{
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrar.isRequesting = false;
+    });;
   }
   onClickConsultar(){
     this.carregarLinhas();

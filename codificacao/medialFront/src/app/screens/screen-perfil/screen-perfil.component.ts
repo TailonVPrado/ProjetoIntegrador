@@ -62,6 +62,7 @@ export class ScreenPerfilComponent implements OnInit {
   }
 
   onClickCadastrar(){
+    this.buttonCadastrar.isRequesting = true;
     this.perfilService.createPerfil(this.perfil).subscribe(
       (response) => {
         this.generic.showSuccess("Perfil ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
@@ -83,11 +84,14 @@ export class ScreenPerfilComponent implements OnInit {
       (error) => {
         this.generic.showError(error.error.errors[0]);
       }
-    );
+    ).add(() =>{
+      this.buttonCadastrar.isRequesting = false;
+    });;
   }
 
   carregaPerfil(){
     //todo alterar para passar a empresa tbm
+    this.buttonConsultar.isRequesting = true;
     this.perfilService.getPerfil(this.perfil).subscribe(
       (perfis) => {
         this.gridPerfil = [];
@@ -109,7 +113,9 @@ export class ScreenPerfilComponent implements OnInit {
       (error) => {
         this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
       }
-    )
+    ).add(() =>{
+      this.buttonConsultar.isRequesting = false;
+    });
     this.efetuandoAltercao = false;
   }
 
@@ -209,6 +215,7 @@ export class ScreenPerfilComponent implements OnInit {
   }
 
   onClickButtonSalvarImg(){
+    this.buttonSalvarImg.isRequesting = true;
     this.perfilService.updateImage(this.perfilImage.idPerfil, this.imagePerfilBase64).subscribe(
       (base64Image: string) => {
         this.generic.showSuccess("Imagem atualizada com sucesso");
@@ -222,7 +229,9 @@ export class ScreenPerfilComponent implements OnInit {
       (error) => {
         console.error('Ocorreu um erro inesperado ao salvar a imagem. Erro: ', error);
       }
-    );
+    ).add(() =>{
+      this.buttonSalvarImg.isRequesting = false;
+    });;
   }
 
   onChangeImage(event: any): void {

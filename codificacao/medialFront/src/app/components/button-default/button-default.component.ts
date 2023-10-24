@@ -16,7 +16,7 @@ export class ButtonDefaultComponent {
 
   click(event: Event){
 
-    if(this.allowClick){
+    if(this.allowClick && !this.properties?.isRequesting){
       this.onClick.emit();
 
       this.allowClick = false;

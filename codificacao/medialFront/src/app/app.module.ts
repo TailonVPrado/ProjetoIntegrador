@@ -7,7 +7,6 @@ import { ScreenCorteComponent } from './screens/screen-corte/screen-corte.compon
 import { ScreenPerfilComponent } from './screens/screen-perfil/screen-perfil.component';
 import { ScreenLinhaComponent } from './screens/screen-linha/screen-linha.component';
 import { ScreenEsquadriaComponent } from './screens/screen-esquadria/screen-esquadria.component';
-import { ScreenDescontoComponent } from './screens/screen-desconto/screen-desconto.component';
 import { ButtonDefaultComponent } from './components/button-default/button-default.component';
 import { ButtonIconComponent } from './components/button-icon/button-icon.component';
 import { ButtonMenuComponent } from './components/button-menu/button-menu.component';
@@ -39,7 +38,6 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
   declarations: [
     AppComponent,
     ScreenCorteComponent,
-    ScreenDescontoComponent,
     ScreenEsquadriaComponent,
     ScreenLinhaComponent,
     ScreenPerfilComponent,
