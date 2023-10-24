@@ -20,3 +20,10 @@ button{
   background-repeat: no-repeat;
   background-image: url('/assets/images/geral/add.png');
 }
+.loading {
+  background-size: 17px 17px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('/assets/images/gifs/loading.gif');
+  color: rgba(255, 255, 255, 0);
+}

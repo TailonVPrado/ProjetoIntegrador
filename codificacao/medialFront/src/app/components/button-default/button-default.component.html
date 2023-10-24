@@ -1,3 +1,9 @@
-<button class="main" [ngClass]="{'imagem': !properties?.label}" [tooltip]="hint ? hint :''" [delay]="500" (click)="click($event)">
+<button class="main"
+  [ngClass]="{'imagem': !properties?.label && !properties?.isRequesting, 'loading' : properties?.isRequesting}"
+  [tooltip]="hint ? hint :''"
+  [delay]="500"
+  (click)="click($event)">
+  <div ></div>
   {{properties?.label}}
 </button>
+<!-- *ngIf="properties?.isRequesting || true" -->

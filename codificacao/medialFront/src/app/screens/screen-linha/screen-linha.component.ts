@@ -48,6 +48,7 @@ export class ScreenLinhaComponent implements OnInit{
 
   carregarLinhas() {
     //todo alterar o 1 para ser por empresa
+    this.buttonConsultar.isRequesting = true;
     this.linhaService.getLinhas(1, this.linha.dsLinha).subscribe(
       (linhas) => {
         this.gridLinhas = []
@@ -69,7 +70,9 @@ export class ScreenLinhaComponent implements OnInit{
       (error) => {
         this.generic.showError('Erro ao carregar linhas:', error);
       }
-    );
+    ).add(() =>{
+      this.buttonConsultar.isRequesting = false;
+    });
     this.efetuandoAltercao = false;
   }
 
