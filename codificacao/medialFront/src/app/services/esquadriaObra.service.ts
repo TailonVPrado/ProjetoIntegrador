@@ -31,9 +31,6 @@ export class EsquadriaObraService {
 
   createEsquadriaObra(esquadriaObra : EsquadriaObra): Observable<any>{
     const url = `${this.apiUrl}/esquadriaobra`;
-
-    //todo tirar a cor da esquadria aqui
-    esquadriaObra.dsCor = 'Preto';
     return this.http.post<EsquadriaObra[]>(url, esquadriaObra);
   }
 
@@ -46,5 +43,4 @@ export class EsquadriaObraService {
     const url = `${this.apiUrl}/esquadriaobra/cores`;
     return this.http.get<string[]>(url);
   }
-
 }

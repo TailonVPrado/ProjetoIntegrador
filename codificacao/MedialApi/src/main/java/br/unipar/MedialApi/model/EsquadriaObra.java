@@ -6,6 +6,9 @@ import java.sql.Date;
 import javax.persistence.*;
 
 import br.unipar.MedialApi.model.enumModel.CorEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -46,7 +49,7 @@ public class EsquadriaObra {
 	@Column(name = "DT_ATUALIZACAO")
 	private Date dtAtualizacao;
 
-	@Column(name = "DS_COR", length = 20)
+	@Column(name = "DS_COR", length = 20, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private CorEnum dsCor;
 	

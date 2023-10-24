@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Properties } from 'src/app/models/interface/properties.model';
 
 @Component({
@@ -13,10 +13,23 @@ export class ListBoxComponent implements OnInit {
   @Input() isGrid: boolean = false;
   @Input() properties: Properties | undefined;
   @Input() list : string[] = []
+  @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  ngOnInit(): void {
-    console.log(this.list);
+  actualValue: any;
+  @Input()
+  set mxModel(val: any) {
+    this.mxModelChange.emit(val);
+    this.actualValue = val;
+  }
+  get mxModel() {
+    return this.actualValue;
   }
 
+  ngOnInit(): void {
+  }
 
+  onChange(event: any) {
+    this.actualValue = event.target!.value;
+    this.mxModelChange.emit(this.actualValue);
+  }
 }

@@ -77,7 +77,7 @@ public class EsquadriaObraService {
     }
     private void validaDefault(EsquadriaObra esquadriaObra)throws Exception{
 
-            esquadriaObra.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra().trim().replaceAll("\\s+", " "));
+        esquadriaObra.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra().trim().replaceAll("\\s+", " "));
         if(esquadriaObra.getCdEsquadriaObra() == null || esquadriaObra.getEsquadria().equals("")){
             throw new Exception("Informe o código da esquadria.");
         }
@@ -90,7 +90,7 @@ public class EsquadriaObraService {
         if(esquadriaObra.getTmLargura() == null || esquadriaObra.getTmLargura().compareTo(new BigDecimal(0)) <= 0){
             throw new Exception("Largura inválida, verifique!");
         }
-        if(esquadriaObra.getDsCor() == null || esquadriaObra.getDsCor().toString().isEmpty()){
+        if(esquadriaObra.getDsCor() == null || esquadriaObra.getDsCor().equals(CorEnum.VAZIO) || esquadriaObra.getDsCor().toString().isEmpty()){
             throw new Exception("Informe a cor da esquadria.");
         }
     }
