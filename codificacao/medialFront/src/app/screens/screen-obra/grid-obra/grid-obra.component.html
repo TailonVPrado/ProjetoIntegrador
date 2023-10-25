@@ -46,12 +46,11 @@
     <hr style="margin-top: -5px;">
 
     <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
-      <input-text style="width: 44%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
+      <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
       [itensDisponiveis]="this.esquadriasDisponiveis"
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
-      <!-- select de cor TODO -->
-      <list-box [(mxModel)]="esquadriaObra.dsCor" [list]="cores"></list-box>
-      <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
+      <list-box style="width: 15%;" [(mxModel)]="esquadriaObra.dsCor" [list]="cores" [properties]="inputDsCor"></list-box>
+      <input-text style="width: 10%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
       <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
       <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>
       <button-default [properties]="buttonCadastrarEsquadriaObra" (onClick)="onClickCadastrarEsquadriaObra()" hint="Vincular Perfil"></button-default>
@@ -62,7 +61,7 @@
         <thead>
           <tr>
             <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
-            <!-- <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Cor</span></th> select de cor TODO -->
+            <th class="pipe" style="text-align: left; width: 25%;"><span>Cor</span></th>
             <th class="pipe" style="text-align: left; width: 8%; text-align: center;"><span>Cód</span></th>
             <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
             <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
@@ -77,9 +76,9 @@
             <td class="padding">
               <input-text [isGrid]="true" [(mxModel)]="x.esquadria.dsEsquadria" [properties]="x.properties" [itensDisponiveis]="this.esquadriasDisponiveis" (itemSelecionado)="esquadriaSelecionada($event, x)"></input-text>
             </td>
-            <!-- <td class="pipe">
-              <input-text [isGrid]="true" [(mxModel)]="x.dsDesconto" [properties]="x.properties" [campoFormula]="true"></input-text>
-            </td> select de cor TODO -->
+            <td class="pipe">
+              <list-box [isGrid]="true" [(mxModel)]="x.dsCor" [list]="cores" [properties]="x.properties"></list-box>
+            </td>
             <td class="pipe">
               <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
             </td>
@@ -90,7 +89,7 @@
               <span style="text-align: center;">X</span>
             </td>
             <td>
-              <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true"></input-number>
+              <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true" [align]="'left'"></input-number>
             </td>
             <td>
               <button-icon (onClick)="onClickDuplicarEsquadriaObra(x, i)" nomeIcone="duplicar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.DUPLICAR)" hint="Duplicar"></button-icon>

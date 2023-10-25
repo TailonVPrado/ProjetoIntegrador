@@ -65,14 +65,18 @@ export class GridObraComponent implements OnInit {
   onClickConfirmarObra(obra : Obra){
   }
 
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
+  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
 
   esquadriaObra : EsquadriaObra = new EsquadriaObra();
   esquadriasDisponiveis : Map<number, string> = new Map<number, string>();
 
   inputDsEsquadria = new InputModel({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
+  inputDsCor = new InputModel({label: 'Cor'})
   inputCdEsquadriaObra = new InputModel({label: 'Código', placeholder: 'Insira o Código'});
-  inputTmLargura = new InputModel({label: 'Altura', placeholder: 'Insira a Altura'});
-  inputTmAltura = new InputModel({label: 'Código', placeholder: 'Insira a Largura'});
+  inputTmAltura = new InputModel({label: 'Altura', placeholder: 'Insira a Largura'});
+  inputTmLargura = new InputModel({label: 'Largura', placeholder: 'Insira a Altura'});
   gridEsquadriaObra : EsquadriaObra[] = [];
   buttonCadastrarEsquadriaObra: ButtonModel = new ButtonModel({  });
 
@@ -87,11 +91,6 @@ export class GridObraComponent implements OnInit {
     keyboard: false,
     class: 'full-size-modal'
   };
-
-
-  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
-  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
-  //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS
 
   openModalEsquadriaObra(template: TemplateRef<any>, obra: Obra){
     if(!obra.properties.ativo){

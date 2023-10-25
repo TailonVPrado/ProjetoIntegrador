@@ -16,7 +16,7 @@ export class EsquadriaObra {
   constructor(
     idEsquadriaObra: number = 0,
     cdEsquadriaObra: string = '',
-    dsCor: string = '',
+    dsCor: string = 'Vazio',
     tmAltura : number = 0,
     tmLargura : number = 0,
     esquadria: Esquadria = new Esquadria(),
