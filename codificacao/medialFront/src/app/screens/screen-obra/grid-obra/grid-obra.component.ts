@@ -80,7 +80,7 @@ export class GridObraComponent implements OnInit {
   gridEsquadriaObra : EsquadriaObra[] = [];
   buttonCadastrarEsquadriaObra: ButtonModel = new ButtonModel({  });
 
-
+  esquadriaObraOld : EsquadriaObra = new EsquadriaObra();
   efetuandoAltercaoEsquadriaObra : boolean = false;
 
   modalRef?: BsModalRef;
@@ -117,9 +117,9 @@ export class GridObraComponent implements OnInit {
     let esquadriaObraFilter = new EsquadriaObra();
     esquadriaObraFilter.obra = obra;
 
+    this.gridEsquadriaObra = [];
     this.esquadriaObraService.getEsquadriasObra(esquadriaObraFilter).subscribe(
       (esquadriaObra)=>{
-        this.gridEsquadriaObra = [];
         esquadriaObra.forEach((esquadriaObra, i) => {
           this.gridEsquadriaObra[i] = esquadriaObra;
           this.gridEsquadriaObra[i].properties = new Properties({ativo : false});
@@ -133,7 +133,7 @@ export class GridObraComponent implements OnInit {
         });
         //todo ver como o generic daz para mudar o duplicar
       }
-    )
+    );
     this.efetuandoAltercaoEsquadriaObra = false;
   }
 
@@ -192,10 +192,47 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  onClickCancelarEsquadriaObra(esquadriaObra : EsquadriaObra){
+  onClickEditarEsquadriaObra(esquadriaObra : EsquadriaObra){
+    if(!this.efetuandoAltercaoEsquadriaObra){
+
+      this.generic.onClickButtonEditar(esquadriaObra);
+
+      this.esquadriaObraOld.esquadria.idEsquadria = esquadriaObra.esquadria.idEsquadria;
+      this.esquadriaObraOld.dsCor = esquadriaObra.dsCor;
+      this.esquadriaObraOld.cdEsquadriaObra = esquadriaObra.cdEsquadriaObra;
+      this.esquadriaObraOld.tmAltura = esquadriaObra.tmAltura;
+      this.esquadriaObraOld.tmLargura = esquadriaObra.tmLargura;
+
+      this.efetuandoAltercaoEsquadriaObra = true;
+    }else{
+      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+    }
   }
 
-  onClickEditarEsquadriaObra(esquadriaObra : EsquadriaObra){
+  async onClickCancelarEsquadriaObra(esquadriaObra : EsquadriaObra){
+    if(this.esquadriaObraOld.esquadria.idEsquadria != esquadriaObra.esquadria.idEsquadria ||
+       this.esquadriaObraOld.dsCor != esquadriaObra.dsCor ||
+       this.esquadriaObraOld.cdEsquadriaObra != esquadriaObra.cdEsquadriaObra ||
+       this.esquadriaObraOld.tmAltura != esquadriaObra.tmAltura ||
+       this.esquadriaObraOld.tmLargura != esquadriaObra.tmLargura ){
+
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
+
+        this.generic.onClickButtonCancelar(esquadriaObra);
+
+        this.efetuandoAltercaoEsquadriaObra = false;
+
+        esquadriaObra.esquadria.idEsquadria =this.esquadriaObraOld.esquadria.idEsquadria;
+        esquadriaObra.dsCor = this.esquadriaObraOld.dsCor;
+        esquadriaObra.cdEsquadriaObra = this.esquadriaObraOld.cdEsquadriaObra;
+        esquadriaObra.tmAltura = this.esquadriaObraOld.tmAltura;
+        esquadriaObra.tmLargura = this.esquadriaObraOld.tmLargura;
+      }
+    }else{
+      this.generic.onClickButtonCancelar(esquadriaObra);
+
+      this.efetuandoAltercaoEsquadriaObra = false;
+    }
   }
 
   onClickConfirmarEsquadriaObra(esquadriaObra : EsquadriaObra){

@@ -1,7 +1,10 @@
 <div [ngClass]="{'main' : !isGrid, 'flex-container': !isGrid}">
   <label *ngIf="!isGrid">{{properties?.label}}</label>
   <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
-    <select [(ngModel)]="actualValue" (change)="onChange($event)" [disabled]="isGrid">
+    <select [(ngModel)]="actualValue"
+            [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
+            (change)="onChange($event)"
+            [disabled]="!properties?.ativo" >
       <option *ngFor="let item of list; let i= index" value={{item}}>{{i != 0 ? item : ''}}</option>
     </select>
   </div>

@@ -4,7 +4,7 @@
       <tr>
         <th class="padding" style="text-align: left;"><span>Descrição Obra</span></th>
         <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Data Lcto</span></th>
-        <th class="pipe" style="text-align: left; width: 3%;"><span>V.</span></th>
+        <th class="pipe" style="text-align: left; width: 3%; text-align: right;"><span>V.</span></th>
         <th style="width:30px;"></th>
         <th style="width:30px;"></th>
       </tr>
@@ -46,13 +46,13 @@
     <hr style="margin-top: -5px;">
 
     <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
-      <input-text style="width: 40%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
+      <input-text style="width: 50%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
       [itensDisponiveis]="this.esquadriasDisponiveis"
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
-      <list-box style="width: 15%;" [(mxModel)]="esquadriaObra.dsCor" [list]="cores" [properties]="inputDsCor"></list-box>
-      <input-text style="width: 10%;" [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
-      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
-      <input-number style="width: 10%;"[(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>
+      <list-box style="width: 30%;" [(mxModel)]="esquadriaObra.dsCor" [list]="cores" [properties]="inputDsCor"></list-box>
+      <input-text  [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra"></input-text>
+      <input-number [(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
+      <input-number [(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>
       <button-default [properties]="buttonCadastrarEsquadriaObra" (onClick)="onClickCadastrarEsquadriaObra()" hint="Vincular Perfil"></button-default>
     </div>
 
