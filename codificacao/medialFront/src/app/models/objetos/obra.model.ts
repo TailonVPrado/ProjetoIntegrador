@@ -10,7 +10,7 @@ export class Obra {
   stAtivo: boolean;
   stImpresso : boolean;
   nrVersao: number;
-  properties: Properties;
+  properties: Map<string, Properties> ;
   visibilidadeBotoes: Map<string, boolean>;
 
   constructor(
@@ -21,7 +21,7 @@ export class Obra {
     stAtivo: boolean = true,
     stImpresso: boolean = false,
     nrVersao: number = 0,
-    properties: Properties = new Properties({}),
+    properties: Map<string, Properties> = new Map<string, Properties>(),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
     this.idObra = idObra;

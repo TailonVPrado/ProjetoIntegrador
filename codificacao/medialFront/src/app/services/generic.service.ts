@@ -57,28 +57,40 @@ export class GenericService {
     } );
   }
 
-  onClickButtonEditar(obj : any){
+  /** O parametro **updateAllPropertie** serve para telas que possuem propiedades por campos e nao por objeto,
+    * como por exemplo a tela de obras (mais precisamente o grid de obras), nessas telas a regra para habilitar
+    * campos é individual e cada tela precisa gerenciar isso de maneira isolada, mas nos demais casos é so nao
+    * adicionar nada nesse parametro de entrada que esses metodos irao realizar o gerenciamento de estado sozinho
+    * */
+
+  onClickButtonEditar(obj : any, updateAllPropertie : boolean = true){
     obj.visibilidadeBotoes.set(this.tipoBotao.EDITAR, false);
     obj.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, false);
     obj.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, true);
     obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, true);
-    obj.properties.ativo = true;
+
+    if(updateAllPropertie)
+      obj.properties.ativo = true;
   }
 
-  onClickButtonCancelar(obj : any){
+  onClickButtonCancelar(obj : any, updateAllPropertie : boolean = true){
     obj.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
     obj.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
     obj.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
     obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-    obj.properties.ativo = false;
+
+    if(updateAllPropertie)
+      obj.properties.ativo = false;
   }
 
-  onClickButtonConfirmar(obj : any){
+  onClickButtonConfirmar(obj : any, updateAllPropertie : boolean = true){
     obj.visibilidadeBotoes.set(this.tipoBotao.EDITAR, true);
     obj.visibilidadeBotoes.set(this.tipoBotao.EXCLUIR, true);
     obj.visibilidadeBotoes.set(this.tipoBotao.CANCELAR, false);
     obj.visibilidadeBotoes.set(this.tipoBotao.CONFIRMAR, false);
-    obj.properties.ativo = false;
+
+    if(updateAllPropertie)
+      obj.properties.ativo = false;
   }
 
   formataData(date : any){

@@ -12,13 +12,13 @@
     <tbody>
       <tr *ngFor="let x of gridObra; let i = index" class="click-row" (click)="openModalEsquadriaObra(templateEsquadriaObra, x)" >
         <td class="padding">
-          <input-text [isGrid]="true" [(mxModel)]="x.dsObra" [properties]="x.properties" ></input-text>
+          <input-text [isGrid]="true" [(mxModel)]="x.dsObra" [properties]="x.properties.get('dsObra')" ></input-text>
         </td>
         <td class="pipe">
-          <input-date [isGrid]="true" [(mxModel)]="x.dtLancamento" [properties]="x.properties" ></input-date>
+          <input-date [isGrid]="true" [(mxModel)]="x.dtLancamento" [properties]="x.properties.get('dtLancamento')" ></input-date>
         </td>
         <td class="pipe">
-          <input-number [isGrid]="true" [(mxModel)]="x.nrVersao" [properties]="x.properties" ></input-number>
+          <input-number [isGrid]="true" [(mxModel)]="x.nrVersao" [properties]="x.properties.get('nrVersao')" ></input-number>
         </td>
         <td>
           <button-icon (onClick)="onClickExcluirObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>

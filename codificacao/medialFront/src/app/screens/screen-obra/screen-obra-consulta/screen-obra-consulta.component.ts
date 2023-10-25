@@ -48,7 +48,12 @@ export class ScreenObraConsultaComponent implements OnInit {
         obras.forEach((obra, i) =>{
           obra.dtLancamento = this.generic.formataData(obra.dtLancamento);
           this.gridObra[i] = obra;
-          this.gridObra[i].properties = new Properties({ativo : false});
+
+          this.gridObra[i].properties = new Map<string, Properties>();
+          for(let name in this.gridObra[i]){
+            this.gridObra[i].properties.set(name, new Properties({ativo : false}));
+          }
+          // this.gridObra[i].properties = new Properties({ativo : false});
           this.gridObra[i].visibilidadeBotoes = new Map <string, boolean>([
             [this.tipoBotao.CANCELAR, false],
              [this.tipoBotao.CONFIRMAR, false],

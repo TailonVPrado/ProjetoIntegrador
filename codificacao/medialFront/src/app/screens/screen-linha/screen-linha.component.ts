@@ -82,14 +82,14 @@ export class ScreenLinhaComponent implements OnInit{
   vetItem: any[] | any = [];
 
 
-  dsLinhaOld : string = '';
+  linhaOld : Linha  =  new Linha();
   efetuandoAltercao : boolean = false;
   onClickEditar(linha : Linha){
     if(!this.efetuandoAltercao){
 
       this.generic.onClickButtonEditar(linha);
 
-      this.dsLinhaOld = linha.dsLinha;
+      this.linhaOld.dsLinha = linha.dsLinha;
 
       this.efetuandoAltercao = true;
     }else{
@@ -98,11 +98,11 @@ export class ScreenLinhaComponent implements OnInit{
   }
 
   async onClickCancelar(linha : Linha){
-    if(linha.dsLinha != this.dsLinhaOld){
+    if(linha.dsLinha != this.linhaOld.dsLinha){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
         this.generic.onClickButtonCancelar(linha);
 
-        linha.dsLinha = this.dsLinhaOld;
+        linha.dsLinha = this.linhaOld.dsLinha;
 
         this.efetuandoAltercao = false;
       }
@@ -114,7 +114,7 @@ export class ScreenLinhaComponent implements OnInit{
   }
 
   onClickConfirmar(linha : Linha){
-    if(linha.dsLinha != this.dsLinhaOld){
+    if(linha.dsLinha != this.linhaOld.dsLinha){
       this.linhaService.updateLinha(linha).subscribe(
         (response) => {
           this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") atualizada com sucesso!");

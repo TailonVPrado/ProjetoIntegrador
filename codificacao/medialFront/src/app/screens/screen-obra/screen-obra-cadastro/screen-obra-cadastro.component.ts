@@ -31,7 +31,12 @@ export class ScreenObraCadastroComponent implements OnInit {
         obras.forEach((obra, i) =>{
           obra.dtLancamento = this.generic.formataData(obra.dtLancamento);
           this.gridObra[i] = obra;
-          this.gridObra[i].properties = new Properties({ativo : false});
+          this.gridObra[i].properties = new Map<string, Properties>();
+
+          for(let name in this.gridObra[i]){
+            this.gridObra[i].properties.set(name, new Properties({ativo : false}));
+          }
+          // this.gridObra[i].properties = new Properties({ativo : false});
           this.gridObra[i].visibilidadeBotoes = new Map <string, boolean>([
             [this.tipoBotao.CANCELAR, false],
              [this.tipoBotao.CONFIRMAR, false],
@@ -62,11 +67,15 @@ export class ScreenObraCadastroComponent implements OnInit {
     this.obraService.createObra(this.obra).subscribe(
       (response) => {
         this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
-        this.obra.idObra = response.idObra;
+        this.obra = response;
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
-        this.obra.nrVersao = response.nrVersao;
         this.gridObra.splice(0,0,this.obra);
-        this.gridObra[0].properties = new Properties({ativo : false});
+        this.gridObra[0].properties = new Map<string, Properties>();
+
+        for(let name in this.obra){
+          this.gridObra[0].properties.set(name, new Properties({ativo : false}));
+        }
+        // this.gridObra[0].properties = new Properties({ativo : false});
         this.gridObra[0].visibilidadeBotoes = new Map <string, boolean>([
           [this.tipoBotao.CANCELAR, false],
            [this.tipoBotao.CONFIRMAR, false],

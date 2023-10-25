@@ -32,6 +32,7 @@ export class GridObraComponent implements OnInit {
 
   @Input() gridObra: Obra[] = [];
   @Input() efetuandoAltercaoObra : boolean = false;
+  obraOld : Obra = new Obra();
 
   cores : string[] = [];
   carregaCores(){
@@ -41,6 +42,7 @@ export class GridObraComponent implements OnInit {
       }
     )
   }
+
 
   async onClickExcluirObra(obra : Obra, idx : number){
     if(await this.generic.showAlert('Deseja realmente remover esta obra?') == 1){
@@ -56,10 +58,35 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  onClickCancelarObra(obra : Obra){
+  onClickEditarObra(obra : Obra){
+    if(!this.efetuandoAltercaoObra){
+
+      this.generic.onClickButtonEditar(obra, false);
+      obra.properties.get('dsObra')!.ativo = true;
+
+      this.obraOld.dsObra = obra.dsObra;
+
+      this.efetuandoAltercaoObra = true;
+    }else{
+      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+    }
   }
 
-  onClickEditarObra(obra : Obra){
+  async onClickCancelarObra(obra : Obra){
+    if(obra.dsObra != this.obraOld.dsObra){
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
+        this.generic.onClickButtonCancelar(obra, false);
+        obra.properties.get('dsObra')!.ativo = false;
+
+        obra.dsObra = this.obraOld.dsObra;
+
+        this.efetuandoAltercaoObra = false;
+      }
+    }else{
+      this.generic.onClickButtonCancelar(obra, false);
+      obra.properties.get('dsObra')!.ativo = false;
+      this.efetuandoAltercaoObra = false;
+    }
   }
 
   onClickConfirmarObra(obra : Obra){
@@ -74,9 +101,9 @@ export class GridObraComponent implements OnInit {
 
   inputDsEsquadria = new InputModel({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
   inputDsCor = new InputModel({label: 'Cor'})
-  inputCdEsquadriaObra = new InputModel({label: 'Código', placeholder: 'Insira o Código'});
-  inputTmAltura = new InputModel({label: 'Altura', placeholder: 'Insira a Largura'});
-  inputTmLargura = new InputModel({label: 'Largura', placeholder: 'Insira a Altura'});
+  inputCdEsquadriaObra = new InputModel({label: 'Código', placeholder: 'Código'});
+  inputTmAltura = new InputModel({label: 'Altura', placeholder: 'Altura'});
+  inputTmLargura = new InputModel({label: 'Largura', placeholder: 'Largura'});
   gridEsquadriaObra : EsquadriaObra[] = [];
   buttonCadastrarEsquadriaObra: ButtonModel = new ButtonModel({  });
 
@@ -93,7 +120,7 @@ export class GridObraComponent implements OnInit {
   };
 
   openModalEsquadriaObra(template: TemplateRef<any>, obra: Obra){
-    if(!obra.properties.ativo){
+    if(!obra.properties.get('dsObra')?.ativo){
       this.titleModal = obra.dsObra;
 
       this.carregaEsquadriaObra(obra);
@@ -175,7 +202,7 @@ export class GridObraComponent implements OnInit {
       }
     ).add(() =>{
       this.buttonCadastrarEsquadriaObra.isRequesting = false;
-    });;
+    });
   }
 
   async onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
