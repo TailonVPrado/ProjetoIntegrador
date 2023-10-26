@@ -100,6 +100,9 @@ public class ObraService {
 
     private void validaUpdate(Obra obra) throws Exception{
         validaDescricao(obra);
+        if(obra.getIdObra() == null || obra.getIdObra() == 0){
+            throw new Exception("Informe o ID para atualizar as informações da obra");
+        }
     }
 
     private void validaDescricao(Obra obra) throws Exception{

@@ -283,6 +283,28 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickConfirmarEsquadriaObra(esquadriaObra : EsquadriaObra){
+
+    if(this.esquadriaObraOld.esquadria.idEsquadria != esquadriaObra.esquadria.idEsquadria ||
+      this.esquadriaObraOld.dsCor != esquadriaObra.dsCor ||
+      this.esquadriaObraOld.cdEsquadriaObra != esquadriaObra.cdEsquadriaObra ||
+      this.esquadriaObraOld.tmAltura != esquadriaObra.tmAltura ||
+      this.esquadriaObraOld.tmLargura != esquadriaObra.tmLargura ){
+
+    this.esquadriaObraService.updateEsquadriaObra(esquadriaObra).subscribe(
+      (response) => {
+        this.generic.showSuccess("Vinculo da esquadria ("+ esquadriaObra.esquadria.dsEsquadria.trim()+") atualizado com sucesso!");
+
+        this.generic.onClickButtonConfirmar(esquadriaObra);
+        this.efetuandoAltercaoEsquadriaObra = false;
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
+  }else{
+    this.generic.onClickButtonConfirmar(esquadriaObra);
+    this.efetuandoAltercaoEsquadriaObra = false;
+  }
   }
 
   onClickDuplicarEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){

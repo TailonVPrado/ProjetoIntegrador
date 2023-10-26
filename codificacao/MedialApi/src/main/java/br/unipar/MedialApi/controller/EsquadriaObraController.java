@@ -30,6 +30,11 @@ public class EsquadriaObraController {
         return esquadriaObraService.delete(id);
     }
 
+    @PutMapping
+    public EsquadriaObra update (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
+        return esquadriaObraService.update(esquadriaObra);
+    }
+
     @GetMapping(path = "/cores")
     private List<CorEnum> getCores(){
         return esquadriaObraService.getCotes();

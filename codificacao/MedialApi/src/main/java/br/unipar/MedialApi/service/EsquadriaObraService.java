@@ -59,6 +59,10 @@ public class EsquadriaObraService {
         }
     }
 
+    public EsquadriaObra update(EsquadriaObra esquadriaObra) throws Exception{
+        validaUpdate(esquadriaObra);
+        return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+    }
     public List<CorEnum> getCotes() {
         return List.of(CorEnum.values());
     }
@@ -92,6 +96,13 @@ public class EsquadriaObraService {
         }
         if(esquadriaObra.getDsCor() == null || esquadriaObra.getDsCor().equals(CorEnum.VAZIO) || esquadriaObra.getDsCor().toString().isEmpty()){
             throw new Exception("Informe a cor da esquadria.");
+        }
+    }
+    private void validaUpdate(EsquadriaObra esquadriaObra) throws Exception{
+        validaFks(esquadriaObra);
+        validaDefault(esquadriaObra);
+        if(esquadriaObra.getIdEsquadriaObra() == null || esquadriaObra.getIdEsquadriaObra() == 0){
+            throw new Exception("Informe o ID para atualizar as informações de vinculo da esquadria com esta obra");
         }
     }
 }

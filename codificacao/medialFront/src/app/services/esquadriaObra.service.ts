@@ -39,6 +39,11 @@ export class EsquadriaObraService {
     return this.http.delete<any>(url);
   }
 
+  updateEsquadriaObra(esquadriaObra: EsquadriaObra): Observable<any> {
+    const url = `${this.apiUrl}/esquadriaobra`;
+    return this.http.put<any>(url, esquadriaObra);
+  }
+
   getCores() : Observable<string[]>{
     const url = `${this.apiUrl}/esquadriaobra/cores`;
     return this.http.get<string[]>(url);
