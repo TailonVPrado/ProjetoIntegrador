@@ -90,6 +90,26 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickConfirmarObra(obra : Obra){
+    if(obra.dsObra != this.obraOld.dsObra){
+      this.obraService.updateObra(obra).subscribe(
+        (response) => {
+          this.generic.showSuccess("Obra ("+obra.dsObra.trim()+") atualizada com sucesso!");
+
+          this.generic.onClickButtonConfirmar(obra, false);
+          obra.properties.get('dsObra')!.ativo = false;
+
+          this.efetuandoAltercaoObra = false;
+        },
+        (error) => {
+          this.generic.showError(error.error.errors[0]);
+        }
+      );
+    }else{
+      this.generic.onClickButtonConfirmar(obra, false);
+      obra.properties.get('dsObra')!.ativo = false;
+
+      this.efetuandoAltercaoObra = false;
+    }
   }
 
   //DAQUI PARA BAIXO É A LOGICA DE ALTERAÇÃO NO GRID DE VINCULO DE ESQUADRIAS COM OBRAS

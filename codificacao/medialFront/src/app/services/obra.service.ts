@@ -46,4 +46,9 @@ export class ObraService {
     return this.http.delete<any>(url);
   }
 
+  updateObra(obra: Obra): Observable<any> {
+    const url = `${this.apiUrl}/obra`;
+    return this.http.put<any>(url, obra);
+  }
+
 }

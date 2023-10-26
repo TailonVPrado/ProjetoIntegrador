@@ -1,6 +1,7 @@
 package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.Esquadria;
+import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.service.ObraService;
@@ -38,6 +39,11 @@ public class ObraController {
     @DeleteMapping(path = "{id}")
     public Obra delete(@PathVariable Long id) throws Exception{
         return obraService.delete(id);
+    }
+
+    @PutMapping
+    public Obra update (@RequestBody Obra obra) throws Exception{
+        return obraService.update(obra);
     }
 /*
     @GetMapping(path = "/all")

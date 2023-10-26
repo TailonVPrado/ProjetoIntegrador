@@ -1,6 +1,7 @@
 package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.Esquadria;
+import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
@@ -73,6 +74,15 @@ public class ObraService {
         return obra;
     }
 
+    public Obra update(Obra obra) throws Exception{
+        validaUpdate(obra);
+        Obra obraAtu = findById(obra.getIdObra());
+        //o unico atributo que deve ser atualziado de uma obra é sua descrição
+        obraAtu.setDsObra(obra.getDsObra());
+
+        return obraRepository.saveAndFlush(obraAtu);
+    }
+
     public Obra findById(Long id) throws Exception{
         Optional<Obra> retorno = obraRepository.findById(id);
         if(retorno.isPresent()){
@@ -87,6 +97,11 @@ public class ObraService {
         validaDataLancamento(obra);
         validaFks(obra);
     }
+
+    private void validaUpdate(Obra obra) throws Exception{
+        validaDescricao(obra);
+    }
+
     private void validaDescricao(Obra obra) throws Exception{
         obra.setDsObra(obra.getDsObra().trim().replaceAll("\\s+", " "));
         if(obra.getDsObra().trim().length() < 3){
