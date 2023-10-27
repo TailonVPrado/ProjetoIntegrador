@@ -3,8 +3,6 @@ import { HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { esUsLocale } from 'ngx-bootstrap/chronos';
-import { PerfilEsquadria } from '../models/objetos/perfilEsquadria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +32,7 @@ export class EsquadriaObraService {
     return this.http.post<EsquadriaObra[]>(url, esquadriaObra);
   }
 
-  desvinculaEsquadria(esquadriaObra : EsquadriaObra) : Observable<PerfilEsquadria>{
+  desvinculaEsquadria(esquadriaObra : EsquadriaObra) : Observable<any>{
     const url = `${this.apiUrl}/esquadriaobra/`+esquadriaObra.idEsquadriaObra;
     return this.http.delete<any>(url);
   }

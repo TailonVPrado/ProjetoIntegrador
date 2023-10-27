@@ -88,8 +88,48 @@ public class EsquadriaObraService {
     public EsquadriaObra delete (Long idEsquadriaObra) throws Exception{
         EsquadriaObra esquadriaObra = findById(idEsquadriaObra);
 
-        esquadriaObra.setStAtivo(false);
+        Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+        if(!obra.isStImpreso()){
+            esquadriaObra.setStAtivo(false);
+            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        }else{
+            return atualizaEsquadriaEmObraImpressa(esquadriaObra);
+        }
+    }
 
+    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception {
+        Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+        int vNrVersao = obra.getNrVersao() + 1;
+
+        //atualiza a versao da obra
+        esquadriaObra.getObra().setNrVersao(vNrVersao);
+        obraService.updateVersao(esquadriaObra.getObra());
+
+        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null);
+
+        for (EsquadriaObra eo: esquadrias) {
+            /* insere a copia da esquadria obra
+             * -Como é um delete precisa inserir na nova versao da esquadria obra apenas os registros que o usuario NAO apagou*/
+            if(eo.getIdEsquadriaObra() != esquadriaObra.getIdEsquadriaObra()){
+                EsquadriaObra esquadriaatualizada = new EsquadriaObra();
+                esquadriaatualizada.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra());
+                esquadriaatualizada.setDsCor(eo.getDsCor());
+                esquadriaatualizada.setTmAltura(eo.getTmAltura());
+                esquadriaatualizada.setTmLargura(eo.getTmLargura());
+                esquadriaatualizada.setEsquadria(eo.getEsquadria());
+                esquadriaatualizada.setObra(eo.getObra());
+                esquadriaatualizada.setStAtivo(true);
+                esquadriaatualizada.setNrVersaobra(vNrVersao);
+                esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
+            }
+
+            //desabilita a esquadriaObra anterior para manter versionamento da obra
+            eo.setStAtivo(false);
+            esquadriaObraRepository.saveAndFlush(eo);
+        }
+        //insere a nova esqaudriaObra
+        esquadriaObra.setStAtivo(true);
+        esquadriaObra.setNrVersaobra(vNrVersao);
         return esquadriaObraRepository.saveAndFlush(esquadriaObra);
     }
 

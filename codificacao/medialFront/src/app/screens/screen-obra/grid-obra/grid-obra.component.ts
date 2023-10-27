@@ -235,6 +235,7 @@ export class GridObraComponent implements OnInit {
       this.esquadriaObraService.desvinculaEsquadria(esquadriaObra).subscribe(
         (response) => {
           this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
+          this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.gridEsquadriaObra.splice(idx, 1);
         },
         (error) => {
