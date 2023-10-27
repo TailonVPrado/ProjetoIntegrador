@@ -60,4 +60,7 @@ public class EsquadriaObra {
 	@ManyToOne
 	@JoinColumn(name = "ID_ESQUADRIA", nullable = false)
 	private Esquadria esquadria;
+
+	@Column(name = "NR_VERSAOBRA")
+	private Integer nrVersaobra;
 }

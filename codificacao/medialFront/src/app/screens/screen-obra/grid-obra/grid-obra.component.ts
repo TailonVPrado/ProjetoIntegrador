@@ -200,22 +200,27 @@ export class GridObraComponent implements OnInit {
       (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadriaObra.esquadria.dsEsquadria+") vinculada a obra ("+ this.esquadriaObra.obra.dsObra +") com sucesso!");
 
-        this.esquadriaObra.idEsquadriaObra = response.idEsquadriaObra;
+        //se mudou a versao reconsulta a tela
+        if(response.nrVersaobra == this.esquadriaObra.obra.nrVersao){
+          this.esquadriaObra.idEsquadriaObra = response.idEsquadriaObra;
 
-        /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
-        this.gridEsquadriaObra.splice(0,0,  Object.assign({}, this.esquadriaObra) );
-        this.gridEsquadriaObra[0].properties = new Properties({ativo : false});
-        this.gridEsquadriaObra[0].visibilidadeBotoes = new Map <string, boolean>([
-          [this.tipoBotao.CANCELAR, false],
-           [this.tipoBotao.CONFIRMAR, false],
-           [this.tipoBotao.EDITAR, true],
-           [this.tipoBotao.EXCLUIR, true],
-           [this.tipoBotao.DUPLICAR, true]
-        ])
-        //todo ver como o generic daz para mudar o duplicar
-        this.esquadriaObra.esquadria = new Esquadria();
-        this.esquadriaObra.idEsquadriaObra = 0;
-
+          /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+          this.gridEsquadriaObra.splice(0,0,  Object.assign({}, this.esquadriaObra) );
+          this.gridEsquadriaObra[0].properties = new Properties({ativo : false});
+          this.gridEsquadriaObra[0].visibilidadeBotoes = new Map <string, boolean>([
+            [this.tipoBotao.CANCELAR, false],
+            [this.tipoBotao.CONFIRMAR, false],
+            [this.tipoBotao.EDITAR, true],
+            [this.tipoBotao.EXCLUIR, true],
+            [this.tipoBotao.DUPLICAR, true]
+          ])
+          //todo ver como o generic daz para mudar o duplicar
+          this.esquadriaObra.esquadria = new Esquadria();
+          this.esquadriaObra.idEsquadriaObra = 0;
+        }else{
+          this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
+          this.carregaEsquadriaObra(response.obra)
+        }
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);

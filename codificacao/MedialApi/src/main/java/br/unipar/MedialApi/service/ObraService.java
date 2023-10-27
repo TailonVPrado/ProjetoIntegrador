@@ -83,6 +83,14 @@ public class ObraService {
         return obraRepository.saveAndFlush(obraAtu);
     }
 
+    public Obra updateVersao(Obra obra) throws Exception{
+        validaUpdate(obra);
+        Obra obraAtu = findById(obra.getIdObra());
+        obraAtu.setNrVersao(obra.getNrVersao());
+
+        return obraRepository.saveAndFlush(obraAtu);
+    }
+
     public Obra findById(Long id) throws Exception{
         Optional<Obra> retorno = obraRepository.findById(id);
         if(retorno.isPresent()){
