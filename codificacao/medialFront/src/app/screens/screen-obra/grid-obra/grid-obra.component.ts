@@ -164,13 +164,13 @@ export class GridObraComponent implements OnInit {
     let esquadriaObraFilter = new EsquadriaObra();
     esquadriaObraFilter.obra = obra;
 
-    this.gridEsquadriaObra = [];
+    let gridEsquadriaObraAux : EsquadriaObra[] = [];
     this.esquadriaObraService.getEsquadriasObra(esquadriaObraFilter).subscribe(
       (esquadriaObra)=>{
         esquadriaObra.forEach((esquadriaObra, i) => {
-          this.gridEsquadriaObra[i] = esquadriaObra;
-          this.gridEsquadriaObra[i].properties = new Properties({ativo : false});
-          this.gridEsquadriaObra[i].visibilidadeBotoes = new Map <string, boolean>([
+          gridEsquadriaObraAux[i] = esquadriaObra;
+          gridEsquadriaObraAux[i].properties = new Properties({ativo : false});
+          gridEsquadriaObraAux[i].visibilidadeBotoes = new Map <string, boolean>([
             [this.tipoBotao.CANCELAR, false],
              [this.tipoBotao.CONFIRMAR, false],
              [this.tipoBotao.EDITAR, true],
@@ -181,6 +181,7 @@ export class GridObraComponent implements OnInit {
         //todo ver como o generic daz para mudar o duplicar
       }
     );
+    this.gridEsquadriaObra = gridEsquadriaObraAux;
     this.efetuandoAltercaoEsquadriaObra = false;
   }
 
@@ -234,9 +235,13 @@ export class GridObraComponent implements OnInit {
     if(await this.generic.showAlert('Deseja realmente desvincular esta esquadria?') == 1){
       this.esquadriaObraService.desvinculaEsquadria(esquadriaObra).subscribe(
         (response) => {
-          this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
           this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
-          this.gridEsquadriaObra.splice(idx, 1);
+          this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
+          if(response.nrVersaobra == this.esquadriaObra.obra.nrVersao){
+            this.gridEsquadriaObra.splice(idx, 1);
+          }else{
+            this.carregaEsquadriaObra(this.esquadriaObra.obra);
+          }
         },
         (error) => {
           this.generic.showError(error.error.errors[0]);
@@ -298,10 +303,17 @@ export class GridObraComponent implements OnInit {
 
     this.esquadriaObraService.updateEsquadriaObra(esquadriaObra).subscribe(
       (response) => {
+
         this.generic.showSuccess("Vinculo da esquadria ("+ esquadriaObra.esquadria.dsEsquadria.trim()+") atualizado com sucesso!");
 
-        this.generic.onClickButtonConfirmar(esquadriaObra);
         this.efetuandoAltercaoEsquadriaObra = false;
+
+        /*se a versao for diferente reconsulta a tela*/
+        if(response.nrVersaobra == this.esquadriaObra.obra.nrVersao){
+          this.generic.onClickButtonConfirmar(esquadriaObra);
+        }else{
+          this.carregaEsquadriaObra(response.obra);
+        }
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);

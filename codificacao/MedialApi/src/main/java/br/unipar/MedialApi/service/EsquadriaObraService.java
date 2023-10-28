@@ -65,7 +65,7 @@ public class EsquadriaObraService {
         for (EsquadriaObra eo: esquadrias) {
             //insere a copia da esquadria obra
             EsquadriaObra esquadriaatualizada = new EsquadriaObra();
-            esquadriaatualizada.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra());
+            esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
             esquadriaatualizada.setDsCor(eo.getDsCor());
             esquadriaatualizada.setTmAltura(eo.getTmAltura());
             esquadriaatualizada.setTmLargura(eo.getTmLargura());
@@ -93,11 +93,11 @@ public class EsquadriaObraService {
             esquadriaObra.setStAtivo(false);
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
         }else{
-            return atualizaEsquadriaEmObraImpressa(esquadriaObra);
+            return excluiEsquadriaEmObraImpressa(esquadriaObra);
         }
     }
 
-    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception {
+    private EsquadriaObra excluiEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception {
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         int vNrVersao = obra.getNrVersao() + 1;
 
@@ -110,9 +110,9 @@ public class EsquadriaObraService {
         for (EsquadriaObra eo: esquadrias) {
             /* insere a copia da esquadria obra
              * -Como é um delete precisa inserir na nova versao da esquadria obra apenas os registros que o usuario NAO apagou*/
-            if(eo.getIdEsquadriaObra() != esquadriaObra.getIdEsquadriaObra()){
+            if(!eo.getIdEsquadriaObra().equals(esquadriaObra.getIdEsquadriaObra())){
                 EsquadriaObra esquadriaatualizada = new EsquadriaObra();
-                esquadriaatualizada.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra());
+                esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
                 esquadriaatualizada.setDsCor(eo.getDsCor());
                 esquadriaatualizada.setTmAltura(eo.getTmAltura());
                 esquadriaatualizada.setTmLargura(eo.getTmLargura());
@@ -127,10 +127,8 @@ public class EsquadriaObraService {
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
         }
-        //insere a nova esqaudriaObra
-        esquadriaObra.setStAtivo(true);
         esquadriaObra.setNrVersaobra(vNrVersao);
-        return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        return esquadriaObra;
     }
 
     public EsquadriaObra findById(Long id) throws Exception{
@@ -143,9 +141,55 @@ public class EsquadriaObraService {
     }
 
     public EsquadriaObra update(EsquadriaObra esquadriaObra) throws Exception{
-        validaUpdate(esquadriaObra);
-        return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+        if(!obra.isStImpreso()){
+            validaUpdate(esquadriaObra);
+            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        }else{
+            return atualizaEsquadriaEmObraImpressa(esquadriaObra);
+        }
     }
+
+    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{
+        Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+        int vNrVersao = obra.getNrVersao() + 1;
+
+        //atualiza a versao da obra
+        esquadriaObra.getObra().setNrVersao(vNrVersao);
+        obraService.updateVersao(esquadriaObra.getObra());
+
+        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null);
+
+        for (EsquadriaObra eo: esquadrias) {
+            /* insere a copia da esquadria obra
+             * -Como é um update precisa verificar o Id para nao deixar o registro duplicado na nova versao da obra*/
+            System.out.println("lista: "+eo.getIdEsquadriaObra() + "  o atualizado: "+esquadriaObra.getIdEsquadriaObra());
+            if(!eo.getIdEsquadriaObra().equals(esquadriaObra.getIdEsquadriaObra())){
+                EsquadriaObra esquadriaatualizada = new EsquadriaObra();
+                esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
+                esquadriaatualizada.setDsCor(eo.getDsCor());
+                esquadriaatualizada.setTmAltura(eo.getTmAltura());
+                esquadriaatualizada.setTmLargura(eo.getTmLargura());
+                esquadriaatualizada.setEsquadria(eo.getEsquadria());
+                esquadriaatualizada.setObra(eo.getObra());
+                esquadriaatualizada.setStAtivo(true);
+                esquadriaatualizada.setNrVersaobra(vNrVersao);
+                esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
+            }else{
+                //passa a PK para null para o Spring criar uma nova entidade no bd
+                esquadriaObra.setIdEsquadriaObra(null);
+                esquadriaObra.setNrVersaobra(vNrVersao);
+                validaUpdate(esquadriaObra);
+                esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            }
+
+            //desabilita a esquadriaObra anterior para manter versionamento da obra
+            eo.setStAtivo(false);
+            esquadriaObraRepository.saveAndFlush(eo);
+        }
+        return esquadriaObra;
+    }
+
     public List<CorEnum> getCotes() {
         return List.of(CorEnum.values());
     }
@@ -184,8 +228,5 @@ public class EsquadriaObraService {
     private void validaUpdate(EsquadriaObra esquadriaObra) throws Exception{
         validaFks(esquadriaObra);
         validaDefault(esquadriaObra);
-        if(esquadriaObra.getIdEsquadriaObra() == null || esquadriaObra.getIdEsquadriaObra() == 0){
-            throw new Exception("Informe o ID para atualizar as informações de vinculo da esquadria com esta obra");
-        }
     }
 }
