@@ -215,13 +215,20 @@ export class GridObraComponent implements OnInit {
             [this.tipoBotao.EXCLUIR, true],
             [this.tipoBotao.DUPLICAR, true]
           ])
-          //todo ver como o generic daz para mudar o duplicar
-          this.esquadriaObra.esquadria = new Esquadria();
-          this.esquadriaObra.idEsquadriaObra = 0;
         }else{
           this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.carregaEsquadriaObra(response.obra)
         }
+        /*Limpa os campos*/
+        this.esquadriaObra.esquadria = new Esquadria();
+        this.esquadriaObra.idEsquadriaObra = 0;
+        this.esquadriaObra.cdEsquadriaObra = '';
+        this.esquadriaObra.tmAltura = 0;
+        this.esquadriaObra.tmLargura = 0;
+
+        /*seta o foco para o campo de esquadria para facilitar o cadastro da procima*/
+        const elementRef = document.getElementById('esquadriaObra-esquadria')?.querySelector('input');
+        elementRef?.focus();
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);

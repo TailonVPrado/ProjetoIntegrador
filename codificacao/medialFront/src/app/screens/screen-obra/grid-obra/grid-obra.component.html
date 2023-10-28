@@ -46,7 +46,7 @@
     <hr style="margin-top: -5px;">
 
     <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
-      <input-text style="width: 50%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
+      <input-text id="esquadriaObra-esquadria" style="width: 50%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
       [itensDisponiveis]="this.esquadriasDisponiveis"
       (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
       <list-box style="width: 30%;" [(mxModel)]="esquadriaObra.dsCor" [list]="cores" [properties]="inputDsCor"></list-box>
