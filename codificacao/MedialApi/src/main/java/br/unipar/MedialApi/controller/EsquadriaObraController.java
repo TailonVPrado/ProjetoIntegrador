@@ -3,6 +3,7 @@ package br.unipar.MedialApi.controller;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
+import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.service.EsquadriaObraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,9 @@ public class EsquadriaObraController {
     private EsquadriaObraService esquadriaObraService;
     @GetMapping(path = "/all")
     public List<EsquadriaObra> findByAll (@RequestParam(required = false) Long idObra,
-                                          @RequestParam(required = false) Long idEsquadria) throws Exception{
-        return esquadriaObraService.findAll(idObra, idEsquadria);
+                                          @RequestParam(required = false) Long idEsquadria,
+                                          @RequestParam(required = false) OrderByEnum orderBy) throws Exception{
+        return esquadriaObraService.findAll(idObra, idEsquadria, orderBy);
     }
 
     @PostMapping

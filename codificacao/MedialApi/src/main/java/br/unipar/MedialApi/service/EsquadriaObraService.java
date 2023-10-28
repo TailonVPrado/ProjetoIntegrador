@@ -4,6 +4,7 @@ import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
+import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.specification.EsquadriaObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class EsquadriaObraService {
     @Autowired
     private ObraService obraService;
 
-    public List<EsquadriaObra> findAll (Long idObra, Long idEsquadria){
+    public List<EsquadriaObra> findAll (Long idObra, Long idEsquadria, OrderByEnum orderBy){
         Specification<EsquadriaObra> spec = Specification.where(null);
 
         if(idObra != null && idObra != 0){
@@ -35,9 +36,16 @@ public class EsquadriaObraService {
         }
         spec = spec.and(EsquadriaObraSpecification.ativo());
 
-        List<EsquadriaObra> esquadriaObras = esquadriaObraRepository.findAll(spec, Sort.by("idEsquadriaObra").descending());
+        List<EsquadriaObra> esquadriaObras;
+
+        if(orderBy != null && orderBy.equals(OrderByEnum.ASC)){
+            esquadriaObras = esquadriaObraRepository.findAll(spec, Sort.by("idEsquadriaObra").ascending());
+        }else{//por padrao a ordenação das esquadrias de obras devem ser DESC
+            esquadriaObras = esquadriaObraRepository.findAll(spec, Sort.by("idEsquadriaObra").descending());
+        }
 
         return esquadriaObras;
+
     }
 
     public EsquadriaObra insert (EsquadriaObra esquadriaObra) throws Exception{
@@ -60,7 +68,7 @@ public class EsquadriaObraService {
         esquadriaObra.getObra().setNrVersao(vNrVersao);
         obraService.updateVersao(esquadriaObra.getObra());
 
-        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null);
+        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null, OrderByEnum.ASC);
 
         for (EsquadriaObra eo: esquadrias) {
             //insere a copia da esquadria obra
@@ -105,7 +113,7 @@ public class EsquadriaObraService {
         esquadriaObra.getObra().setNrVersao(vNrVersao);
         obraService.updateVersao(esquadriaObra.getObra());
 
-        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null);
+        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null, OrderByEnum.ASC);
 
         for (EsquadriaObra eo: esquadrias) {
             /* insere a copia da esquadria obra
@@ -158,7 +166,7 @@ public class EsquadriaObraService {
         esquadriaObra.getObra().setNrVersao(vNrVersao);
         obraService.updateVersao(esquadriaObra.getObra());
 
-        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null);
+        List<EsquadriaObra> esquadrias = findAll(esquadriaObra.getObra().getIdObra(), null, OrderByEnum.ASC);
 
         for (EsquadriaObra eo: esquadrias) {
             /* insere a copia da esquadria obra
@@ -177,10 +185,10 @@ public class EsquadriaObraService {
                 esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
             }else{
                 //passa a PK para null para o Spring criar uma nova entidade no bd
-                esquadriaObra.setIdEsquadriaObra(null);
+                /*esquadriaObra.setIdEsquadriaObra(null);
                 esquadriaObra.setNrVersaobra(vNrVersao);
                 validaUpdate(esquadriaObra);
-                esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+                esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);*/
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
