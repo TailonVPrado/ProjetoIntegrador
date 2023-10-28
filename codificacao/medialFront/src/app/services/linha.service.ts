@@ -13,9 +13,9 @@ export class LinhaService {
 
   private apiUrl = environment.apiUrl;
 
-  createLinha(linha: Linha): Observable<any> {
+  createLinha(linha: Linha): Observable<Linha> {
     const url = `${this.apiUrl}/linha`;
-    return this.http.post<any>(url, linha);
+    return this.http.post<Linha>(url, linha);
   }
 
   //todo alterar pegar o objeto inteiro da tela
@@ -33,16 +33,16 @@ export class LinhaService {
     return this.http.get<Linha[]>(url, {params});
   }
 
-  updateLinha(linha: Linha): Observable<any> {
+  updateLinha(linha: Linha): Observable<Linha> {
     const url = `${this.apiUrl}/linha`;
-    return this.http.put<any>(url, linha);
+    return this.http.put<Linha>(url, linha);
   }
 
-  deleteLinha(linha: Linha): Observable<any> {
+  deleteLinha(linha: Linha): Observable<Linha> {
     const url = `${this.apiUrl}/linha/`+linha.idLinha;
-    return this.http.delete<any>(url);
+    return this.http.delete<Linha>(url);
   }
-  getLinhaById(id: number): Observable<any>{
+  getLinhaById(id: number): Observable<Linha>{
     const url = `${this.apiUrl}/linha/`+id;
     return this.http.get<Linha>(url);
   }

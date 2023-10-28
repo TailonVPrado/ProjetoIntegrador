@@ -14,9 +14,9 @@ export class ObraService {
 
   private apiUrl = environment.apiUrl;
 
-  createObra(obra: Obra): Observable<any> {
+  createObra(obra: Obra): Observable<Obra> {
     const url = `${this.apiUrl}/obra`;
-    return this.http.post<any>(url, obra);
+    return this.http.post<Obra>(url, obra);
   }
 
   getObras(obra: Obra, datasFiltro : Date[] | any = null ,limit : number = 0): Observable<Obra[]> {
@@ -41,14 +41,14 @@ export class ObraService {
     return this.http.get<Obra[]>(url, {params});
   }
 
-  deleteObra(obra : Obra) : Observable<any> {
+  deleteObra(obra : Obra) : Observable<Obra> {
     const url = `${this.apiUrl}/obra/`+obra.idObra;
-    return this.http.delete<any>(url);
+    return this.http.delete<Obra>(url);
   }
 
-  updateObra(obra: Obra): Observable<any> {
+  updateObra(obra: Obra): Observable<Obra> {
     const url = `${this.apiUrl}/obra`;
-    return this.http.put<any>(url, obra);
+    return this.http.put<Obra>(url, obra);
   }
 
 }

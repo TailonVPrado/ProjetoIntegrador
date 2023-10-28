@@ -14,9 +14,9 @@ export class PerfilService {
 
   private apiUrl = environment.apiUrl;
 
-  createPerfil(perfil: Perfil): Observable<any> {
+  createPerfil(perfil: Perfil): Observable<Perfil> {
     const url = `${this.apiUrl}/perfil`;
-    return this.http.post<any>(url, perfil);
+    return this.http.post<Perfil>(url, perfil);
   }
 
   getPerfil(perfil: Perfil): Observable<Perfil[]> {
@@ -36,14 +36,14 @@ export class PerfilService {
     return this.http.get<Perfil[]>(url, {params});
   }
 
-  updatePerfil(perfil: Perfil): Observable<any> {
+  updatePerfil(perfil: Perfil): Observable<Perfil> {
     const url = `${this.apiUrl}/perfil`;
-    return this.http.put<any>(url, perfil);
+    return this.http.put<Perfil>(url, perfil);
   }
 
-  deletePerfil(perfil: Perfil): Observable<any> {
+  deletePerfil(perfil: Perfil): Observable<Perfil> {
     const url = `${this.apiUrl}/perfil/`+perfil.idPerfil;
-    return this.http.delete<any>(url);
+    return this.http.delete<Perfil>(url);
   }
 
   updateImage(id: number, image: string): Observable<any>{
@@ -68,7 +68,7 @@ export class PerfilService {
     );
   }
 
-  getPerfilById(id: number): Observable<any>{
+  getPerfilById(id: number): Observable<Perfil>{
     const url = `${this.apiUrl}/perfil/`+id;
     return this.http.get<Perfil>(url);
   }

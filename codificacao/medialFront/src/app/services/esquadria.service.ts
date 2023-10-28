@@ -13,9 +13,9 @@ export class EsquadriaService {
 
   private apiUrl = environment.apiUrl;
 
-  createEsquadria(esquadria: Esquadria): Observable<any> {
+  createEsquadria(esquadria: Esquadria): Observable<Esquadria> {
     const url = `${this.apiUrl}/esquadria`;
-    return this.http.post<any>(url, esquadria);
+    return this.http.post<Esquadria>(url, esquadria);
   }
 
   getEsquadrias(esquadria: Esquadria): Observable<Esquadria[]> {
@@ -35,17 +35,17 @@ export class EsquadriaService {
     return this.http.get<Esquadria[]>(url, {params});
   }
 
-  deleteEsquadria(esquadria: Esquadria): Observable<any> {
+  deleteEsquadria(esquadria: Esquadria): Observable<Esquadria> {
     const url = `${this.apiUrl}/esquadria/`+esquadria.idEsquadria;
-    return this.http.delete<any>(url);
+    return this.http.delete<Esquadria>(url);
   }
 
-  updateEsquadria(esquadria: Esquadria): Observable<any> {
+  updateEsquadria(esquadria: Esquadria): Observable<Esquadria> {
     const url = `${this.apiUrl}/esquadria`;
-    return this.http.put<any>(url, esquadria);
+    return this.http.put<Esquadria>(url, esquadria);
   }
 
-  getEsquadriaById(id: number): Observable<any>{
+  getEsquadriaById(id: number): Observable<Esquadria>{
     const url = `${this.apiUrl}/esquadria/`+id;
     return this.http.get<Esquadria>(url);
   }

@@ -13,9 +13,9 @@ export class PerfilEsquadriaService {
 
   private apiUrl = environment.apiUrl;
 
-  createPerfilEsquadria(perfilEsquadria: PerfilEsquadria): Observable<any> {
+  createPerfilEsquadria(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria> {
     const url = `${this.apiUrl}/perfilesquadria`;
-    return this.http.post<any>(url, perfilEsquadria);
+    return this.http.post<PerfilEsquadria>(url, perfilEsquadria);
   }
 
   getPerfilEsquadrias(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria[]> {
@@ -37,8 +37,8 @@ export class PerfilEsquadriaService {
     return this.http.delete<any>(url);
   }
 
-  updatePerfilEsquadria(perfilEsquadria: PerfilEsquadria): Observable<any> {
+  updatePerfilEsquadria(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria> {
     const url = `${this.apiUrl}/perfilesquadria`;
-    return this.http.put<any>(url, perfilEsquadria);
+    return this.http.put<PerfilEsquadria>(url, perfilEsquadria);
   }
 }

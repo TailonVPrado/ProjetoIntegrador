@@ -10,6 +10,7 @@ export class EsquadriaObra {
   tmLargura : number;
   esquadria : Esquadria;
   obra : Obra;
+  nrVersaobra : number;
   properties: Properties;
   visibilidadeBotoes: Map<string, boolean>;
 
@@ -21,6 +22,7 @@ export class EsquadriaObra {
     tmLargura : number = 0,
     esquadria: Esquadria = new Esquadria(),
     obra : Obra = new Obra(),
+    nrVersaobra : number = 0,
     properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
@@ -31,6 +33,7 @@ export class EsquadriaObra {
     this.tmLargura = tmLargura;
     this.esquadria = esquadria;
     this.obra = obra;
+    this.nrVersaobra = nrVersaobra;
     this.properties = properties;
     this.visibilidadeBotoes = visibilidadeBotoes;
   }

@@ -32,14 +32,14 @@ export class EsquadriaObraService {
     return this.http.post<EsquadriaObra[]>(url, esquadriaObra);
   }
 
-  desvinculaEsquadria(esquadriaObra : EsquadriaObra) : Observable<any>{
+  desvinculaEsquadria(esquadriaObra : EsquadriaObra) : Observable<EsquadriaObra>{
     const url = `${this.apiUrl}/esquadriaobra/`+esquadriaObra.idEsquadriaObra;
-    return this.http.delete<any>(url);
+    return this.http.delete<EsquadriaObra>(url);
   }
 
-  updateEsquadriaObra(esquadriaObra: EsquadriaObra): Observable<any> {
+  updateEsquadriaObra(esquadriaObra: EsquadriaObra): Observable<EsquadriaObra> {
     const url = `${this.apiUrl}/esquadriaobra`;
-    return this.http.put<any>(url, esquadriaObra);
+    return this.http.put<EsquadriaObra>(url, esquadriaObra);
   }
 
   getCores() : Observable<string[]>{
