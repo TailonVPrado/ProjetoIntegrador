@@ -41,4 +41,9 @@ public class EsquadriaObraController {
     private List<CorEnum> getCores(){
         return esquadriaObraService.getCotes();
     }
+
+    @GetMapping(path = "/proximoCodigo")
+    public String retornaProximoCodigoEsquadria(@RequestParam(required = false) String cdCodigo){
+        return esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
+    }
 }

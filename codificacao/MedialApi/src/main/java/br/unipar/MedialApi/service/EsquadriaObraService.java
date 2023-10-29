@@ -237,4 +237,68 @@ public class EsquadriaObraService {
         validaFks(esquadriaObra);
         validaDefault(esquadriaObra);
     }
+
+    public String retornaProximoCodigoEsquadria(String value){
+        if(value.isEmpty()){
+            return value;
+        }
+        char[] caracteres = value.toCharArray();
+        boolean finalizou = false;
+
+        for(int i = caracteres.length-1; i >= 0 ; i--){
+            caracteres[i] = inc(caracteres[i]);
+            if(caracteres[i] != '0' && !String.valueOf(caracteres[i]).equalsIgnoreCase("A")){
+                finalizou = true;
+                break;
+            }
+        }
+
+        //comeca a preparar o retorno
+        String retorno = new String(caracteres);
+
+        if(finalizou){
+            //se finalizou o loop como esperamos ja retorna o valor
+            return retorno;
+        }else if(!finalizou && caracteres.length < 5){
+            //se nao finalizou o loop antes de seu fim e a entrada é menor que 5 caracteres incrementa um numero/letra automaticamente
+            try{
+                int testaInt = Integer.parseInt(retorno);
+                retorno = "1" + retorno;
+            }catch(Exception e){
+                retorno =  "A" + retorno;
+            }
+            return retorno;
+        }else{
+            //retorna vazio caso nao finalizou e ja esta com 5 caracteres
+            return "";
+        }
+    }
+
+    private char inc(char value){
+        /*Função para incrementar o proximo caractere*/
+        int  valueInt;
+        String  valueString;
+        try{
+            valueInt = Integer.parseInt(String.valueOf(value)) + 1; //se for number adiciona +1 no valor
+            valueString = Integer.toString(valueInt); //converte para string para simplifcar o retorno
+            return valueString.charAt(valueString.length()-1); //volta o ultimo valor porque o valor de input pode ser 9, que totalizaria 10 na variavel valueString, porem temos que retornar o ZERO, para continuar correto os valores
+        }catch(Exception e){
+            //se caior no cacth retorno a proxima letra
+            return retornaProximaLetra(value);
+        }
+    }
+
+    private char retornaProximaLetra(char value) {
+
+        if (value >= 'A' && value < 'Z') {
+            return (char) (value + 1);
+        } else if (value == 'Z') {
+            return 'A';
+        } else if (value >= 'a' && value < 'z') {
+            return (char) (value + 1);
+        } else if (value == 'z') {
+            return 'a';
+        }
+        return value;
+    }
 }
