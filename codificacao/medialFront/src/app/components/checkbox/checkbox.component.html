@@ -1,0 +1,8 @@
+<div class="main">
+  <label>
+    <input type="checkbox"
+    [(ngModel)]="mxModel"
+    [disabled]="!properties?.ativo">
+    <span style="margin-left: 5px;">{{ properties?.label }}</span>
+  </label>
+</div>

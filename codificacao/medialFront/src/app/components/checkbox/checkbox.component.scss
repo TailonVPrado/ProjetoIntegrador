@@ -1,0 +1,17 @@
+input{
+  border-color: rgba(0, 0, 0, 0.342);
+  width: 17px;
+  outline: none;
+  cursor: pointer;
+}
+label{
+  margin-right: 5px;
+  align-items: center;
+  display: flex;
+  white-space: nowrap;
+}
+
+.main{
+  display: inline-block;
+  margin: 10px;
+}

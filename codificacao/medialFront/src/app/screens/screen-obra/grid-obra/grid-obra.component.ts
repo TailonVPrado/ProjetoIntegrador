@@ -127,6 +127,10 @@ export class GridObraComponent implements OnInit {
   gridEsquadriaObra : EsquadriaObra[] = [];
   buttonCadastrarEsquadriaObra: ButtonModel = new ButtonModel({  });
 
+  //checkbox para nao limpar campos da tela
+  chkLimparCamposAposCadastro : boolean = true;
+  chkLimparCamposAposCadastroProperties = new InputModel({label: 'Limpar campos ao vincular nova esquadria'});
+
   esquadriaObraOld : EsquadriaObra = new EsquadriaObra();
   efetuandoAltercaoEsquadriaObra : boolean = false;
 
