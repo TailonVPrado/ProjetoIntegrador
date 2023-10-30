@@ -25,6 +25,10 @@ public class EsquadriaObraService {
     @Autowired
     private ObraService obraService;
 
+    public List<EsquadriaObra> findAll (Long idObra, Long idEsquadria){
+        return findAll(idObra, idEsquadria, OrderByEnum.DESC);
+    }
+
     public List<EsquadriaObra> findAll (Long idObra, Long idEsquadria, OrderByEnum orderBy){
         Specification<EsquadriaObra> spec = Specification.where(null);
 

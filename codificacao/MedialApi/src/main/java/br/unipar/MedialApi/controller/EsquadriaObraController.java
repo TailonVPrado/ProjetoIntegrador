@@ -17,9 +17,8 @@ public class EsquadriaObraController {
     private EsquadriaObraService esquadriaObraService;
     @GetMapping(path = "/all")
     public List<EsquadriaObra> findByAll (@RequestParam(required = false) Long idObra,
-                                          @RequestParam(required = false) Long idEsquadria,
-                                          @RequestParam(required = false) OrderByEnum orderBy) throws Exception{
-        return esquadriaObraService.findAll(idObra, idEsquadria, orderBy);
+                                          @RequestParam(required = false) Long idEsquadria) throws Exception{
+        return esquadriaObraService.findAll(idObra, idEsquadria);
     }
 
     @PostMapping
@@ -44,6 +43,8 @@ public class EsquadriaObraController {
 
     @GetMapping(path = "/proximoCodigo")
     public String retornaProximoCodigoEsquadria(@RequestParam(required = false) String cdCodigo){
-        return esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
+        String teste =esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
+        System.out.println(teste);
+        return teste;
     }
 }

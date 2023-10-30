@@ -21,35 +21,6 @@ label{
   height: 100%;
 }
 
-.item-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  border-top: none;
-  max-height: 120px;
-  overflow-y: auto;
-  z-index: 10;
-  border-bottom-left-radius: 10px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-}
-.item {
-  padding: 2px;
-  border-bottom: 1px solid #cccccc57;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-}
-.item.selected {
-  background-color: #f0f0f0;
-  transition: background-color 0.2s;
-}
-
-.item:hover {
-  background-color: #f0f0f0;
-}
-
 .main{
   display: inline-block;
   margin: 10px;
@@ -57,16 +28,4 @@ label{
 
 .flex-container {
   display: flex;
-}
-
-.item-list::-webkit-scrollbar {
-  width: 6px; //largura da barra de rolagem
-}
-
-.item-list::-webkit-scrollbar-thumb {
-  background-color: #2f74c4; //Cor da barra de rolagem
-  border-radius: 3px; //arrednda a barra de rolagem
-}
-.item-list::-webkit-scrollbar-track {
-  background-color: #c3d1ff; //cor do fundo da barra de rolagem
 }

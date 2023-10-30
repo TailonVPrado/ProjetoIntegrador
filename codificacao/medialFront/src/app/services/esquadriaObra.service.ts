@@ -46,4 +46,11 @@ export class EsquadriaObraService {
     const url = `${this.apiUrl}/esquadriaobra/cores`;
     return this.http.get<string[]>(url);
   }
+
+  retornaProximoCodigoEsquadria(value : string) : Observable<any>{
+    let params = new HttpParams();
+    params = params.set('cdCodigo', value);
+    const url = `${this.apiUrl}/esquadriaobra/proximoCodigo`;
+    return this.http.get(url, { params, responseType: 'text' });
+  }
 }

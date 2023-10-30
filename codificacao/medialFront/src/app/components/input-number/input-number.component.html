@@ -2,12 +2,12 @@
   <label *ngIf="!isGrid">{{properties?.label}}</label>
   <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
     <input
-    #inputElement
-    (focus)="onFocus()"
-    [disabled]="!properties?.ativo"
-    [placeholder]="properties?.placeholder"
-    [(ngModel)]="mxModel"
-    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '', 'text-align': align }"
-    currencyMask [options]="maskOptions"/>
+      #inputElement
+      (focus)="onFocus()"
+      [disabled]="!properties?.ativo"
+      [placeholder]="properties?.placeholder"
+      [(ngModel)]="mxModel"
+      [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '', 'text-align': align }"
+      currencyMask [options]="maskOptions"/>
   </div>
 </div>

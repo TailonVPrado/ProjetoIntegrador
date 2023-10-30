@@ -199,10 +199,10 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  onClickCadastrarEsquadriaObra(){
+  async onClickCadastrarEsquadriaObra(){
     this.buttonCadastrarEsquadriaObra.isRequesting = true;
     this.esquadriaObraService.createEsquadriaObra(this.esquadriaObra).subscribe(
-      (response) => {
+      async (response) => {
         this.generic.showSuccess("Esquadria ("+this.esquadriaObra.esquadria.dsEsquadria+") vinculada a obra ("+ this.esquadriaObra.obra.dsObra +") com sucesso!");
 
         //se mudou a versao reconsulta a tela
@@ -223,16 +223,26 @@ export class GridObraComponent implements OnInit {
           this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.carregaEsquadriaObra(response.obra)
         }
-        /*Limpa os campos*/
-        this.esquadriaObra.esquadria = new Esquadria();
-        this.esquadriaObra.idEsquadriaObra = 0;
-        this.esquadriaObra.cdEsquadriaObra = '';
-        this.esquadriaObra.tmAltura = 0;
-        this.esquadriaObra.tmLargura = 0;
 
-        /*seta o foco para o campo de esquadria para facilitar o cadastro da procima*/
-        const elementRef = document.getElementById('esquadriaObra-esquadria')?.querySelector('input');
-        elementRef?.focus();
+
+        this.esquadriaObraService.retornaProximoCodigoEsquadria(this.esquadriaObra.cdEsquadriaObra).subscribe(
+          (response) =>{
+            console.log('tailon:',response);
+            this.esquadriaObra.cdEsquadriaObra = response;
+          }
+        );
+        this.esquadriaObra.idEsquadriaObra = 0;
+        if(this.chkLimparCamposAposCadastro){
+          /*Limpa os campos so se a checkbox de limpar campos estiver marcada*/
+          this.esquadriaObra.esquadria = new Esquadria();
+          this.esquadriaObra.tmAltura = 0;
+          this.esquadriaObra.tmLargura = 0;
+
+          /*seta o foco para o campo de esquadria para facilitar o cadastro da proxima*/
+          const elementRef = document.getElementById('esquadriaObra-esquadria')?.querySelector('input');
+          elementRef?.focus();
+        }
+
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);
