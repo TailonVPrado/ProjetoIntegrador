@@ -8,4 +8,56 @@
     <checkbox [properties]="chkExibirObrasImpressasProperties" [(mxModel)]="chkExibirObrasImpressas"></checkbox>
   </div>
 
+
+<!--
+  <div class="center" style="width: 95%; margin-left: 3%;">
+    <table class="custom-table" style="width: 95%;" >
+      <thead>
+        <tr>
+          <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
+          <th class="pipe" style="text-align: left; width: 25%;"><span>Cor</span></th>
+          <th class="pipe" style="text-align: left; width: 8%; text-align: center;"><span>Cód</span></th>
+          <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
+          <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
+          <th style="text-align: left; width: 8%;"><span>Largura</span></th>
+          <th style="width: 4%; text-align: center;">Qtde</th>
+          <th style="width:30px;"></th>
+          <th style="width:30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of gridEsquadriaObra; let i = index"  >
+          <td class="padding">
+            <input-text [isGrid]="true" [(mxModel)]="x.esquadria.dsEsquadria" [properties]="x.properties" [itensDisponiveis]="this.esquadriasDisponiveis" (itemSelecionado)="esquadriaSelecionada($event, x)"></input-text>
+          </td>
+          <td class="pipe">
+            <list-box [isGrid]="true" [(mxModel)]="x.dsCor" [list]="cores" [properties]="x.properties"></list-box>
+          </td>
+          <td class="pipe">
+            <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
+          </td>
+          <td class="pipe">
+            <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [decimal]="true" [align]="'right'"></input-number>
+          </td>
+          <td>
+            <span style="text-align: center;">X</span>
+          </td>
+          <td>
+            <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true" [align]="'left'"></input-number>
+          </td>
+          <td>
+            <button-icon (onClick)="onClickDuplicarEsquadriaObra(x, i)" nomeIcone="duplicar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.DUPLICAR)" hint="Duplicar"></button-icon>
+          </td>
+          <td>
+            <button-icon (onClick)="onClickExcluirEsquadriaObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
+            <button-icon (onClick)="onClickCancelarEsquadriaObra(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+          </td>
+          <td>
+            <button-icon (onClick)="onClickEditarEsquadriaObra(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
+            <button-icon (onClick)="onClickConfirmarEsquadriaObra(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
 </div>

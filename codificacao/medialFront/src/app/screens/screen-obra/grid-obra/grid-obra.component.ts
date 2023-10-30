@@ -252,25 +252,6 @@ export class GridObraComponent implements OnInit {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   async onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
     if(await this.generic.showAlert('Deseja realmente desvincular esta esquadria?') == 1){
       this.esquadriaObraService.desvinculaEsquadria(esquadriaObra).subscribe(
@@ -352,11 +333,12 @@ export class GridObraComponent implements OnInit {
         this.efetuandoAltercaoEsquadriaObra = false;
 
         /*se a versao for diferente reconsulta a tela*/
-        if(response.nrVersaobra == this.esquadriaObra.obra.nrVersao){
-          this.generic.onClickButtonConfirmar(esquadriaObra);
-        }else{
+        if(response.nrVersaobra != esquadriaObra.obra.nrVersao){
+          this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.carregaEsquadriaObra(response.obra);
         }
+        this.generic.onClickButtonConfirmar(esquadriaObra);
+
       },
       (error) => {
         this.generic.showError(error.error.errors[0]);

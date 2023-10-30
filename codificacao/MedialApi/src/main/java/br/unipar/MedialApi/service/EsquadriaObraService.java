@@ -173,7 +173,6 @@ public class EsquadriaObraService {
         for (EsquadriaObra eo: esquadrias) {
             /* insere a copia da esquadria obra
              * -Como é um update precisa verificar o Id para nao deixar o registro duplicado na nova versao da obra*/
-            System.out.println("lista: "+eo.getIdEsquadriaObra() + "  o atualizado: "+esquadriaObra.getIdEsquadriaObra());
             if(!eo.getIdEsquadriaObra().equals(esquadriaObra.getIdEsquadriaObra())){
                 EsquadriaObra esquadriaatualizada = new EsquadriaObra();
                 esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
@@ -187,10 +186,10 @@ public class EsquadriaObraService {
                 esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
             }else{
                 //passa a PK para null para o Spring criar uma nova entidade no bd
-                /*esquadriaObra.setIdEsquadriaObra(null);
+                esquadriaObra.setIdEsquadriaObra(null);
                 esquadriaObra.setNrVersaobra(vNrVersao);
                 validaUpdate(esquadriaObra);
-                esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);*/
+                esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
