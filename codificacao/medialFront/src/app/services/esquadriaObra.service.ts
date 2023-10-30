@@ -27,9 +27,9 @@ export class EsquadriaObraService {
     return this.http.get<EsquadriaObra[]>(url, {params});
   }
 
-  createEsquadriaObra(esquadriaObra : EsquadriaObra): Observable<any>{
+  createEsquadriaObra(esquadriaObra : EsquadriaObra): Observable<EsquadriaObra>{
     const url = `${this.apiUrl}/esquadriaobra`;
-    return this.http.post<EsquadriaObra[]>(url, esquadriaObra);
+    return this.http.post<EsquadriaObra>(url, esquadriaObra);
   }
 
   desvinculaEsquadria(esquadriaObra : EsquadriaObra) : Observable<EsquadriaObra>{
@@ -52,5 +52,10 @@ export class EsquadriaObraService {
     params = params.set('cdCodigo', value);
     const url = `${this.apiUrl}/esquadriaobra/proximoCodigo`;
     return this.http.get(url, { params, responseType: 'text' });
+  }
+
+  duplicarEsquadriaObra(esquadriaObra : EsquadriaObra) : Observable<EsquadriaObra>{
+    const url = `${this.apiUrl}/esquadriaobra/duplicar`;
+    return this.http.post<EsquadriaObra>(url, esquadriaObra);
   }
 }

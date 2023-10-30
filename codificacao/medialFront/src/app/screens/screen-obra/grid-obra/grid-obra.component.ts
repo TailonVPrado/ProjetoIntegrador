@@ -227,7 +227,6 @@ export class GridObraComponent implements OnInit {
 
         this.esquadriaObraService.retornaProximoCodigoEsquadria(this.esquadriaObra.cdEsquadriaObra).subscribe(
           (response) =>{
-            console.log('tailon:',response);
             this.esquadriaObra.cdEsquadriaObra = response;
           }
         );
@@ -252,16 +251,39 @@ export class GridObraComponent implements OnInit {
     });
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   async onClickExcluirEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
     if(await this.generic.showAlert('Deseja realmente desvincular esta esquadria?') == 1){
       this.esquadriaObraService.desvinculaEsquadria(esquadriaObra).subscribe(
         (response) => {
           this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
-          if(response.nrVersaobra == this.esquadriaObra.obra.nrVersao){
+
+
+
+          if(response.nrVersaobra == esquadriaObra.obra.nrVersao){
             this.gridEsquadriaObra.splice(idx, 1);
           }else{
-            this.carregaEsquadriaObra(this.esquadriaObra.obra);
+            this.carregaEsquadriaObra(response.obra);
           }
         },
         (error) => {
@@ -347,5 +369,37 @@ export class GridObraComponent implements OnInit {
   }
 
   onClickDuplicarEsquadriaObra(esquadriaObra : EsquadriaObra, idx : number){
+
+    this.esquadriaObraService.duplicarEsquadriaObra(esquadriaObra).subscribe(
+      async (response) => {
+        this.generic.showSuccess("Esquadria ("+response.esquadria.dsEsquadria+") duplicada com sucesso!");
+
+        //se mudou a versao reconsulta a tela
+        if(response.nrVersaobra == esquadriaObra.obra.nrVersao){
+
+          /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
+          this.gridEsquadriaObra.splice(0,0,  Object.assign({}, response) );
+          this.gridEsquadriaObra[0].properties = new Properties({ativo : false});
+          this.gridEsquadriaObra[0].visibilidadeBotoes = new Map <string, boolean>([
+            [this.tipoBotao.CANCELAR, false],
+            [this.tipoBotao.CONFIRMAR, false],
+            [this.tipoBotao.EDITAR, true],
+            [this.tipoBotao.EXCLUIR, true],
+            [this.tipoBotao.DUPLICAR, true]
+          ])
+        }else{
+          this.carregaEsquadriaObra(response.obra)
+        }
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
+
+
+
+
+
+
   }
 }

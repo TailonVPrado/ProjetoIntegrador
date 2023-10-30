@@ -63,7 +63,6 @@ public class EsquadriaObraService {
             return insereEsquadriaEmObraImpressa(esquadriaObra);
         }
     }
-
     private EsquadriaObra insereEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         int vNrVersao = obra.getNrVersao() + 1;
@@ -308,5 +307,21 @@ public class EsquadriaObraService {
             return 'a';
         }
         return value;
+    }
+
+    public EsquadriaObra duplicarEsquadriaObra(EsquadriaObra esquadriaObra)throws Exception{
+        validaInsert(esquadriaObra);
+
+        esquadriaObra.setCdEsquadriaObra(retornaProximoCodigoEsquadria(esquadriaObra.getCdEsquadriaObra()));
+
+        Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+        if(!obra.isStImpreso()){
+            esquadriaObra.setIdEsquadriaObra(null);//sera para null para criar uma nova esquadriaObra
+            esquadriaObra.setNrVersaobra(obra.getNrVersao());
+            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        }else{
+            esquadriaObra.setIdEsquadriaObra(null);
+            return insereEsquadriaEmObraImpressa(esquadriaObra);
+        }
     }
 }

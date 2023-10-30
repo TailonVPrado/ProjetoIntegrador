@@ -45,4 +45,9 @@ public class EsquadriaObraController {
     public String retornaProximoCodigoEsquadria(@RequestParam(required = false) String cdCodigo){
         return esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
     }
+
+    @PostMapping(path = "/duplicar")
+    public EsquadriaObra duplicar (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
+        return esquadriaObraService.duplicarEsquadriaObra(esquadriaObra);
+    }
 }
