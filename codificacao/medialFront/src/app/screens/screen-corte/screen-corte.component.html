@@ -1,1 +1,11 @@
-<p>screen-corte works!</p>
+<div class="window">
+  <div class="left" style="margin-top: 30px; margin-left: 7%; margin-right: 7%;">
+    <input-text style="width: 60%;" [(mxModel)]="obra.dsObra" [properties]="inputDsObra"></input-text>
+    <input-date-range [(mxModel)]="datasFiltro" style="width: 40%;" [properties]="inputDtLancamento"></input-date-range>
+    <button-default [properties]="buttonConsultarObra" (onClick)="onClickConsultarObra()" hint="Consultar Obras"></button-default>
+  </div>
+  <div class="left" style="margin-bottom: 50px; margin-left: 7%; margin-right: 7%;">
+    <checkbox [properties]="chkExibirObrasImpressasProperties" [(mxModel)]="chkExibirObrasImpressas"></checkbox>
+  </div>
+
+</div>
