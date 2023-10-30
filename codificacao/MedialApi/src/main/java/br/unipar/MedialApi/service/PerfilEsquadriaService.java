@@ -133,7 +133,7 @@ public class PerfilEsquadriaService {
 
 
 
-            if(formula.trim() != null && !formula.equals("")){
+            if(formula.trim() != null && !formula.isEmpty()){
                 formula = formula.replaceAll("LT", String.valueOf(new BigDecimal(100.0)));
                 formula = formula.replaceAll("AT", String.valueOf(new BigDecimal(100.0)));
 

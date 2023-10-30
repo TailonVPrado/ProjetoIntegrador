@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -220,9 +219,10 @@ public class EsquadriaObraService {
     private void validaDefault(EsquadriaObra esquadriaObra)throws Exception{
 
         esquadriaObra.setCdEsquadriaObra(esquadriaObra.getCdEsquadriaObra().trim().replaceAll("\\s+", " "));
-        if(esquadriaObra.getCdEsquadriaObra() == null || esquadriaObra.getEsquadria().equals("")){
+        /* COMENTATO PORQUE NAO É OBRIGATORIO
+        if(esquadriaObra.getCdEsquadriaObra() == null || esquadriaObra.getCdEsquadriaObra().isEmpty()){
             throw new Exception("Informe o código da esquadria.");
-        }
+        }*/
         if(esquadriaObra.getCdEsquadriaObra().trim().length() > 5){
             throw new Exception("O código da esquadria deve conter no máximo 5 caracteres.");
         }
