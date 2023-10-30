@@ -262,6 +262,10 @@ public class EsquadriaObraService {
 
         if(finalizou){
             //se finalizou o loop como esperamos ja retorna o valor
+            if(retorno.equals(value)){
+                /*se o valor for o mesmo retorna vazio, por que as vezes o ususario pode colcoar um caracter especial no meio do codigo*/
+                return "";
+            }
             return retorno;
         }else if(!finalizou && caracteres.length < 5){
             //se nao finalizou o loop antes de seu fim e a entrada é menor que 5 caracteres incrementa um numero/letra automaticamente

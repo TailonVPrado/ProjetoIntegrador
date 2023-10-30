@@ -9,5 +9,4 @@ public class MedialApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MedialApiApplication.class, args);
 	}
-
 }

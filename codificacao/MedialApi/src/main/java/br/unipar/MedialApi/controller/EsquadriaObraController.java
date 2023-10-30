@@ -43,8 +43,6 @@ public class EsquadriaObraController {
 
     @GetMapping(path = "/proximoCodigo")
     public String retornaProximoCodigoEsquadria(@RequestParam(required = false) String cdCodigo){
-        String teste =esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
-        System.out.println(teste);
-        return teste;
+        return esquadriaObraService.retornaProximoCodigoEsquadria(cdCodigo);
     }
 }
