@@ -3,6 +3,7 @@ package br.unipar.MedialApi.controller;
 import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Obra;
+import br.unipar.MedialApi.model.dto.ObraCorteDto;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.service.ObraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,9 @@ public class ObraController {
                                  @RequestParam(required = false) String dsObra,
                                  @RequestParam(required = false) Date dtLctoIni,
                                  @RequestParam(required = false) Date dtLctoFim,
-                                 @RequestParam(defaultValue = "0") Long limit) throws Exception{
-        return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim, limit);
+                                 @RequestParam(defaultValue = "0") Long limit,
+                                 @RequestParam(defaultValue = "true") boolean retornarObrasJaImpressas){
+        return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim, limit, retornarObrasJaImpressas);
     }
 
     @DeleteMapping(path = "{id}")
@@ -45,20 +47,5 @@ public class ObraController {
     public Obra update (@RequestBody Obra obra) throws Exception{
         return obraService.update(obra);
     }
-/*
-    @GetMapping(path = "/all")
-    public ResponseEntity<Page<Obra>> findByAll (@RequestParam(defaultValue = "0") int page,
-                                                 @RequestParam(defaultValue = "10") int size){
 
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Obra> obras = obraService.findAll(pageable);
-        return ResponseEntity.ok(obras);
-        //return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim);
-    }*/
 }
-/*
-    @RequestParam(required = false) Long idEmpresa,
-    @RequestParam(required = false) String dsObra,
-    @RequestParam(required = false) Date dtLctoIni,
-    @RequestParam(required = false) Date dtLctoFim
-*/

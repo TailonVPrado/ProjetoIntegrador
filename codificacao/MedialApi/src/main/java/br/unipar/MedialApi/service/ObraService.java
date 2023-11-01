@@ -1,13 +1,9 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.model.Esquadria;
-import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Obra;
-import br.unipar.MedialApi.model.Perfil;
-import br.unipar.MedialApi.model.dto.PerfilDto;
+import br.unipar.MedialApi.model.dto.ObraCorteDto;
 import br.unipar.MedialApi.repository.ObraRepository;
 import br.unipar.MedialApi.specification.ObraSpecification;
-import br.unipar.MedialApi.specification.PerfilSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +27,7 @@ public class ObraService {
         return obraRepository.saveAndFlush(obra);
     }
 
-    public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit){
+    public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit, boolean retornarObrasJaImpressas){
         Specification<Obra> spec = Specification.where(null);
 
         if(idEmpresa != null && idEmpresa != 0){
@@ -44,13 +39,16 @@ public class ObraService {
         if (dtLctoIni != null) {
             spec = spec.and(ObraSpecification.lancamentoMaiorQue(dtLctoIni));
         }
-
         if (dtLctoFim != null) {
             spec = spec.and(ObraSpecification.lancamentoMenorQue(dtLctoFim));
         }
 
+        if(!retornarObrasJaImpressas){
+            spec = spec.and(ObraSpecification.impressa());
+        }
 
         spec = spec.and(ObraSpecification.ativo());
+
 
         Pageable pageable;
         if (limit != null && limit > 0) {
@@ -132,14 +130,4 @@ public class ObraService {
             throw new Exception("Não é possivel inserir uma obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
         }
     }
-
-    /*
-    public List<PerfilDto> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim) {
-
-        return new List<new PerfilDto()>();
-    }
-
-    public Page<Obra> findAll(Pageable pageable) {
-        return obraRepository.findAll(pageable);
-    }*/
 }

@@ -2,7 +2,7 @@ package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
-import br.unipar.MedialApi.model.PerfilEsquadria;
+import br.unipar.MedialApi.model.dto.ObraCorteDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
@@ -13,6 +13,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +56,7 @@ public class EsquadriaObraService {
     public EsquadriaObra insert (EsquadriaObra esquadriaObra) throws Exception{
         validaInsert(esquadriaObra);
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
-        if(!obra.isStImpreso()){
+        if(!obra.isStImpresso()){
             esquadriaObra.setStAtivo(true);
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
@@ -99,7 +101,7 @@ public class EsquadriaObraService {
         EsquadriaObra esquadriaObra = findById(idEsquadriaObra);
 
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
-        if(!obra.isStImpreso()){
+        if(!obra.isStImpresso()){
             esquadriaObra.setStAtivo(false);
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
         }else{
@@ -152,7 +154,7 @@ public class EsquadriaObraService {
 
     public EsquadriaObra update(EsquadriaObra esquadriaObra) throws Exception{
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
-        if(!obra.isStImpreso()){
+        if(!obra.isStImpresso()){
             validaUpdate(esquadriaObra);
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
         }else{
@@ -314,7 +316,7 @@ public class EsquadriaObraService {
         esquadriaObra.setCdEsquadriaObra(retornaProximoCodigoEsquadria(esquadriaObra.getCdEsquadriaObra()));
 
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
-        if(!obra.isStImpreso()){
+        if(!obra.isStImpresso()){
             esquadriaObra.setIdEsquadriaObra(null);//sera para null para criar uma nova esquadriaObra
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
@@ -322,5 +324,25 @@ public class EsquadriaObraService {
             esquadriaObra.setIdEsquadriaObra(null);
             return insereEsquadriaEmObraImpressa(esquadriaObra);
         }
+    }
+
+    public List<ObraCorteDto> findAllAgrupado (Long idObra){
+        List<Object[]> objs = esquadriaObraRepository.findAllAgrupado(idObra);
+        List<ObraCorteDto> listaObraCorteDto = new ArrayList<>();
+
+        for (Object[] obj: objs) {
+            ObraCorteDto obraCorteDto = new ObraCorteDto();
+            obraCorteDto.setIdObra(((BigInteger) obj[0]).longValue());
+            obraCorteDto.setIdEsquadria(((BigInteger) obj[1]).longValue());
+            obraCorteDto.setDsCor((String) obj[2]);
+            obraCorteDto.setTmLargura((BigDecimal) obj[3]);
+            obraCorteDto.setTmAltura((BigDecimal) obj[4]);
+            obraCorteDto.setQtde(((BigInteger) obj[5]).longValue());
+            obraCorteDto.setCdEsquadriaObra((String) obj[6]);
+            obraCorteDto.setDsEsquadria((String) obj[7]);
+
+            listaObraCorteDto.add(obraCorteDto);
+        }
+        return listaObraCorteDto;
     }
 }

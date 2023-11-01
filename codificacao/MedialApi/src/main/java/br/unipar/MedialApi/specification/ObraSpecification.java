@@ -24,9 +24,13 @@ public class ObraSpecification {
                 criteriaBuilder.lessThanOrEqualTo(root.get("dtLancamento"), dtLctoFim);
     }
 
-
     public static Specification<Obra> ativo() {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.isTrue(root.get("stAtivo"));
+    }
+
+    public static Specification<Obra> impressa() {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.isTrue(root.get("stImpresso"));
     }
 }
