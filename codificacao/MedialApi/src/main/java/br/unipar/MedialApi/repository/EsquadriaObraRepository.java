@@ -12,24 +12,33 @@ import java.util.List;
 
 @Repository
 public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Long>, JpaSpecificationExecutor<EsquadriaObra> {
-    @Query(value = "SELECT e.id_Obra as idObra, " +
-                          "e.id_Esquadria as idEsquadria, " +
-                          "e.ds_Cor as dsCor, " +
-                          "e.tm_Largura as tmLargura, " +
-                          "e.tm_Altura as tmAltura, " +
-                          "COUNT(1) AS qtde, " +
-                          "STRING_AGG(e.cd_EsquadriaObra, ', ') AS cdEsquadriaObra," +
-                          "(select esquadria.ds_esquadria " +
-                          "   from esquadria " +
-                          "  where esquadria.id_esquadria = e.id_Esquadria) AS dsEsquadria " +
-                     "FROM esquadriaobra e " +
-                    "WHERE e.id_obra = :idObra " +
-                      "AND e.st_Ativo = true " +
-                    "GROUP BY e.id_Obra, " +
-                             "e.id_Esquadria, " +
-                             "e.ds_Cor, " +
-                             "e.tm_Largura, " +
-                             "e.tm_Altura " ,
+    @Query(value = "SELECT idObra,\n" +
+                    "      idEsquadria,\n" +
+                    "      dsCor,\n" +
+                    "      tmLargura,\n" +
+                    "      tmAltura,\n" +
+                    "      qtde,\n" +
+                    "      cdEsquadriaObra,\n" +
+                    "      dsEsquadria\n" +
+                    " FROM(SELECT e.id_Obra as idObra,\n" +
+                    "             e.id_Esquadria as idEsquadria,\n" +
+                    "             e.ds_Cor as dsCor,\n" +
+                    "             e.tm_Largura as tmLargura,\n" +
+                    "             e.tm_Altura as tmAltura,\n" +
+                    "             COUNT(1) as qtde,\n" +
+                    "             STRING_AGG(e.cd_EsquadriaObra, ', ') as cdEsquadriaObra,\n" +
+                    "             (select esquadria.ds_esquadria\n" +
+                    "                 from esquadria\n" +
+                    "               where esquadria.id_esquadria = e.id_Esquadria) as dsEsquadria\n" +
+                    "           FROM esquadriaobra e\n" +
+                    "           WHERE e.id_obra = :idObra\n" +
+                    "           AND e.st_Ativo = true\n" +
+                    "           GROUP BY e.id_Obra,\n" +
+                    "                 e.id_Esquadria,\n" +
+                    "                 e.ds_Cor,\n" +
+                    "                 e.tm_Largura,\n" +
+                    "                 e.tm_Altura) consulta\n" +
+                    " ORDER BY dsEsquadria asc, qtde desc" ,
          nativeQuery = true)
     List<Object[]> findAllAgrupado(@Param("idObra") Long idObra);
 }

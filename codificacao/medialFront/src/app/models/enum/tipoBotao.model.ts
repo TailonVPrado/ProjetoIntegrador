@@ -8,4 +8,6 @@ import { Injectable } from "@angular/core";
   EDITAR:  string = 'EDITAR';
   IMAGEM: string = 'IMAGEM';
   DUPLICAR: string = 'DUPLICAR';
+  IMPRIMIR: string = 'IMPRIMIR';
+  RECALCULAR: string = 'RECALCULAR';
 }

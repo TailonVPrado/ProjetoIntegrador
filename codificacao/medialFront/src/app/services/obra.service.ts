@@ -19,7 +19,7 @@ export class ObraService {
     return this.http.post<Obra>(url, obra);
   }
 
-  getObras(obra: Obra, datasFiltro : Date[] | any = null ,limit : number = 0): Observable<Obra[]> {
+  getObras(obra: Obra, datasFiltro : Date[] | any = null ,limit : number = 0, retornarObrasJaImpressas : boolean = true): Observable<Obra[]> {
     let params = new HttpParams();
     //todo alterar essa empresa logada aqui
     if(obra.empresa.idEmpresa){
@@ -34,8 +34,7 @@ export class ObraService {
     }
 
     params = params.set('limit', limit);
-
-    //todo fazer a parada para mandar a data ini e data fim no filtro
+    params = params.set('retornarObrasJaImpressas', retornarObrasJaImpressas);
 
     const url = `${this.apiUrl}/obra/all`;
     return this.http.get<Obra[]>(url, {params});

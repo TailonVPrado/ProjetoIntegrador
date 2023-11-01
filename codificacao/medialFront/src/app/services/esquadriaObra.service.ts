@@ -3,6 +3,7 @@ import { HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { EsquadriaObraAgrupadaDto } from '../models/objetos/dto/esquadriaObraAgrupadaDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,11 @@ export class EsquadriaObraService {
 
     const url = `${this.apiUrl}/esquadriaobra/all`;
     return this.http.get<EsquadriaObra[]>(url, {params});
+  }
+
+  getEsquadriasObraAgrupadas(idObra: number): Observable<EsquadriaObraAgrupadaDto[]> {
+    const url = `${this.apiUrl}/esquadriaobra/all/agrupado/`+idObra;
+    return this.http.get<EsquadriaObraAgrupadaDto[]>(url);
   }
 
   createEsquadriaObra(esquadriaObra : EsquadriaObra): Observable<EsquadriaObra>{

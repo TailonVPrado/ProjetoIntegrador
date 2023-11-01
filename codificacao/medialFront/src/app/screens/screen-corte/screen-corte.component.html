@@ -4,60 +4,96 @@
     <input-date-range [(mxModel)]="datasFiltro" style="width: 40%;" [properties]="inputDtLancamento"></input-date-range>
     <button-default [properties]="buttonConsultarObra" (onClick)="onClickConsultarObra()" hint="Consultar Obras"></button-default>
   </div>
+
   <div class="left" style="margin-bottom: 50px; margin-left: 7%; margin-right: 7%;">
     <checkbox [properties]="chkExibirObrasImpressasProperties" [(mxModel)]="chkExibirObrasImpressas"></checkbox>
   </div>
 
-
-<!--
   <div class="center" style="width: 95%; margin-left: 3%;">
     <table class="custom-table" style="width: 95%;" >
       <thead>
         <tr>
-          <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
-          <th class="pipe" style="text-align: left; width: 25%;"><span>Cor</span></th>
-          <th class="pipe" style="text-align: left; width: 8%; text-align: center;"><span>Cód</span></th>
-          <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
-          <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
-          <th style="text-align: left; width: 8%;"><span>Largura</span></th>
-          <th style="width: 4%; text-align: center;">Qtde</th>
+          <th class="padding" style="text-align: left;"><span>Descrição Obra</span></th>
+          <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Data Lcto</span></th>
+          <th class="pipe" style="text-align: left; width: 5%; text-align: right;"><span>V.</span></th>
           <th style="width:30px;"></th>
           <th style="width:30px;"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let x of gridEsquadriaObra; let i = index"  >
+      <tr *ngFor="let x of gridObra; let i = index" class="click-row" (click)="openModalEsquadriaObra(templateEsquadriaObra, x)" >
+        <!-- <tr *ngFor="let x of gridObra; let i = index" class="click-row" > -->
           <td class="padding">
-            <input-text [isGrid]="true" [(mxModel)]="x.esquadria.dsEsquadria" [properties]="x.properties" [itensDisponiveis]="this.esquadriasDisponiveis" (itemSelecionado)="esquadriaSelecionada($event, x)"></input-text>
+          <input-text [isGrid]="true" [(mxModel)]="x.dsObra" [properties]="x.properties.get('dsObra')" ></input-text>
           </td>
           <td class="pipe">
-            <list-box [isGrid]="true" [(mxModel)]="x.dsCor" [list]="cores" [properties]="x.properties"></list-box>
+            <input-date [isGrid]="true" [(mxModel)]="x.dtLancamento" [properties]="x.properties.get('dtLancamento')" ></input-date>
           </td>
           <td class="pipe">
-            <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
-          </td>
-          <td class="pipe">
-            <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [decimal]="true" [align]="'right'"></input-number>
+            <input-number [isGrid]="true" [(mxModel)]="x.nrVersao" [properties]="x.properties.get('nrVersao')" ></input-number>
           </td>
           <td>
-            <span style="text-align: center;">X</span>
+            <button-icon (onClick)="onClickRecalcularDescontos(x)" nomeIcone="calculadora" [visivel]="x.visibilidadeBotoes.get(tipoBotao.RECALCULAR)" hint="Recalcular Descontos"></button-icon>
           </td>
           <td>
-            <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true" [align]="'left'"></input-number>
-          </td>
-          <td>
-            <button-icon (onClick)="onClickDuplicarEsquadriaObra(x, i)" nomeIcone="duplicar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.DUPLICAR)" hint="Duplicar"></button-icon>
-          </td>
-          <td>
-            <button-icon (onClick)="onClickExcluirEsquadriaObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-            <button-icon (onClick)="onClickCancelarEsquadriaObra(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
-          </td>
-          <td>
-            <button-icon (onClick)="onClickEditarEsquadriaObra(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
-            <button-icon (onClick)="onClickConfirmarEsquadriaObra(x)" nomeIcone="confirmar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CONFIRMAR)" hint="Confirmar alteração"></button-icon>
+            <button-icon (onClick)="onClickImprimir(x)" nomeIcone="pdf" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMPRIMIR)" hint="Editar"></button-icon>
           </td>
         </tr>
       </tbody>
     </table>
-  </div> -->
+  </div>
 </div>
+
+<ng-template #templateEsquadriaObra>
+  <div class="window">
+
+    <div class="title-modal" (click)="modalRefEsquadriaObra?.hide()">
+      <button-icon nomeIcone="voltar" [visivel]="true" hint="Voltar" (onClick)="modalRefEsquadriaObra?.hide()" ></button-icon>
+      <label>{{this.titleModalEsquadriaObra}}</label>
+    </div>
+
+    <hr style="margin-top: -5px;">
+
+    <div class="center" style="width: 95%; margin-left: 3%;">
+      <table class="custom-table" style="width: 95%;" >
+        <thead>
+          <tr>
+            <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
+            <th class="pipe" style="text-align: center; width: 20%;"><span>Cor</span></th>
+            <th class="pipe" style="text-align: left; width: 35%; text-align: center;"><span>Código</span></th>
+            <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
+            <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
+            <th style="text-align: left; width: 8%;"><span>Largura</span></th>
+            <th class="padding-right pipe" style="text-align: left; width: 8%; text-align: right;"><span>QTDE</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of gridEsquadriaObra; let i = index"  >
+            <td class="padding">
+              <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
+            </td>
+            <td class="pipe">
+              <input-text [isGrid]="true" [(mxModel)]="x.dsCor" [properties]="x.properties" [align]="'center'"></input-text>
+            </td>
+            <td class="pipe">
+              <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
+            </td>
+            <td class="pipe">
+              <input-number [isGrid]="true" [(mxModel)]="x.tmAltura" [properties]="x.properties" [decimal]="true" [align]="'right'"></input-number>
+            </td>
+            <td>
+              <span style="text-align: center;">X</span>
+            </td>
+            <td>
+              <input-number [isGrid]="true" [(mxModel)]="x.tmLargura" [properties]="x.properties" [decimal]="true" [align]="'left'"></input-number>
+            </td>
+            <td class="padding-right pipe">
+              <input-number [isGrid]="true" [(mxModel)]="x.qtde" [properties]="x.properties" [align]="'right'"></input-number>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</ng-template>
