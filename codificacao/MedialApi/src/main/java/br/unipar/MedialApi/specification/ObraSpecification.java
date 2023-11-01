@@ -31,6 +31,6 @@ public class ObraSpecification {
 
     public static Specification<Obra> impressa() {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.isTrue(root.get("stImpresso"));
+                criteriaBuilder.isFalse(root.get("stImpresso"));
     }
 }

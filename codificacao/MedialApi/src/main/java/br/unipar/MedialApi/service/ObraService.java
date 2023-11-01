@@ -43,6 +43,7 @@ public class ObraService {
         }
 
         if(!retornarObrasJaImpressas){
+            //quando o parametro vem false significa que a requisicao quer apenas obras que nao foram impressas ainda
             spec = spec.and(ObraSpecification.impressa());
         }
 
