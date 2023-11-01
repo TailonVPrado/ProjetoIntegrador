@@ -2,7 +2,7 @@ package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
-import br.unipar.MedialApi.model.dto.ObraCorteDto;
+import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
@@ -326,23 +326,24 @@ public class EsquadriaObraService {
         }
     }
 
-    public List<ObraCorteDto> findAllAgrupado (Long idObra){
+    public List<EsquadriaObraAgrupadaDto> findAllAgrupado (Long idObra){
         List<Object[]> objs = esquadriaObraRepository.findAllAgrupado(idObra);
-        List<ObraCorteDto> listaObraCorteDto = new ArrayList<>();
+        List<EsquadriaObraAgrupadaDto> listaDto = new ArrayList<>();
 
         for (Object[] obj: objs) {
-            ObraCorteDto obraCorteDto = new ObraCorteDto();
-            obraCorteDto.setIdObra(((BigInteger) obj[0]).longValue());
-            obraCorteDto.setIdEsquadria(((BigInteger) obj[1]).longValue());
-            obraCorteDto.setDsCor((String) obj[2]);
-            obraCorteDto.setTmLargura((BigDecimal) obj[3]);
-            obraCorteDto.setTmAltura((BigDecimal) obj[4]);
-            obraCorteDto.setQtde(((BigInteger) obj[5]).longValue());
-            obraCorteDto.setCdEsquadriaObra((String) obj[6]);
-            obraCorteDto.setDsEsquadria((String) obj[7]);
+            EsquadriaObraAgrupadaDto dto = new EsquadriaObraAgrupadaDto();
 
-            listaObraCorteDto.add(obraCorteDto);
+            dto.setIdObra(((BigInteger) obj[0]).longValue());
+            dto.setIdEsquadria(((BigInteger) obj[1]).longValue());
+            dto.setDsCor((String) obj[2]);
+            dto.setTmLargura((BigDecimal) obj[3]);
+            dto.setTmAltura((BigDecimal) obj[4]);
+            dto.setQtde(((BigInteger) obj[5]).longValue());
+            dto.setCdEsquadriaObra((String) obj[6]);
+            dto.setDsEsquadria((String) obj[7]);
+
+            listaDto.add(dto);
         }
-        return listaObraCorteDto;
+        return listaDto;
     }
 }

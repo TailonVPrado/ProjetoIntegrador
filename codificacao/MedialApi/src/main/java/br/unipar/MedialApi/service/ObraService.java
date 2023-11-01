@@ -1,7 +1,6 @@
 package br.unipar.MedialApi.service;
 
 import br.unipar.MedialApi.model.Obra;
-import br.unipar.MedialApi.model.dto.ObraCorteDto;
 import br.unipar.MedialApi.repository.ObraRepository;
 import br.unipar.MedialApi.specification.ObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;

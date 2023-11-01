@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class ObraCorteDto {
+public class EsquadriaObraAgrupadaDto {
     private Long idObra;
     private Long idEsquadria;
     private String  dsEsquadria;

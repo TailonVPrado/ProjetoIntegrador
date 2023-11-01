@@ -1,16 +1,8 @@
 package br.unipar.MedialApi.controller;
 
-import br.unipar.MedialApi.model.Esquadria;
-import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.model.Obra;
-import br.unipar.MedialApi.model.dto.ObraCorteDto;
-import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.service.ObraService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;

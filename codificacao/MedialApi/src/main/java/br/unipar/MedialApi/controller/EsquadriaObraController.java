@@ -2,7 +2,7 @@ package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
-import br.unipar.MedialApi.model.dto.ObraCorteDto;
+import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.service.EsquadriaObraService;
@@ -53,7 +53,7 @@ public class EsquadriaObraController {
     }
 
     @GetMapping(path = "/all/agrupado/{idObra}")
-    public List<ObraCorteDto> findAllAgrupado (@PathVariable Long idObra) {
+    public List<EsquadriaObraAgrupadaDto> findAllAgrupado (@PathVariable Long idObra) {
         return esquadriaObraService.findAllAgrupado(idObra);
     }
 }
