@@ -54,7 +54,6 @@ public class PerfilEsquadriaService {
             perfilEsquadriaDto.setQtPerfil(perfilEsquadria.getQtPerfil());
             perfilEsquadriaDto.setDsDesconto(perfilEsquadria.getDsDesconto());
             perfilEsquadriaDto.setEsquadria(perfilEsquadria.getEsquadria());
-            perfilEsquadriaDto.setStAtivo(perfilEsquadria.isStAtivo());
 
             perfilDto.setIdPerfil(perfilEsquadria.getPerfil().getIdPerfil());
             perfilDto.setDsPerfil(perfilEsquadria.getPerfil().getDsPerfil());

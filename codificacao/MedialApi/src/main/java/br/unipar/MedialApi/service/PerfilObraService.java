@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.ExceptionSemFormula;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.PerfilObra;
@@ -31,7 +32,14 @@ public class PerfilObraService {
     private PerfilObraRepository perfilObraRepository;
 
     @Async
-    public void addOperationQueue(EsquadriaObra esquadriaObra, Operacao operacao) throws Exception {
+    public void addOperationQueue(EsquadriaObra esquadriaObra){
+        /*em casos de update precisa deletar e inserir o novo, e por isso nao passa argumentos para esse emtodo e ele passa o DELETE e INSERT para o metodo principal*/
+        addOperationQueue(esquadriaObra, Operacao.DELETE);
+        addOperationQueue(esquadriaObra, Operacao.INSERT);
+    }
+
+    @Async
+    public void addOperationQueue(EsquadriaObra esquadriaObra, Operacao operacao){
         EsquadriaObraQueue esquadriaObraQueue = new EsquadriaObraQueue();
         esquadriaObraQueue.setEsquadriaObra(esquadriaObra);
         esquadriaObraQueue.setOperacao(operacao);
@@ -73,8 +81,8 @@ public class PerfilObraService {
     private void calculaPerfilObra(EsquadriaObra esquadriaObra) {
         List<PerfilEsquadria> listaPerfisEsquadria = perfilEsquadriaService.findByEsquadriaObra(esquadriaObra.getEsquadria());
 
-        try{
-            for (PerfilEsquadria perfilEsquadria: listaPerfisEsquadria) {
+        for (PerfilEsquadria perfilEsquadria: listaPerfisEsquadria) {
+            try{
                 PerfilObra perfilObra = new PerfilObra();
                 perfilObra.setStAtivo(true);
                 perfilObra.setEsquadriaobra(esquadriaObra);
@@ -82,9 +90,9 @@ public class PerfilObraService {
                 perfilObra.setTmPerfil(retornaTmPerfilObra(esquadriaObra, perfilEsquadria));
 
                 perfilObraRepository.saveAndFlush(perfilObra);
+            }catch (Exception e){
+                log.error(e.getMessage());
             }
-        }catch (Exception e){
-            log.error(e.getMessage());
         }
     }
 
@@ -98,17 +106,20 @@ public class PerfilObraService {
             BigDecimal largura = esquadriaObra.getTmLargura();
             BigDecimal altura = esquadriaObra.getTmAltura();
 
+
             if(formula.trim() != null && !formula.isEmpty()){
                 formula = formula.replaceAll("LT", String.valueOf(largura));
                 formula = formula.replaceAll("AT", String.valueOf(altura));
 
                 return NumericExpressionEngine.resolve(formula).doubleValue();
             }else{
-                throw new Exception("Formula nao informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
+                throw new ExceptionSemFormula("Formula nao informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
                         "Esquadria ("+perfilEsquadria.getEsquadria().getIdEsquadria()+"), " +
                         "perfilEsquadria ("+perfilEsquadria.getIdPerfilEsquadria()+")");
             }
-        } catch (Exception ex) {
+        }catch (ExceptionSemFormula ex){
+            throw new Exception(ex.getMessage());
+        }catch (Exception ex) {
             throw new Exception("ERRO AO EXECUTAR FORMULA. ERRO; "+ex.getMessage());
         }
     }

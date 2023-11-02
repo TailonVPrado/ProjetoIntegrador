@@ -39,7 +39,7 @@ public class EsquadriaObraController {
 
     @GetMapping(path = "/cores")
     private List<CorEnum> getCores(){
-        return esquadriaObraService.getCotes();
+        return esquadriaObraService.getCores();
     }
 
     @GetMapping(path = "/proximoCodigo")

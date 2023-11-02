@@ -11,6 +11,5 @@ public class PerfilDto {
     private String dsPerfil;
     private Empresa empresa;
     private Linha linha;
-    private boolean stAtivo;
     private boolean stNotContemImg;
 }

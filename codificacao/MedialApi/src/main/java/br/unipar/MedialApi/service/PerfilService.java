@@ -47,7 +47,6 @@ public class PerfilService {
             perfilDto.setDsPerfil(perfil.getDsPerfil());
             perfilDto.setEmpresa(perfil.getEmpresa());
             perfilDto.setLinha(perfil.getLinha());
-            perfilDto.setStAtivo(perfil.isStAtivo());
 
             if(perfil.getImPerfil() != null && perfil.getImPerfil().length != 0){
                 perfilDto.setStNotContemImg(false);

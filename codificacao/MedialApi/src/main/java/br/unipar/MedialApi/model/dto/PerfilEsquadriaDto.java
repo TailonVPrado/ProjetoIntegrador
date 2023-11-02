@@ -11,5 +11,4 @@ public class PerfilEsquadriaDto {
     private String dsDesconto;
     private Esquadria esquadria;
     private PerfilDto perfil;
-    private boolean stAtivo;
 }

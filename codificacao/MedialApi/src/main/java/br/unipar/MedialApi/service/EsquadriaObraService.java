@@ -93,16 +93,21 @@ public class EsquadriaObraService {
             esquadriaatualizada.setObra(eo.getObra());
             esquadriaatualizada.setStAtivo(true);
             esquadriaatualizada.setNrVersaobra(vNrVersao);
-            esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
+            perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
+
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
+
+            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
         }
         //insere a nova esqaudriaObra
         esquadriaObra.setStAtivo(true);
         esquadriaObra.setNrVersaobra(vNrVersao);
-        return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+        perfilObraService.addOperationQueue(retorno, Operacao.INSERT);
+        return retorno;
     }
 
     public EsquadriaObra delete (Long idEsquadriaObra) throws Exception{
@@ -141,12 +146,13 @@ public class EsquadriaObraService {
                 esquadriaatualizada.setObra(eo.getObra());
                 esquadriaatualizada.setStAtivo(true);
                 esquadriaatualizada.setNrVersaobra(vNrVersao);
-                esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
+            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
         }
         esquadriaObra.setNrVersaobra(vNrVersao);
         return esquadriaObra;
@@ -165,13 +171,15 @@ public class EsquadriaObraService {
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         if(!obra.isStImpresso()){
             validaUpdate(esquadriaObra);
-            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            perfilObraService.addOperationQueue(retorno);
+            return retorno;
         }else{
             return atualizaEsquadriaEmObraImpressa(esquadriaObra);
         }
     }
 
-    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{
+    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{//todo tvp
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         int vNrVersao = obra.getNrVersao() + 1;
 
@@ -210,7 +218,7 @@ public class EsquadriaObraService {
         return esquadriaObra;
     }
 
-    public List<CorEnum> getCotes() {
+    public List<CorEnum> getCores() {
         return List.of(CorEnum.values());
     }
 
@@ -319,7 +327,7 @@ public class EsquadriaObraService {
         return value;
     }
 
-    public EsquadriaObra duplicarEsquadriaObra(EsquadriaObra esquadriaObra)throws Exception{
+    public EsquadriaObra duplicarEsquadriaObra(EsquadriaObra esquadriaObra)throws Exception{//todo tvp
         validaInsert(esquadriaObra);
 
         esquadriaObra.setCdEsquadriaObra(retornaProximoCodigoEsquadria(esquadriaObra.getCdEsquadriaObra()));
