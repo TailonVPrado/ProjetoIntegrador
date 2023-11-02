@@ -1,9 +1,12 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.model.Empresa;
+import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
+import br.unipar.MedialApi.model.enumModel.Operacao;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.specification.EsquadriaObraSpecification;
@@ -22,9 +25,10 @@ import java.util.Optional;
 public class EsquadriaObraService {
     @Autowired
     private EsquadriaObraRepository esquadriaObraRepository;
-
     @Autowired
     private ObraService obraService;
+    @Autowired
+    PerfilObraService perfilObraService;
 
     public List<EsquadriaObra> findAll (Long idObra, Long idEsquadria){
         return findAll(idObra, idEsquadria, OrderByEnum.DESC);
@@ -59,7 +63,11 @@ public class EsquadriaObraService {
         if(!obra.isStImpresso()){
             esquadriaObra.setStAtivo(true);
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
-            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+
+            EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            perfilObraService.addOperationQueue(retorno, Operacao.INSERT);//calcula os descontos dos perfis
+
+            return retorno;
         }else{
             return insereEsquadriaEmObraImpressa(esquadriaObra);
         }
@@ -103,6 +111,7 @@ public class EsquadriaObraService {
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         if(!obra.isStImpresso()){
             esquadriaObra.setStAtivo(false);
+            perfilObraService.addOperationQueue(esquadriaObra, Operacao.DELETE);
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
         }else{
             return excluiEsquadriaEmObraImpressa(esquadriaObra);
@@ -326,7 +335,7 @@ public class EsquadriaObraService {
         }
     }
 
-    public List<EsquadriaObraAgrupadaDto> findAllAgrupado (Long idObra){
+    public List<EsquadriaObraAgrupadaDto> findAllAgrupado (Long idObra) {
         List<Object[]> objs = esquadriaObraRepository.findAllAgrupado(idObra);
         List<EsquadriaObraAgrupadaDto> listaDto = new ArrayList<>();
 

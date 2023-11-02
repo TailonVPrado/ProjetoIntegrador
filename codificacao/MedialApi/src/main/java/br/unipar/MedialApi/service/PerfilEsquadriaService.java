@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
@@ -88,6 +89,10 @@ public class PerfilEsquadriaService {
         }else{
             throw new Exception("Vinculo com o ID ("+id+") não encontrado");
         }
+    }
+
+    public List<PerfilEsquadria> findByEsquadriaObra(Esquadria esquadria){
+        return perfilEsquadriaRepository.findAllByEsquadria(esquadria);
     }
 
     private void validaInsert(PerfilEsquadria perfilEsquadria) throws Exception{
