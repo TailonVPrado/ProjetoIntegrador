@@ -77,6 +77,14 @@ export class ScreenCorteComponent implements OnInit {
   }
 
   onClickRecalcularDescontos(obra : Obra){
+    this.obraService.recalcularDescontos(obra).subscribe(
+      (response) => {
+        this.generic.showSuccess("Recalculo de desconstos da obra ("+obra.dsObra+") iniciado!");
+      },
+      (error) => {
+        this.generic.showError(error.error.errors[0]);
+      }
+    );
   }
 
   onClickImprimir(obra : Obra){
