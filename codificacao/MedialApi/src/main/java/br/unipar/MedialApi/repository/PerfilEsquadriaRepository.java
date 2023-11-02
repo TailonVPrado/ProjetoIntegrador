@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface PerfilEsquadriaRepository extends JpaRepository<PerfilEsquadria, Long>, JpaSpecificationExecutor<PerfilEsquadria> {
-    List<PerfilEsquadria> findAllByEsquadria(Esquadria esquadria);
+    List<PerfilEsquadria> findAllByEsquadriaAndStAtivoIsTrue(Esquadria esquadria);
 }

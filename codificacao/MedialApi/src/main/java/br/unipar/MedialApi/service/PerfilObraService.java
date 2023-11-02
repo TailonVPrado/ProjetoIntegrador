@@ -80,7 +80,7 @@ public class PerfilObraService {
     }
 
     private void calculaPerfilObra(EsquadriaObra esquadriaObra) {
-        List<PerfilEsquadria> listaPerfisEsquadria = perfilEsquadriaRepository.findAllByEsquadria(esquadriaObra.getEsquadria());
+        List<PerfilEsquadria> listaPerfisEsquadria = perfilEsquadriaRepository.findAllByEsquadriaAndStAtivoIsTrue(esquadriaObra.getEsquadria());
 
         for (PerfilEsquadria perfilEsquadria: listaPerfisEsquadria) {
             try{

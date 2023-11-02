@@ -14,7 +14,4 @@ import java.util.List;
 
 @Repository
 public interface EsquadriaRepository extends JpaRepository<Esquadria, Long>, JpaSpecificationExecutor<Esquadria> {
-	//Page<Esquadria> findAll(Specification<Esquadria> specification, Pageable pageable);
-
-    List<Esquadria> findByLinha(Linha linha);
 }

@@ -97,7 +97,7 @@ public class PerfilEsquadriaService {
     }
 
     public List<PerfilEsquadria> findByEsquadriaObra(Esquadria esquadria){
-        return perfilEsquadriaRepository.findAllByEsquadria(esquadria);
+        return perfilEsquadriaRepository.findAllByEsquadriaAndStAtivoIsTrue(esquadria);
     }
 
     private void validaInsert(PerfilEsquadria perfilEsquadria) throws Exception{
