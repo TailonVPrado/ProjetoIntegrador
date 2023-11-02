@@ -1,6 +1,8 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
+import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.repository.ObraRepository;
 import br.unipar.MedialApi.specification.ObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ import java.util.Optional;
 public class ObraService {
     @Autowired
     private ObraRepository obraRepository;
+    @Autowired
+    private PerfilObraService perfilObraService;
+    @Autowired
+    private EsquadriaObraRepository esquadriaObraRepository;
 
     public Obra insert(Obra obra) throws Exception{
         validaInsert(obra);
@@ -128,6 +134,14 @@ public class ObraService {
     private void validaFks(Obra obra) throws Exception{
         if(obra.getEmpresa() == null || obra.getEmpresa().getIdEmpresa() == 0){
             throw new Exception("Não é possivel inserir uma obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+        }
+    }
+
+    public void recalcularDescontosObra(Obra obra) {
+        List<EsquadriaObra> listaEsquadriasObra = esquadriaObraRepository.findAllByObraAndStAtivoIsTrue(obra);
+
+        for (EsquadriaObra esquadriaObra : listaEsquadriasObra) {
+            perfilObraService.addOperationQueue(esquadriaObra);
         }
     }
 }

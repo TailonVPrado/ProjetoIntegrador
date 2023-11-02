@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.repository;
 
+import br.unipar.MedialApi.model.Obra;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +42,6 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                     " ORDER BY dsEsquadria asc, qtde desc" ,
          nativeQuery = true)
     List<Object[]> findAllAgrupado(@Param("idObra") Long idObra);
+
+    List<EsquadriaObra> findAllByObraAndStAtivoIsTrue(Obra obra);
 }

@@ -1,7 +1,5 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.model.Empresa;
-import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
@@ -95,7 +93,6 @@ public class EsquadriaObraService {
             esquadriaatualizada.setNrVersaobra(vNrVersao);
             perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
 
-
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
@@ -179,7 +176,7 @@ public class EsquadriaObraService {
         }
     }
 
-    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{//todo tvp
+    private EsquadriaObra atualizaEsquadriaEmObraImpressa(EsquadriaObra esquadriaObra) throws Exception{
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         int vNrVersao = obra.getNrVersao() + 1;
 
@@ -202,18 +199,22 @@ public class EsquadriaObraService {
                 esquadriaatualizada.setObra(eo.getObra());
                 esquadriaatualizada.setStAtivo(true);
                 esquadriaatualizada.setNrVersaobra(vNrVersao);
-                esquadriaObraRepository.saveAndFlush(esquadriaatualizada);
+
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);
             }else{
                 //passa a PK para null para o Spring criar uma nova entidade no bd
                 esquadriaObra.setIdEsquadriaObra(null);
                 esquadriaObra.setNrVersaobra(vNrVersao);
                 validaUpdate(esquadriaObra);
                 esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+
+                perfilObraService.addOperationQueue(esquadriaObra, Operacao.INSERT);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
+            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
         }
         return esquadriaObra;
     }
@@ -334,9 +335,11 @@ public class EsquadriaObraService {
 
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         if(!obra.isStImpresso()){
-            esquadriaObra.setIdEsquadriaObra(null);//sera para null para criar uma nova esquadriaObra
+            esquadriaObra.setIdEsquadriaObra(null);//seta para null para criar uma nova esquadriaObra
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
-            return esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
+            perfilObraService.addOperationQueue(retorno, Operacao.INSERT);
+            return retorno;
         }else{
             esquadriaObra.setIdEsquadriaObra(null);
             return insereEsquadriaEmObraImpressa(esquadriaObra);
@@ -363,4 +366,5 @@ public class EsquadriaObraService {
         }
         return listaDto;
     }
+
 }

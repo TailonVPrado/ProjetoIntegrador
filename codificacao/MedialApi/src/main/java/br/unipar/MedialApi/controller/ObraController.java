@@ -40,4 +40,14 @@ public class ObraController {
         return obraService.update(obra);
     }
 
+    @PutMapping(path = "/recalcualarDescontos")
+    public void recalcularDescontosObra(@RequestBody Obra obra){
+        obraService.recalcularDescontosObra(obra);
+    }
+
+    @GetMapping(path = "/{id}")
+    public Obra findById(@PathVariable Long id) throws Exception{
+        return obraService.findById(id);
+    }
+
 }
