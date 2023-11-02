@@ -4,6 +4,7 @@ import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
+import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
 import br.unipar.MedialApi.specification.PerfilEsquadriaSpecification;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
@@ -24,6 +25,10 @@ public class PerfilEsquadriaService {
 
     @Autowired
     private PerfilEsquadriaRepository perfilEsquadriaRepository;
+    @Autowired
+    private EsquadriaObraService esquadriaObraService;
+    @Autowired
+    private PerfilObraService perfilObraService;
 
     public PerfilEsquadria insert(PerfilEsquadria perfilEsquadria) throws Exception {
         validaInsert(perfilEsquadria);
@@ -79,6 +84,7 @@ public class PerfilEsquadriaService {
 
     public PerfilEsquadria update(PerfilEsquadria perfilEsquadria) throws Exception{
         validaUpdate(perfilEsquadria);
+        recalculaDescontos(perfilEsquadria);
         return perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
     }
     public PerfilEsquadria findById(Long id) throws Exception{
@@ -188,4 +194,15 @@ public class PerfilEsquadriaService {
         }
     }
 
+    private void recalculaDescontos(PerfilEsquadria perfilEsquadria) throws Exception{
+        /* Se alterou os descontos recalcula todas as obras que ainda nao foram impressas (as que ja foram
+         * impressas nao recalcula porque em teoria o arquivo ja foi gerado e ja esta em processo de corte)
+         * */
+        if(!perfilEsquadria.getDsDesconto().equals(findById(perfilEsquadria.getIdPerfilEsquadria()).getDsDesconto())){
+            Long[] idsEsquadriaObra = esquadriaObraService.findAllEsquadriaObraContemPerfil(perfilEsquadria.getIdPerfilEsquadria());
+            for(int i = 0; i < idsEsquadriaObra.length; i++){
+                perfilObraService.addOperationQueue(esquadriaObraService.findById(idsEsquadriaObra[i]));
+            }
+        }
+    }
 }

@@ -367,4 +367,7 @@ public class EsquadriaObraService {
         return listaDto;
     }
 
+    public Long[] findAllEsquadriaObraContemPerfil(Long idPerfilEsquadria){
+        return esquadriaObraRepository.findAllEsquadriaObraContemPerfil(idPerfilEsquadria);
+    }
 }

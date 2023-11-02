@@ -44,4 +44,17 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
     List<Object[]> findAllAgrupado(@Param("idObra") Long idObra);
 
     List<EsquadriaObra> findAllByObraAndStAtivoIsTrue(Obra obra);
+
+    @Query(value = "SELECT ESQUADRIAOBRA.ID_ESQUADRIAOBRA\n" +
+                   "  FROM ESQUADRIAOBRA,\n" +
+                   "  \t   ESQUADRIA,\n" +
+                   "  \t   PERFILESQUADRIA,\n" +
+                   "  \t   OBRA\n" +
+                   " WHERE ESQUADRIA.ID_ESQUADRIA = ESQUADRIAOBRA .ID_ESQUADRIA\n" +
+                   "   AND ESQUADRIAOBRA.ID_OBRA = OBRA.ID_OBRA\n" +
+                   "   AND PERFILESQUADRIA.ID_ESQUADRIA = ESQUADRIA.ID_ESQUADRIA\n" +
+                   "   AND NOT OBRA.ST_IMPRESSO\n" +
+                   "   AND PERFILESQUADRIA.ID_PERFILESQUADRIA = :idPerfilEsquadria",
+        nativeQuery = true)
+    Long[] findAllEsquadriaObraContemPerfil(@Param("idPerfilEsquadria") Long idPerfilEsquadria);
 }

@@ -6,6 +6,7 @@ import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.PerfilObra;
 import br.unipar.MedialApi.model.enumModel.Operacao;
 import br.unipar.MedialApi.model.modelQueue.EsquadriaObraQueue;
+import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
 import br.unipar.MedialApi.repository.PerfilObraRepository;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,9 @@ public class PerfilObraService {
     private final Map<Long, Executor> executoresPorEmpresa = new ConcurrentHashMap<>();
 
     @Autowired
-    private PerfilEsquadriaService perfilEsquadriaService;
-    @Autowired
     private PerfilObraRepository perfilObraRepository;
+    @Autowired
+    private PerfilEsquadriaRepository perfilEsquadriaRepository;
 
     @Async
     public void addOperationQueue(EsquadriaObra esquadriaObra){
@@ -79,7 +80,7 @@ public class PerfilObraService {
     }
 
     private void calculaPerfilObra(EsquadriaObra esquadriaObra) {
-        List<PerfilEsquadria> listaPerfisEsquadria = perfilEsquadriaService.findByEsquadriaObra(esquadriaObra.getEsquadria());
+        List<PerfilEsquadria> listaPerfisEsquadria = perfilEsquadriaRepository.findAllByEsquadria(esquadriaObra.getEsquadria());
 
         for (PerfilEsquadria perfilEsquadria: listaPerfisEsquadria) {
             try{
