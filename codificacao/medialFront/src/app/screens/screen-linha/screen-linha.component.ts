@@ -39,7 +39,7 @@ export class ScreenLinhaComponent implements OnInit{
         this.carregarLinhas();
       },
       (error) => {
-        this.generic.showError(error.error?.errors[0]);
+        this.generic.showError(error.error?.errors);
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
@@ -123,7 +123,7 @@ export class ScreenLinhaComponent implements OnInit{
           this.efetuandoAltercao = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors[0]);
+          this.generic.showError(error.error?.errors);
         }
       );
     }else{
@@ -140,7 +140,7 @@ export class ScreenLinhaComponent implements OnInit{
           this.gridLinhas.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors[0]);
+          this.generic.showError(error.error?.errors);
         }
       );
     }
