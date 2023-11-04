@@ -113,11 +113,20 @@ public class PerfilService {
         image = image.replaceAll("data:image/png;base64,", "");
         byte[] imageByte = Base64.getDecoder().decode(image);
 
+        validaTamanhoImagem(imageByte);
+
         Perfil perfil = findById(id);
         perfil.setImPerfil(imageByte);
 
         perfilRepository.saveAndFlush(perfil);
     }
+
+    private void validaTamanhoImagem(byte[] image) throws Exception{
+        if(image != null && image.length/1024 >= 5120){
+            throw new Exception("A imagem ultrapassa 5MB, escolha uma imagem menor.");
+        }
+    }
+
 
     public Perfil findById(Long id) throws Exception{
         Optional<Perfil> retorno = perfilRepository.findById(id);

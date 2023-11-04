@@ -231,7 +231,9 @@ export class ScreenPerfilComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Ocorreu um erro inesperado ao salvar a imagem. Erro: ', error);
+        if(error.error.errors){
+          this.generic.showWarning(error.error.errors);
+        }
       }
     ).add(() =>{
       this.buttonSalvarImg.isRequesting = false;
