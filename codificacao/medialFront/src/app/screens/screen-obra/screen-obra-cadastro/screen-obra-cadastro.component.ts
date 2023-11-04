@@ -86,7 +86,7 @@ export class ScreenObraCadastroComponent implements OnInit {
         this.obra = new Obra();
       },
       (error) => {
-        this.generic.showError(error.error.errors[0]);
+        this.generic.showError(error.error?.errors[0]);
       }
     ).add(() =>{
       this.buttonCadastrarObra.isRequesting = false;
