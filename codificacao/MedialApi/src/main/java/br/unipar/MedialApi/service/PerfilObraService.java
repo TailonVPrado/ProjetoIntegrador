@@ -8,6 +8,7 @@ import br.unipar.MedialApi.model.enumModel.Operacao;
 import br.unipar.MedialApi.model.modelQueue.EsquadriaObraQueue;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
 import br.unipar.MedialApi.repository.PerfilObraRepository;
+import br.unipar.MedialApi.util.EmailService;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class PerfilObraService {
     private PerfilObraRepository perfilObraRepository;
     @Autowired
     private PerfilEsquadriaRepository perfilEsquadriaRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Async
     public void addOperationQueue(EsquadriaObra esquadriaObra){
@@ -111,17 +114,30 @@ public class PerfilObraService {
             if(formula.trim() != null && !formula.isEmpty()){
                 formula = formula.replaceAll("LT", String.valueOf(largura));
                 formula = formula.replaceAll("AT", String.valueOf(altura));
-
+//                NumericExpressionEngine.validaCaracteresFormula(formula);
                 return NumericExpressionEngine.resolve(formula).doubleValue();
             }else{
-                throw new ExceptionSemFormula("Formula nao informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
+                throw new ExceptionSemFormula("Formula não informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
                         "Esquadria ("+perfilEsquadria.getEsquadria().getIdEsquadria()+"), " +
                         "perfilEsquadria ("+perfilEsquadria.getIdPerfilEsquadria()+")");
             }
         }catch (ExceptionSemFormula ex){
             throw new Exception(ex.getMessage());
         }catch (Exception ex) {
-            throw new Exception("ERRO AO EXECUTAR FORMULA. ERRO; "+ex.getMessage());
+            String msg = "ERRO AO EXECUTAR FORMULA!!!\n" +
+                    "EMPRESA: (" + esquadriaObra.getObra().getEmpresa().getNmEmpresa() + ")("+esquadriaObra.getObra().getEmpresa().getIdEmpresa()+").\n" +
+                    "OBRA: (" +esquadriaObra.getObra().getDsObra() +")("+esquadriaObra.getObra().getIdObra()+")\n" +
+                    "ESQUADRIA: (" +esquadriaObra.getEsquadria().getDsEsquadria()+")("+esquadriaObra.getEsquadria().getIdEsquadria()+")\n" +
+                    "PERFIL: (" +perfilEsquadria.getPerfil().getDsPerfil()+")("+perfilEsquadria.getPerfil().getIdPerfil()+")\n"+
+                    "ID_ESQUADRIAOBRA: " +esquadriaObra.getIdEsquadriaObra()+"\n"+
+                    "ID_PERFILESQUADRIA: " +perfilEsquadria.getIdPerfilEsquadria()+"\n"+
+                    "ALTURA DA ESQUADRIA: " +esquadriaObra.getTmAltura()+"\n"+
+                    "LARGURA DA ESQUADRIA: " +esquadriaObra.getTmLargura()+"\n"+
+                    "DESCONTO DO PERFIL: " +perfilEsquadria.getDsDesconto()+"\n"+
+                    "ERRO: " + ex.getMessage()+"\n\n\n\n";
+
+            emailService.addEmailQueue("ERRO GRAVE AO EXECUTAR FORMULA", msg);//envia email aos adm avisando a falha
+            throw new Exception(msg);
         }
     }
 

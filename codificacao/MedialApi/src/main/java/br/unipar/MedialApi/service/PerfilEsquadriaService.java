@@ -139,9 +139,7 @@ public class PerfilEsquadriaService {
         try {
             String formula = perfilEsquadria.getDsDesconto().toUpperCase();
 
-            validaCaracteresFormula(formula);
-
-
+//            NumericExpressionEngine.validaCaracteresFormula(formula);
 
             if(formula.trim() != null && !formula.isEmpty()){
                 formula = formula.replaceAll("LT", String.valueOf(new BigDecimal(100.0)));
@@ -150,49 +148,10 @@ public class PerfilEsquadriaService {
                 NumericExpressionEngine.resolve(formula);
             }
         } catch (Exception ex) {
-            System.out.println("erro formula: "+ex);
-            throw new Exception("Formula inválida, verifique!");
+            throw new Exception(ex.getMessage());
         }
     }
-    private void validaCaracteresFormula(String formula)throws Exception{
-        String formulaSimulacao = "";
-        String regex = "";
-        /*
-            Aqui valida se há caracteres diferentes de:
-            "+", "-", "*", "/", "(", ")", "AT", "LT"
-        */
-        formulaSimulacao = formula;
-        formulaSimulacao = formulaSimulacao.replaceAll("AT", "");
-        formulaSimulacao = formulaSimulacao.replaceAll("LT", "");
-        formulaSimulacao = formulaSimulacao.replaceAll(",", ".");
-        formulaSimulacao = formulaSimulacao.replaceAll(" ", "");
-        regex = "^[0-9()+\\-*/.]*$";
-        if(!formulaSimulacao.matches(regex)){
-            throw new Exception();
-        };
 
-        /* Aqui valida se os pre fixos "AT" e "LT" não estao sem um separador ARITIMETICO entre eles. */
-        formulaSimulacao = formula;
-        formulaSimulacao = formulaSimulacao.replaceAll("[0-9()]", "");
-        if(formulaSimulacao.contains("AT")||formulaSimulacao.contains("LT")){
-            regex = "AT\\s*[+\\-*/]\\s*LT";
-
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(formulaSimulacao);
-            if (matcher.find()) {
-                throw new Exception();//retorna erro porque encontrou algum caracter sem separador aritimetico
-            }
-        }
-    
-        /* Aqui valida se os pre fixos "AT" ou "LT" nao foram informados JUNTOS*/
-        formulaSimulacao = formula;
-        regex = "(AT|LT)(?!\\s*[-+*/])(AT|LT)";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(formulaSimulacao);
-        if (matcher.find()) {
-            throw new Exception();//retorna erro porque encontrou algum pre fixo grudado
-        }
-    }
 
     private void recalculaDescontos(PerfilEsquadria perfilEsquadria) throws Exception{
         /* Se alterou os descontos recalcula todas as obras que ainda nao foram impressas (as que ja foram
