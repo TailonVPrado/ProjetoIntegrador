@@ -66,7 +66,8 @@ export class ScreenObraConsultaComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar obras:', error.error.error[0]);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar obras:', error.error.errors);
       }
     ).add(() =>{
       this.buttonConsultarObra.isRequesting = false;

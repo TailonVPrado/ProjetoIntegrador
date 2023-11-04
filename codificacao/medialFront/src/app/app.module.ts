@@ -13,7 +13,7 @@ import { ButtonMenuComponent } from './components/button-menu/button-menu.compon
 import { InputTextComponent } from './components/input-text/input-text.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AlertComponent } from './components/alert/alert.component';
@@ -32,6 +32,7 @@ import { GridObraComponent } from './screens/screen-obra/grid-obra/grid-obra.com
 import { InputDateRangeComponent } from './components/input-date-range/input-date-range.component';
 import { ListBoxComponent } from './components/list-box/list-box.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { ErrorInterceptor } from './intercept/error.intercept';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -75,7 +76,7 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     NgxCurrencyModule,
     BsDatepickerModule.forRoot()
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

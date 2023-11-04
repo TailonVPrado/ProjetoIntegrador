@@ -82,7 +82,8 @@ export class ScreenPerfilComponent implements OnInit {
         this.perfil = new Perfil;
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
@@ -111,7 +112,8 @@ export class ScreenPerfilComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar perfis:', error.error.errors);
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;
@@ -162,7 +164,8 @@ export class ScreenPerfilComponent implements OnInit {
           this.gridPerfil.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }
@@ -178,7 +181,8 @@ export class ScreenPerfilComponent implements OnInit {
           this.efetuandoAltercao = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }else{

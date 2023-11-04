@@ -69,7 +69,8 @@ export class ScreenCorteComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar obras:', error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar obras:', error.error.errors);
       }
     ).add(() =>{
       this.buttonConsultarObra.isRequesting = false;
@@ -82,7 +83,8 @@ export class ScreenCorteComponent implements OnInit {
         this.generic.showSuccess("Recalculo de desconstos da obra ("+obra.dsObra+") iniciado!");
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     );
   }

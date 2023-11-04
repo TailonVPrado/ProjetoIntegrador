@@ -77,7 +77,8 @@ export class ScreenEsquadriaComponent implements OnInit {
         this.esquadria = new Esquadria();
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrarEsquadria.isRequesting = false;
@@ -109,7 +110,8 @@ export class ScreenEsquadriaComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar perfis:', error.error.error[0]);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar perfis:', error.error.errors);
       }
     ).add(() =>{
       this.buttonConsultarEsquadria.isRequesting = false;
@@ -125,7 +127,8 @@ export class ScreenEsquadriaComponent implements OnInit {
           this.gridEsquadria.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }
@@ -177,7 +180,8 @@ export class ScreenEsquadriaComponent implements OnInit {
           this.efetuandoAltercaoEsquadria = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }else{
@@ -293,7 +297,8 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrarPerfilEsquadria.isRequesting = false;
@@ -308,7 +313,8 @@ export class ScreenEsquadriaComponent implements OnInit {
           this.gridPerfilEsquadria.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }
@@ -368,7 +374,8 @@ export class ScreenEsquadriaComponent implements OnInit {
           this.efetuandoAltercaoPerfilEsquadria = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }else{

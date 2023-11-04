@@ -39,11 +39,12 @@ export class ScreenLinhaComponent implements OnInit{
         this.carregarLinhas();
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
-    });;
+    });
   }
   onClickConsultar(){
     this.carregarLinhas();
@@ -71,7 +72,8 @@ export class ScreenLinhaComponent implements OnInit{
         // this.gridLinhas = linhas;
       },
       (error) => {
-        this.generic.showError('Erro ao carregar linhas:', error);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar linhas:', error.error.errors);
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;
@@ -123,7 +125,8 @@ export class ScreenLinhaComponent implements OnInit{
           this.efetuandoAltercao = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }else{
@@ -140,7 +143,8 @@ export class ScreenLinhaComponent implements OnInit{
           this.gridLinhas.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }

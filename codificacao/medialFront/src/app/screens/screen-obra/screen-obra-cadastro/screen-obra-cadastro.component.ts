@@ -49,7 +49,8 @@ export class ScreenObraCadastroComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError('Erro ao carregar obras:', error.error.error[0]);
+        if(error.error.errors)
+          this.generic.showError('Erro ao carregar obras:', error.error.errors);
       }
     )
   }
@@ -86,7 +87,8 @@ export class ScreenObraCadastroComponent implements OnInit {
         this.obra = new Obra();
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrarObra.isRequesting = false;

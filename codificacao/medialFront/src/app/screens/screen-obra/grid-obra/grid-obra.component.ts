@@ -52,7 +52,8 @@ export class GridObraComponent implements OnInit {
           this.gridObra.splice(idx, 1);
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }
@@ -101,7 +102,8 @@ export class GridObraComponent implements OnInit {
           this.efetuandoAltercaoObra = false;
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }else{
@@ -244,7 +246,8 @@ export class GridObraComponent implements OnInit {
 
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     ).add(() =>{
       this.buttonCadastrarEsquadriaObra.isRequesting = false;
@@ -268,7 +271,8 @@ export class GridObraComponent implements OnInit {
           }
         },
         (error) => {
-          this.generic.showError(error.error?.errors);
+          if(error.error.errors)
+            this.generic.showError(error.error.errors);
         }
       );
     }
@@ -341,7 +345,8 @@ export class GridObraComponent implements OnInit {
 
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     );
   }else{
@@ -374,7 +379,8 @@ export class GridObraComponent implements OnInit {
         }
       },
       (error) => {
-        this.generic.showError(error.error?.errors);
+        if(error.error.errors)
+          this.generic.showError(error.error.errors);
       }
     );
 
