@@ -328,7 +328,7 @@ public class EsquadriaObraService {
         return value;
     }
 
-    public EsquadriaObra duplicarEsquadriaObra(EsquadriaObra esquadriaObra)throws Exception{//todo tvp
+    public EsquadriaObra duplicarEsquadriaObra(EsquadriaObra esquadriaObra)throws Exception{
         validaInsert(esquadriaObra);
 
         esquadriaObra.setCdEsquadriaObra(retornaProximoCodigoEsquadria(esquadriaObra.getCdEsquadriaObra()));

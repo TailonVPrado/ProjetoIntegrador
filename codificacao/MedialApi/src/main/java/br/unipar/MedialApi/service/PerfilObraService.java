@@ -1,6 +1,6 @@
 package br.unipar.MedialApi.service;
 
-import br.unipar.MedialApi.exception.ExceptionSemFormula;
+import br.unipar.MedialApi.exception.SemFormulaException;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.PerfilObra;
@@ -117,11 +117,11 @@ public class PerfilObraService {
 //                NumericExpressionEngine.validaCaracteresFormula(formula);
                 return NumericExpressionEngine.resolve(formula).doubleValue();
             }else{
-                throw new ExceptionSemFormula("Formula não informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
+                throw new SemFormulaException("Formula não informada para o perfil ("+perfilEsquadria.getPerfil().getIdPerfil()+"), " +
                         "Esquadria ("+perfilEsquadria.getEsquadria().getIdEsquadria()+"), " +
                         "perfilEsquadria ("+perfilEsquadria.getIdPerfilEsquadria()+")");
             }
-        }catch (ExceptionSemFormula ex){
+        }catch (SemFormulaException ex){
             throw new Exception(ex.getMessage());
         }catch (Exception ex) {
             String msg = "ERRO AO EXECUTAR FORMULA!!!\n" +
