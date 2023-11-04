@@ -36,7 +36,7 @@
             <button-icon (onClick)="onClickRecalcularDescontos(x)" nomeIcone="calculadora" [visivel]="x.visibilidadeBotoes.get(tipoBotao.RECALCULAR)" hint="Recalcular Descontos"></button-icon>
           </td>
           <td>
-            <button-icon (onClick)="onClickImprimir(x)" nomeIcone="pdf" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMPRIMIR)" hint="Editar"></button-icon>
+            <button-icon (onClick)="onClickImprimir(x)" nomeIcone="pdf" [visivel]="x.visibilidadeBotoes.get(tipoBotao.IMPRIMIR)" [hint]="x.stImpresso ? 'Reimprimir' : 'imprimir'" ></button-icon>
           </td>
         </tr>
       </tbody>
