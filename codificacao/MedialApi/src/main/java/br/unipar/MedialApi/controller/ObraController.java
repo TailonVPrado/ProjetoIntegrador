@@ -37,14 +37,15 @@ public class ObraController {
         return obraService.delete(id);
     }
 
-    @PutMapping
-    public Obra update (@RequestBody Obra obra) throws Exception{
-        return obraService.update(obra);
+    @PutMapping(path = "/{id}")
+    public Obra update (@PathVariable Long id,
+                        @RequestBody Obra obra) throws Exception{
+        return obraService.update(id, obra);
     }
 
-    @PutMapping(path = "/recalcualarDescontos")
-    public void recalcularDescontosObra(@RequestBody Obra obra){
-        obraService.recalcularDescontosObra(obra);
+    @PutMapping(path = "/recalcualarDescontos/{id}")
+    public void recalcularDescontosObra(@PathVariable Long id) throws Exception{
+        obraService.recalcularDescontosObra(id);
     }
 
     @GetMapping(path = "/{id}")

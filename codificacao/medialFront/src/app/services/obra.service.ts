@@ -48,7 +48,7 @@ export class ObraService {
   }
 
   updateObra(obra: Obra): Observable<Obra> {
-    const url = `${this.apiUrl}/obra`;
+    const url = `${this.apiUrl}/obra/`+obra.idObra;
     return this.http.put<Obra>(url, obra);
   }
 

@@ -81,13 +81,14 @@ public class ObraService {
         return obra;
     }
 
-    public Obra update(Obra obra) throws Exception{
-        validaUpdate(obra);
-        Obra obraAtu = findById(obra.getIdObra());
-        //o unico atributo que deve ser atualziado de uma obra é sua descrição
-        obraAtu.setDsObra(obra.getDsObra());
+    public Obra update(Long id, Obra obj) throws Exception{
+        Obra obra = findById(id);
 
-        return obraRepository.saveAndFlush(obraAtu);
+        obra.setDsObra(obj.getDsObra());
+
+        validaUpdate(obra);
+
+        return obraRepository.saveAndFlush(obra);
     }
 
     public Obra updateVersao(Obra obra) throws Exception{
@@ -140,7 +141,9 @@ public class ObraService {
         }
     }
 
-    public void recalcularDescontosObra(Obra obra) {
+    public void recalcularDescontosObra(Long id) throws Exception{
+        Obra obra = findById(id);
+
         List<EsquadriaObra> listaEsquadriasObra = esquadriaObraRepository.findAllByObraAndStAtivoIsTrue(obra);
 
         for (EsquadriaObra esquadriaObra : listaEsquadriasObra) {
