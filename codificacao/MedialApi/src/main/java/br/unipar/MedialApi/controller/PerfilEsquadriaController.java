@@ -5,6 +5,7 @@ import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.PerfilEsquadriaDto;
 import br.unipar.MedialApi.service.PerfilEsquadriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class PerfilEsquadriaController {
     private PerfilEsquadriaService perfilEsquadriaService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PerfilEsquadria insert (@RequestBody PerfilEsquadria perfilEsquadria) throws Exception{
         return perfilEsquadriaService.insert(perfilEsquadria);
     }

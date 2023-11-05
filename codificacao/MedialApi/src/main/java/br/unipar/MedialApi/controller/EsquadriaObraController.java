@@ -7,6 +7,7 @@ import br.unipar.MedialApi.model.enumModel.CorEnum;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.service.EsquadriaObraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class EsquadriaObraController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public EsquadriaObra insert (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
         return esquadriaObraService.insert(esquadriaObra);
     }
@@ -48,6 +50,7 @@ public class EsquadriaObraController {
     }
 
     @PostMapping(path = "/duplicar")
+    @ResponseStatus(HttpStatus.CREATED)
     public EsquadriaObra duplicar (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
         return esquadriaObraService.duplicarEsquadriaObra(esquadriaObra);
     }

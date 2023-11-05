@@ -28,6 +28,7 @@ public class PerfilController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Perfil insert (@RequestBody Perfil perfil) throws Exception{
         return perfilService.insert(perfil);
     }
@@ -40,6 +41,7 @@ public class PerfilController {
         return perfilService.update(perfil);
     }
     @PostMapping(path = "/updateImage/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void setImagemPerfil(@PathVariable Long id,@RequestBody Map<String, String> imagem) throws Exception{
         perfilService.addImage(id, imagem);
     }

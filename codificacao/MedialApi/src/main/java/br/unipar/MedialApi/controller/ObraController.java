@@ -3,6 +3,7 @@ package br.unipar.MedialApi.controller;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.service.ObraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class ObraController {
     private ObraService obraService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Obra insert (@RequestBody Obra obra) throws Exception{
         return obraService.insert(obra);
     }
