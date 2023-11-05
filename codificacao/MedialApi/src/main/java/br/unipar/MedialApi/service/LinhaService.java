@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.EmpresaIndefinidaException;
 import br.unipar.MedialApi.model.Linha;
 import br.unipar.MedialApi.repository.EmpresaRepository;
 import br.unipar.MedialApi.repository.EsquadriaRepository;
@@ -41,12 +42,15 @@ public class LinhaService {
     }
 
 
-    public List<Linha> findAll(Long idEmpresa, String dsLinha) {
+    public List<Linha> findAll(Long idEmpresa, String dsLinha) throws Exception{
+        if(idEmpresa == null || idEmpresa == 0){
+            throw new EmpresaIndefinidaException();
+        }
+
         Specification<Linha> spec = Specification.where(null);
 
-        if(idEmpresa != null && idEmpresa != 0){
-            spec = spec.and(LinhaSpecification.pertenceAEmpresa(idEmpresa));
-        }
+        spec = spec.and(LinhaSpecification.pertenceAEmpresa(idEmpresa));
+
         if(dsLinha != null){
             spec = spec.and(LinhaSpecification.descricaoContains(dsLinha));
         }
@@ -101,7 +105,7 @@ public class LinhaService {
 
     private void validaFks(Linha linha) throws Exception{
         if(linha.getEmpresa() == null || linha.getEmpresa().getIdEmpresa() == 0 ){
-            throw new Exception("Não é possivel inserir uma linha no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new EmpresaIndefinidaException();
         }
     }
 }

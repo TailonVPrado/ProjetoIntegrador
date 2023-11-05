@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.EmpresaIndefinidaException;
 import br.unipar.MedialApi.model.Esquadria;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
@@ -53,12 +54,15 @@ public class EsquadriaService {
         validaDescricao(esquadria);
         validaFks(esquadria);
     }
-    public List<Esquadria> findAll(Long idEmpresa, Long idLinha, String dsEsquadria){
-        Specification<Esquadria> spec = Specification.where(null);
 
+    public List<Esquadria> findAll(Long idEmpresa, Long idLinha, String dsEsquadria) throws Exception{
         if(idEmpresa != null && idEmpresa != 0){
-            spec = spec.and(EsquadriaSpecification.pertenceAEmpresa(idEmpresa));
+            throw new EmpresaIndefinidaException();
         }
+
+        Specification<Esquadria> spec = Specification.where(null);
+        spec = spec.and(EsquadriaSpecification.pertenceAEmpresa(idEmpresa));
+
         if(idLinha != null && idLinha != 0){
             spec = spec.and(EsquadriaSpecification.pertenceALinha(idLinha));
         }
@@ -90,7 +94,7 @@ public class EsquadriaService {
 
     private void validaFks(Esquadria esquadria) throws Exception{
         if(esquadria.getEmpresa() == null || esquadria.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir uma esquadria no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new EmpresaIndefinidaException();
         }
         if(esquadria.getLinha() == null || esquadria.getLinha().getIdLinha() == 0){
             throw new Exception("Não é possivel inserir uma esquadria sem vinculo com uma linha. Verifique!");

@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.EmpresaIndefinidaException;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
@@ -32,12 +33,14 @@ public class ObraService {
         return obraRepository.saveAndFlush(obra);
     }
 
-    public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit, boolean retornarObrasJaImpressas){
-        Specification<Obra> spec = Specification.where(null);
-
+    public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit, boolean retornarObrasJaImpressas) throws Exception{
         if(idEmpresa != null && idEmpresa != 0){
-            spec = spec.and(ObraSpecification.pertenceAEmpresa(idEmpresa));
+            throw new EmpresaIndefinidaException();
         }
+
+        Specification<Obra> spec = Specification.where(null);
+        spec = spec.and(ObraSpecification.pertenceAEmpresa(idEmpresa));
+
         if(dsObra != null){
             spec = spec.and(ObraSpecification.descricaoContains(dsObra));
         }
@@ -133,7 +136,7 @@ public class ObraService {
     }
     private void validaFks(Obra obra) throws Exception{
         if(obra.getEmpresa() == null || obra.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possivel inserir uma obra no sistema sem vinculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new EmpresaIndefinidaException ();
         }
     }
 

@@ -1,5 +1,6 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.EmpresaIndefinidaException;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
 import br.unipar.MedialApi.repository.PerfilRepository;
@@ -23,12 +24,14 @@ public class PerfilService {
         return perfilRepository.saveAndFlush(perfil);
     }
 
-    public List<PerfilDto> findAll(Long idEmpresa, Long idLinha, String dsPerfil){
-        Specification<Perfil> spec = Specification.where(null);
-
+    public List<PerfilDto> findAll(Long idEmpresa, Long idLinha, String dsPerfil) throws Exception{
         if(idEmpresa != null && idEmpresa != 0){
-            spec = spec.and(PerfilSpecification.pertenceAEmpresa(idEmpresa));
+            throw new EmpresaIndefinidaException();
         }
+
+        Specification<Perfil> spec = Specification.where(null);
+        spec = spec.and(PerfilSpecification.pertenceAEmpresa(idEmpresa));
+
         if(idLinha != null && idLinha != 0){
             spec = spec.and(PerfilSpecification.pertenceALinha(idLinha));
         }
@@ -100,7 +103,7 @@ public class PerfilService {
 
     private void validaFks(Perfil perfil) throws Exception{
         if(perfil.getEmpresa() == null || perfil.getEmpresa().getIdEmpresa() == 0){
-            throw new Exception("Não é possível inserir um perfil no sistema sem vínculo com uma empresa. Entre em contato com os administradores do sistema.");
+            throw new EmpresaIndefinidaException();
         }
         if(perfil.getLinha() == null || perfil.getLinha().getIdLinha() == 0){
             throw new Exception("Não é possível inserir um perfil sem vínculo com uma linha. Verifique!");

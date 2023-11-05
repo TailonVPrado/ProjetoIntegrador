@@ -28,7 +28,7 @@ public class ObraController {
                                  @RequestParam(required = false) Date dtLctoIni,
                                  @RequestParam(required = false) Date dtLctoFim,
                                  @RequestParam(defaultValue = "0") Long limit,
-                                 @RequestParam(defaultValue = "true") boolean retornarObrasJaImpressas){
+                                 @RequestParam(defaultValue = "true") boolean retornarObrasJaImpressas) throws Exception{
         return obraService.findAll(idEmpresa, dsObra, dtLctoIni, dtLctoFim, limit, retornarObrasJaImpressas);
     }
 
