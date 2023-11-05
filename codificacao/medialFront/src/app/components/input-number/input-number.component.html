@@ -2,6 +2,7 @@
   <label *ngIf="!isGrid">{{properties?.label}}</label>
   <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
     <input
+      [maxlength]="this.decimal ? 18 : 9"
       #inputElement
       (focus)="onFocus()"
       [disabled]="!properties?.ativo"
