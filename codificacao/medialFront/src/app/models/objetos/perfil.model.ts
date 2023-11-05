@@ -6,7 +6,6 @@ export class Perfil {
   idPerfil: number;
   dsPerfil: string;
   imPerfil: string;
-  stAtivo: boolean;
   stNotContemImg: boolean;
   empresa: Empresa;
   linha: Linha;
@@ -17,7 +16,6 @@ export class Perfil {
     idPerfil: number = 0,
     dsPerfil: string = '',
     imPerfil: string = '',
-    stAtivo: boolean = true,
     stNotContemImg: boolean = false,
     empresa: Empresa = new Empresa(),
     linha: Linha = new Linha(), properties: Properties = new Properties({}),
@@ -26,7 +24,6 @@ export class Perfil {
     this.idPerfil = idPerfil;
     this.dsPerfil = dsPerfil;
     this.imPerfil = imPerfil;
-    this.stAtivo = stAtivo;
     this.stNotContemImg = stNotContemImg;
     this.empresa = empresa;
     this.linha = linha;

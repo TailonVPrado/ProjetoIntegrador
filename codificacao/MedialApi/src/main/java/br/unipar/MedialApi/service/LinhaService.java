@@ -27,9 +27,12 @@ public class LinhaService {
         return linhaRepository.saveAndFlush(linha);
     }
 
-    public Linha update(Linha linha) throws Exception{
-        validaUpdate(linha);
-        return linhaRepository.saveAndFlush(linha);
+    public Linha update(Long id, Linha linha) throws Exception{
+        Linha linhaUpdate = findById(id);
+        linhaUpdate.setDsLinha(linha.getDsLinha());
+
+        validaUpdate(linhaUpdate);
+        return linhaRepository.saveAndFlush(linhaUpdate);
     }
 
     public Linha findById(Long id) throws Exception{

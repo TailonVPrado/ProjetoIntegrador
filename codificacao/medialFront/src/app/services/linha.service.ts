@@ -35,7 +35,7 @@ export class LinhaService {
   }
 
   updateLinha(linha: Linha): Observable<Linha> {
-    const url = `${this.apiUrl}/linha`;
+    const url = `${this.apiUrl}/linha/`+linha.idLinha;
     return this.http.put<Linha>(url, linha);
   }
 

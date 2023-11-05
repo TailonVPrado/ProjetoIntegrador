@@ -22,9 +22,9 @@ public class LinhaController {
         return linhaService.insert(linha);
     }
 
-    @PutMapping
-    public Linha update (@RequestBody Linha linha) throws Exception{
-        return linhaService.update(linha);
+    @PutMapping(path = "/{id}")
+    public Linha update ( @PathVariable Long id, @RequestBody Linha linha) throws Exception{
+        return linhaService.update(id, linha);
     }
 
     @GetMapping(path = "/{id}")
