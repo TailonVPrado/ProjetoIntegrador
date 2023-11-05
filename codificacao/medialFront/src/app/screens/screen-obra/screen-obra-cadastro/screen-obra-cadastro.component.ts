@@ -29,7 +29,6 @@ export class ScreenObraCadastroComponent implements OnInit {
   }
 
   carregaTela(){
-    //todo alterar para passar a empresa tbm
     this.obraService.getObras(new Obra(), null, 50).subscribe(
       (obras) => {
         this.gridObra = [];

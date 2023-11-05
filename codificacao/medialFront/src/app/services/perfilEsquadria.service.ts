@@ -20,7 +20,7 @@ export class PerfilEsquadriaService {
 
   getPerfilEsquadrias(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria[]> {
     let params = new HttpParams();
-    //todo alterar essa empresa logada aqui
+
     if(perfilEsquadria.esquadria.idEsquadria){
       params = params.set('idEsquadria', perfilEsquadria.esquadria.idEsquadria);
     }

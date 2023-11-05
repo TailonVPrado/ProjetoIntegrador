@@ -40,7 +40,6 @@ export class ScreenObraConsultaComponent implements OnInit {
   efetuandoAltercaoObra : boolean = false;
 
   onClickConsultarObra() {
-    //todo alterar para passar a empresa tbm
     this.buttonConsultarObra.isRequesting = true;
     this.obraService.getObras(this.obra, this.datasFiltro).subscribe(
       (obras) => {

@@ -60,7 +60,7 @@ export class GenericService {
   /** O parametro **updateAllPropertie** serve para telas que possuem propiedades por campos e nao por objeto,
     * como por exemplo a tela de obras (mais precisamente o grid de obras), nessas telas a regra para habilitar
     * campos é individual e cada tela precisa gerenciar isso de maneira isolada, mas nos demais casos é so nao
-    * adicionar nada nesse parametro de entrada que esses metodos irao realizar o gerenciamento de estado sozinho
+    * adicionar nada nesse parametro de entrada que esses metods irao realizar o gerenciamento de estado sozinho
     * */
 
   onClickButtonEditar(obj : any, updateAllPropertie : boolean = true){

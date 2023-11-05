@@ -15,7 +15,7 @@ export class LinhaService {
 
   private apiUrl = environment.apiUrl;
 
-  createLinha(linha: Linha): Observable<Linha> {//todo tvp
+  createLinha(linha: Linha): Observable<Linha> {
     const url = `${this.apiUrl}/linha`;
     linha.empresa = this.login.getEmpresa();
     return this.http.post<Linha>(url, linha);
@@ -34,7 +34,7 @@ export class LinhaService {
     return this.http.get<Linha[]>(url, {params});
   }
 
-  updateLinha(linha: Linha): Observable<Linha> { //todo tvp
+  updateLinha(linha: Linha): Observable<Linha> {
     const url = `${this.apiUrl}/linha`;
     return this.http.put<Linha>(url, linha);
   }

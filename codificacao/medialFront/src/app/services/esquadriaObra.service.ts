@@ -16,7 +16,7 @@ export class EsquadriaObraService {
 
   getEsquadriasObra(esquadriaObra: EsquadriaObra): Observable<EsquadriaObra[]> {
     let params = new HttpParams();
-    //todo alterar essa empresa logada aqui
+
     if(esquadriaObra.obra.idObra){
       params = params.set('idObra', esquadriaObra.obra.idObra);
     }

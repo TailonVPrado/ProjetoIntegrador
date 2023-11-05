@@ -96,7 +96,6 @@ export class ScreenPerfilComponent implements OnInit {
   }
 
   carregaPerfil(){
-    //todo alterar para passar a empresa tbm
     this.buttonConsultar.isRequesting = true;
     this.perfilService.getPerfil(this.perfil).subscribe(
       (perfis) => {

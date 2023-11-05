@@ -184,7 +184,6 @@ export class GridObraComponent implements OnInit {
              [this.tipoBotao.DUPLICAR, true]
           ])
         });
-        //todo ver como o generic daz para mudar o duplicar
       }
     );
     this.gridEsquadriaObra = gridEsquadriaObraAux;
