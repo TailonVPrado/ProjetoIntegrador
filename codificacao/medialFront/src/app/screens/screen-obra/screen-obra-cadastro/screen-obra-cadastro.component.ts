@@ -20,7 +20,12 @@ export class ScreenObraCadastroComponent implements OnInit {
               private generic : GenericService) { }
 
   ngOnInit(): void {
-    this.carregaTela();
+    //todo tvp
+    // depois que fizer a implementação do login da para tirar esse timeOut
+    // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
+    setTimeout(() => {
+      this.carregaTela();
+    }, 100);
   }
 
   carregaTela(){
@@ -50,7 +55,7 @@ export class ScreenObraCadastroComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors, 'Erro ao carregar obras:');
+          this.generic.showError(error.error.errors, 'Erro ao carregar Obras');
       }
     )
   }
@@ -67,7 +72,7 @@ export class ScreenObraCadastroComponent implements OnInit {
     this.buttonCadastrarObra.isRequesting = true;
     this.obraService.createObra(this.obra).subscribe(
       (response) => {
-        this.generic.showSuccess("Obra ("+this.obra.dsObra.trim()+") cadastrada com sucesso!");
+        this.generic.showSuccess("Obra ("+response.dsObra+") cadastrada com sucesso!");
         this.obra = response;
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridObra.splice(0,0,this.obra);
@@ -88,7 +93,7 @@ export class ScreenObraCadastroComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao cadastrar Obra");
       }
     ).add(() =>{
       this.buttonCadastrarObra.isRequesting = false;
