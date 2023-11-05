@@ -25,7 +25,7 @@ public class PerfilService {
     }
 
     public List<PerfilDto> findAll(Long idEmpresa, Long idLinha, String dsPerfil) throws Exception{
-        if(idEmpresa == null && idEmpresa == 0){
+        if(idEmpresa == null || idEmpresa == 0){
             throw new EmpresaIndefinidaException();
         }
 

@@ -34,7 +34,7 @@ public class ObraService {
     }
 
     public List<Obra> findAll(Long idEmpresa, String dsObra, Date dtLctoIni, Date dtLctoFim, Long limit, boolean retornarObrasJaImpressas) throws Exception{
-        if(idEmpresa == null && idEmpresa == 0){
+        if(idEmpresa == null || idEmpresa == 0){
             throw new EmpresaIndefinidaException();
         }
 

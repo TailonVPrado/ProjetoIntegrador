@@ -56,7 +56,7 @@ public class EsquadriaService {
     }
 
     public List<Esquadria> findAll(Long idEmpresa, Long idLinha, String dsEsquadria) throws Exception{
-        if(idEmpresa == null && idEmpresa == 0){
+        if(idEmpresa == null || idEmpresa == 0){
             throw new EmpresaIndefinidaException();
         }
 
