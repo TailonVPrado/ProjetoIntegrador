@@ -26,7 +26,7 @@ export class LinhaService {
 
     params = params.set('idEmpresa', this.login.getEmpresa().idEmpresa);
 
-    if(linha.dsLinha){
+    if(linha?.dsLinha){
       params = params.set('dsLinha', linha.dsLinha);
     }
 

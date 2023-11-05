@@ -4,27 +4,29 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Perfil } from '../models/objetos/perfil.model';
 import { map, switchMap } from 'rxjs/operators';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerfilService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private login: LoginService) { }
 
   private apiUrl = environment.apiUrl;
 
   createPerfil(perfil: Perfil): Observable<Perfil> {
     const url = `${this.apiUrl}/perfil`;
+    perfil.empresa = this.login.getEmpresa();
     return this.http.post<Perfil>(url, perfil);
   }
 
   getPerfil(perfil: Perfil): Observable<Perfil[]> {
     let params = new HttpParams();
-    //todo alterar essa empresa logada aqui
-    if(perfil.empresa.idEmpresa){
-      params = params.set('idEmpresa', perfil.empresa.idEmpresa);
-    }
+
+    params = params.set('idEmpresa', this.login.getEmpresa().idEmpresa);
+
     if(perfil.dsPerfil){
       params = params.set('dsPerfil', perfil.dsPerfil);
     }

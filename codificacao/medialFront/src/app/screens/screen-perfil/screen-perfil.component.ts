@@ -26,13 +26,18 @@ export class ScreenPerfilComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.linhaService.getLinhas(null).subscribe(
-      (linhas) => {
-        linhas.forEach((linha) =>{
-          this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
-        })
-      }
-    )
+    //todo tvp
+    // depois que fizer a implementação do login da para tirar esse timeOut
+    // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
+    setTimeout(() => {
+      this.linhaService.getLinhas(null).subscribe(
+        (linhas) => {
+          linhas.forEach((linha) =>{
+            this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
+          })
+        }
+      )
+    }, 100);
   }
 
   modalRef?: BsModalRef;
@@ -65,7 +70,7 @@ export class ScreenPerfilComponent implements OnInit {
     this.buttonCadastrar.isRequesting = true;
     this.perfilService.createPerfil(this.perfil).subscribe(
       (response) => {
-        this.generic.showSuccess("Perfil ("+this.perfil.dsPerfil.trim()+") cadastrado com sucesso!");
+        this.generic.showSuccess("Perfil ("+response.dsPerfil+") cadastrado com sucesso!");
         this.perfil.idPerfil = response.idPerfil;
         this.perfil.stNotContemImg = true;
         /*adiciona o perfil na primeira linha para facilitar a experiencia do usuário*/
@@ -83,7 +88,7 @@ export class ScreenPerfilComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao cadastrar Perfil");
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
@@ -113,7 +118,7 @@ export class ScreenPerfilComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors, 'Erro ao carregar perfis:');
+          this.generic.showError(error.error.errors, 'Erro ao carregar Perfis');
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;
@@ -165,7 +170,7 @@ export class ScreenPerfilComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao excluir Perfil");
         }
       );
     }
@@ -182,7 +187,7 @@ export class ScreenPerfilComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao atualizar Perfil");
         }
       );
     }else{
@@ -232,7 +237,7 @@ export class ScreenPerfilComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors){
-          this.generic.showWarning(error.error.errors);
+          this.generic.showWarning(error.error.errors, "Ocorreu um erro ao salvar a imagem");
         }
       }
     ).add(() =>{
