@@ -113,7 +113,7 @@ export class ScreenPerfilComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError('Erro ao carregar perfis:', error.error.errors);
+          this.generic.showError(error.error.errors, 'Erro ao carregar perfis:');
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;

@@ -1,3 +1,4 @@
+import { EmpresaService } from './../../services/empresa.service';
 import { LinhaService } from './../../services/linha.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
@@ -73,7 +74,7 @@ export class ScreenLinhaComponent implements OnInit{
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError('Erro ao carregar linhas:', error.error.errors);
+          this.generic.showError( error.error.errors, 'Erro ao carregar linhas');
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;

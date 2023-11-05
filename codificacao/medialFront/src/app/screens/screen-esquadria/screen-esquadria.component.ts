@@ -90,7 +90,6 @@ export class ScreenEsquadriaComponent implements OnInit {
   }
 
   carregaEsquadrias() {
-    //todo alterar para passar a empresa tbm
     this.buttonConsultarEsquadria.isRequesting = true;
     this.esquadriaService.getEsquadrias(this.esquadria).subscribe(
       (perfis) => {
@@ -111,7 +110,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError('Erro ao carregar perfis:', error.error.errors);
+          this.generic.showError( error.error.errors, 'Erro ao carregar perfis:');
       }
     ).add(() =>{
       this.buttonConsultarEsquadria.isRequesting = false;

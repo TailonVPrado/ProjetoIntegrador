@@ -70,7 +70,7 @@ export class ScreenCorteComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError('Erro ao carregar obras:', error.error.errors);
+          this.generic.showError(error.error.errors, 'Erro ao carregar obras');
       }
     ).add(() =>{
       this.buttonConsultarObra.isRequesting = false;
