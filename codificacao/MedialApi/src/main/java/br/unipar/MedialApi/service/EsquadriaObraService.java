@@ -164,8 +164,16 @@ public class EsquadriaObraService {
         }
     }
 
-    public EsquadriaObra update(EsquadriaObra esquadriaObra) throws Exception{
+    public EsquadriaObra update(Long id, EsquadriaObra obj) throws Exception{
+        EsquadriaObra esquadriaObra = findById(id);
+        esquadriaObra.setEsquadria(obj.getEsquadria());
+        esquadriaObra.setDsCor(obj.getDsCor());
+        esquadriaObra.setCdEsquadriaObra(obj.getCdEsquadriaObra());
+        esquadriaObra.setTmAltura(obj.getTmAltura());
+        esquadriaObra.setTmLargura(obj.getTmLargura());
+
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
+
         if(!obra.isStImpresso()){
             validaUpdate(esquadriaObra);
             EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);

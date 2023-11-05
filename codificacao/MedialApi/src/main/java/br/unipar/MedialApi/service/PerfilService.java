@@ -63,14 +63,15 @@ public class PerfilService {
         return perfilDtoList;
     }
 
-    public Perfil update(Long id, Perfil perfil) throws Exception{
-        Perfil perfilUpdate = findById(id);
-        perfilUpdate.setDsPerfil(perfil.getDsPerfil());
-        perfilUpdate.setLinha(perfil.getLinha());
+    public Perfil update(Long id, Perfil obj) throws Exception{
+        Perfil perfil = findById(id);
 
-        validaUpdate(perfilUpdate);
+        perfil.setDsPerfil(obj.getDsPerfil());
+        perfil.setLinha(obj.getLinha());
 
-        return perfilRepository.saveAndFlush(perfilUpdate);
+        validaUpdate(perfil);
+
+        return perfilRepository.saveAndFlush(perfil);
     }
 
     @Transactional

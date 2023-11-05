@@ -82,15 +82,16 @@ public class PerfilEsquadriaService {
         return perfilEsquadria;
     }
 
-    public PerfilEsquadria update(Long id, PerfilEsquadria perfilEsquadria) throws Exception{
-        PerfilEsquadria perfilEsquadriaUpdate = findById(id);
-        perfilEsquadriaUpdate.setDsDesconto(perfilEsquadria.getDsDesconto());
-        perfilEsquadriaUpdate.setQtPerfil(perfilEsquadria.getQtPerfil());
-        perfilEsquadriaUpdate.setPerfil(perfilEsquadria.getPerfil());
+    public PerfilEsquadria update(Long id, PerfilEsquadria obj) throws Exception{
+        PerfilEsquadria perfilEsquadria = findById(id);
 
-        validaUpdate(perfilEsquadriaUpdate);
-        recalculaDescontos(perfilEsquadriaUpdate);
-        return perfilEsquadriaRepository.saveAndFlush(perfilEsquadriaUpdate);
+        perfilEsquadria.setDsDesconto(obj.getDsDesconto());
+        perfilEsquadria.setQtPerfil(obj.getQtPerfil());
+        perfilEsquadria.setPerfil(obj.getPerfil());
+
+        validaUpdate(perfilEsquadria);
+        recalculaDescontos(perfilEsquadria);
+        return perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
     }
 
     public PerfilEsquadria findById(Long id) throws Exception{

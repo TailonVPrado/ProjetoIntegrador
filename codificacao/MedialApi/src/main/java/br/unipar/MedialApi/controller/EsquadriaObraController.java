@@ -34,9 +34,10 @@ public class EsquadriaObraController {
         return esquadriaObraService.delete(id);
     }
 
-    @PutMapping
-    public EsquadriaObra update (@RequestBody EsquadriaObra esquadriaObra) throws Exception{
-        return esquadriaObraService.update(esquadriaObra);
+    @PutMapping(path = "/{id}")
+    public EsquadriaObra update (@PathVariable Long id,
+                                 @RequestBody EsquadriaObra esquadriaObra) throws Exception{
+        return esquadriaObraService.update(id, esquadriaObra);
     }
 
     @GetMapping(path = "/cores")
