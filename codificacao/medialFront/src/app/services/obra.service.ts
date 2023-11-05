@@ -53,8 +53,8 @@ export class ObraService {
   }
 
   recalcularDescontos(obra: Obra): Observable<any> {
-    const url = `${this.apiUrl}/obra/recalcualarDescontos`;
-    return this.http.put<Obra>(url, obra);
+    const url = `${this.apiUrl}/obra/recalcualarDescontos/`+obra.idObra;
+    return this.http.put<Obra>(url, null);
   }
 
 }
