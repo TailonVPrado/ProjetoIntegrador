@@ -30,7 +30,7 @@ export class ScreenEsquadriaComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit(): void {//todo ver esse null, null
-    this.linhaService.getLinhas(null, null).subscribe(
+    this.linhaService.getLinhas(null).subscribe(
       (linhas) => {
         linhas.forEach((linha) =>{
           this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);

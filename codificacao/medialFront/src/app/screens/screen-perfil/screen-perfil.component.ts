@@ -26,7 +26,7 @@ export class ScreenPerfilComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.linhaService.getLinhas(null, null).subscribe(
+    this.linhaService.getLinhas(null).subscribe(
       (linhas) => {
         linhas.forEach((linha) =>{
           this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);

@@ -1,6 +1,6 @@
 import { EmpresaService } from './../../services/empresa.service';
 import { LinhaService } from './../../services/linha.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { InputModel } from 'src/app/models/interface/input.model';
@@ -21,7 +21,12 @@ export class ScreenLinhaComponent implements OnInit{
     private generic: GenericService) { }
 
   ngOnInit(): void {
-    this.carregarLinhas();
+    //todo tvp
+    // depois que fizer a implementação do login da para tirar esse timeOut
+    // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
+    setTimeout(() => {
+      this.carregarLinhas();
+    },100);
   }
 
   linha: Linha = new Linha();
@@ -35,13 +40,13 @@ export class ScreenLinhaComponent implements OnInit{
     this.buttonCadastrar.isRequesting = true;
     this.linhaService.createLinha(this.linha).subscribe(
       (response) => {
-        this.generic.showSuccess("Linha ("+this.linha.dsLinha.trim()+") cadastrada com sucesso!");
-        this.linha.dsLinha = '';
+        this.generic.showSuccess("Linha ("+ response.dsLinha.trim()+") cadastrada com sucesso!");
+        this.linha = new Linha();
         this.carregarLinhas();
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao inserir Linha");
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
@@ -52,9 +57,8 @@ export class ScreenLinhaComponent implements OnInit{
   }
 
   carregarLinhas() {
-    //todo alterar o 1 para ser por empresa
     this.buttonConsultar.isRequesting = true;
-    this.linhaService.getLinhas(1, this.linha.dsLinha).subscribe(
+    this.linhaService.getLinhas(this.linha).subscribe(
       (linhas) => {
         this.gridLinhas = []
         linhas.forEach((linha, i) => {
@@ -127,7 +131,7 @@ export class ScreenLinhaComponent implements OnInit{
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao atualizar Linha");
         }
       );
     }else{
@@ -145,7 +149,7 @@ export class ScreenLinhaComponent implements OnInit{
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao excluir Linha");
         }
       );
     }
