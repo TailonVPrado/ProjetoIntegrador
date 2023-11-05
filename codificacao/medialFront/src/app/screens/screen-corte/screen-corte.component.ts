@@ -30,7 +30,7 @@ export class ScreenCorteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 1000);//todo voltar para -15
+    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 1000);//todo tvp voltar para -15
   }
 
   obra: Obra = new Obra();
@@ -70,7 +70,7 @@ export class ScreenCorteComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors, 'Erro ao carregar obras');
+          this.generic.showError(error.error.errors, 'Erro ao carregar Obras');
       }
     ).add(() =>{
       this.buttonConsultarObra.isRequesting = false;
@@ -80,11 +80,11 @@ export class ScreenCorteComponent implements OnInit {
   onClickRecalcularDescontos(obra : Obra){
     this.obraService.recalcularDescontos(obra).subscribe(
       (response) => {
-        this.generic.showSuccess("Recalculo de desconstos da obra ("+obra.dsObra+") iniciado!");
+        this.generic.showSuccess("Recálculo de desconstos da obra ("+obra.dsObra+") iniciado!");
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao iniciar recálculos");
       }
     );
   }
