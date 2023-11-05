@@ -21,9 +21,10 @@ public class EsquadriaController {
         return esquadriaService.insert(esquadria);
     }
 
-    @PutMapping
-    public Esquadria update(@RequestBody Esquadria esquadria) throws Exception{
-        return esquadriaService.update(esquadria);
+    @PutMapping(path = "/{id}")
+    public Esquadria update(@PathVariable Long id,
+                            @RequestBody Esquadria esquadria) throws Exception{
+        return esquadriaService.update(id, esquadria);
     }
 
     @GetMapping(path = "/{id}")

@@ -43,7 +43,7 @@ export class EsquadriaService {
   }
 
   updateEsquadria(esquadria: Esquadria): Observable<Esquadria> {
-    const url = `${this.apiUrl}/esquadria`;
+    const url = `${this.apiUrl}/esquadria/`+esquadria.idEsquadria;
     return this.http.put<Esquadria>(url, esquadria);
   }
 

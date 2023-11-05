@@ -27,9 +27,14 @@ public class EsquadriaService {
         return esquadriaRepository.saveAndFlush(esquadria);
     }
 
-    public Esquadria update(Esquadria esquadria) throws Exception{
-        validaUpdate(esquadria);
-        return esquadriaRepository.saveAndFlush(esquadria);
+    public Esquadria update(Long id, Esquadria esquadria) throws Exception{
+        Esquadria esquadriaUpdate = findById(id);
+        esquadriaUpdate.setDsEsquadria(esquadria.getDsEsquadria());
+        esquadriaUpdate.setLinha(esquadria.getLinha());
+
+        validaUpdate(esquadriaUpdate);
+        
+        return esquadriaRepository.saveAndFlush(esquadriaUpdate);
     }
 
     public Esquadria findById(Long id) throws Exception{
