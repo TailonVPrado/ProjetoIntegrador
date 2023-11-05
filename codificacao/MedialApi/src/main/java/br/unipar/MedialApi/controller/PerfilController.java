@@ -36,14 +36,17 @@ public class PerfilController {
     public Perfil delete(@PathVariable Long id) throws Exception{
         return perfilService.delete(id);
     }
-    @PutMapping
-    public Perfil update (@RequestBody Perfil perfil) throws Exception{
-        return perfilService.update(perfil);
+    @PutMapping(path = "/{id}")
+    public Perfil update (@PathVariable Long id,
+                          @RequestBody Perfil perfil) throws Exception{
+        return perfilService.update(id, perfil);
     }
-    @PostMapping(path = "/updateImage/{id}")
+
+    @PutMapping(path = "/updateImage/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void setImagemPerfil(@PathVariable Long id,@RequestBody Map<String, String> imagem) throws Exception{
-        perfilService.addImage(id, imagem);
+    public void setImagemPerfil(@PathVariable Long id,
+                                @RequestBody Map<String, String> imagem) throws Exception{
+        perfilService.setImage(id, imagem);
     }
 
     @GetMapping(path = "/getImage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
