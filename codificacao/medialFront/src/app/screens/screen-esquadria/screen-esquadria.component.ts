@@ -379,7 +379,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors, "Erro ao realizar atualizar vínculo");
+            this.generic.showError(error.error.errors, "Erro ao atualizar vínculo");
         }
       );
     }else{

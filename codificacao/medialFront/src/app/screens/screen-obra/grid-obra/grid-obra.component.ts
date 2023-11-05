@@ -53,7 +53,7 @@ export class GridObraComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao excluir Obra");
         }
       );
     }
@@ -103,7 +103,7 @@ export class GridObraComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao atualizar Obra");
         }
       );
     }else{
@@ -247,7 +247,7 @@ export class GridObraComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao realizar vínculo");
       }
     ).add(() =>{
       this.buttonCadastrarEsquadriaObra.isRequesting = false;
@@ -261,8 +261,6 @@ export class GridObraComponent implements OnInit {
         (response) => {
           this.esquadriaObra.obra.nrVersao = response.nrVersaobra;
           this.generic.showSuccess("Esquadria ("+esquadriaObra.esquadria.dsEsquadria.trim()+") desvinculada com sucesso!");
-
-
 
           if(response.nrVersaobra == esquadriaObra.obra.nrVersao){
             this.gridEsquadriaObra.splice(idx, 1);
@@ -346,7 +344,7 @@ export class GridObraComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao atualizar vínculo");
       }
     );
   }else{
@@ -383,11 +381,5 @@ export class GridObraComponent implements OnInit {
           this.generic.showError(error.error.errors);
       }
     );
-
-
-
-
-
-
   }
 }
