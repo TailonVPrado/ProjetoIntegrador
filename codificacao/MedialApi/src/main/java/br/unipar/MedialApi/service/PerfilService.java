@@ -63,10 +63,14 @@ public class PerfilService {
         return perfilDtoList;
     }
 
-    public Perfil update(Perfil perfil) throws Exception{
-        validaUpdate(perfil);
-        perfil.setImPerfil(getImage(perfil.getIdPerfil()));
-        return perfilRepository.saveAndFlush(perfil);
+    public Perfil update(Long id, Perfil perfil) throws Exception{
+        Perfil perfilUpdate = findById(id);
+        perfilUpdate.setDsPerfil(perfil.getDsPerfil());
+        perfilUpdate.setLinha(perfil.getLinha());
+
+        validaUpdate(perfilUpdate);
+
+        return perfilRepository.saveAndFlush(perfilUpdate);
     }
 
     @Transactional
@@ -111,7 +115,7 @@ public class PerfilService {
     }
 
 
-    public void addImage(Long id, Map<String, String> imagem) throws Exception {
+    public void setImage(Long id, Map<String, String> imagem) throws Exception {
         String image = imagem.get("image").replaceAll("data:image/jpeg;base64,", "");
         image = image.replaceAll("data:image/png;base64,", "");
         byte[] imageByte = Base64.getDecoder().decode(image);

@@ -39,7 +39,7 @@ export class PerfilService {
   }
 
   updatePerfil(perfil: Perfil): Observable<Perfil> {
-    const url = `${this.apiUrl}/perfil`;
+    const url = `${this.apiUrl}/perfil/`+perfil.idPerfil;
     return this.http.put<Perfil>(url, perfil);
   }
 

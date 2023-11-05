@@ -23,7 +23,8 @@ public class LinhaController {
     }
 
     @PutMapping(path = "/{id}")
-    public Linha update ( @PathVariable Long id, @RequestBody Linha linha) throws Exception{
+    public Linha update ( @PathVariable Long id,
+                          @RequestBody Linha linha) throws Exception{
         return linhaService.update(id, linha);
     }
 
