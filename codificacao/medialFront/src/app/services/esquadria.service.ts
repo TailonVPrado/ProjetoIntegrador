@@ -3,27 +3,29 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Esquadria } from '../models/objetos/esquadria.model';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EsquadriaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private login: LoginService) { }
 
   private apiUrl = environment.apiUrl;
 
   createEsquadria(esquadria: Esquadria): Observable<Esquadria> {
     const url = `${this.apiUrl}/esquadria`;
+    esquadria.empresa = this.login.getEmpresa();
     return this.http.post<Esquadria>(url, esquadria);
   }
 
   getEsquadrias(esquadria: Esquadria): Observable<Esquadria[]> {
     let params = new HttpParams();
-    //todo alterar essa empresa logada aqui
-    if(esquadria.empresa.idEmpresa){
-      params = params.set('idEmpresa', esquadria.empresa.idEmpresa);
-    }
+
+    params = params.set('idEmpresa', this.login.getEmpresa().idEmpresa);
+
     if(esquadria.dsEsquadria){
       params = params.set('dsEsquadria', esquadria.dsEsquadria);
     }

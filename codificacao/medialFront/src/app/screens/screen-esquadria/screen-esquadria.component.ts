@@ -29,14 +29,19 @@ export class ScreenEsquadriaComponent implements OnInit {
               private generic : GenericService,
               private modalService: BsModalService) { }
 
-  ngOnInit(): void {//todo ver esse null, null
-    this.linhaService.getLinhas(null).subscribe(
-      (linhas) => {
-        linhas.forEach((linha) =>{
-          this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
-        })
-      }
-    )
+  ngOnInit(): void {
+    //todo tvp
+    // depois que fizer a implementação do login da para tirar esse timeOut
+    // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
+    setTimeout(() => {
+      this.linhaService.getLinhas(null).subscribe(
+        (linhas) => {
+          linhas.forEach((linha) =>{
+            this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
+          })
+        }
+      )
+    }, 100);
   }
 
   linhasDisponiveis : Map<number, string> = new Map<number, string>();
@@ -78,7 +83,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao cadastrar Esquadria");
       }
     ).add(() =>{
       this.buttonCadastrarEsquadria.isRequesting = false;
@@ -110,7 +115,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError( error.error.errors, 'Erro ao carregar perfis:');
+          this.generic.showError( error.error.errors, 'Erro ao carregar Esquadrias');
       }
     ).add(() =>{
       this.buttonConsultarEsquadria.isRequesting = false;
@@ -122,12 +127,12 @@ export class ScreenEsquadriaComponent implements OnInit {
     if(await this.generic.showAlert('Deseja realmente remover esta esquadria?') == 1){
       this.esquadriaService.deleteEsquadria(esquadria).subscribe(
         (response) => {
-          this.generic.showSuccess("Perfil ("+esquadria.dsEsquadria.trim()+") excluido com sucesso!");
+          this.generic.showSuccess("Esquadria ("+esquadria.dsEsquadria.trim()+") excluido com sucesso!");
           this.gridEsquadria.splice(idx, 1);
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao excluir Esquadria");
         }
       );
     }
@@ -180,7 +185,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao atualizar Esquadria");
         }
       );
     }else{
@@ -297,7 +302,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors);
+          this.generic.showError(error.error.errors, "Erro ao realizar vínculo");
       }
     ).add(() =>{
       this.buttonCadastrarPerfilEsquadria.isRequesting = false;
@@ -374,7 +379,7 @@ export class ScreenEsquadriaComponent implements OnInit {
         },
         (error) => {
           if(error.error.errors)
-            this.generic.showError(error.error.errors);
+            this.generic.showError(error.error.errors, "Erro ao realizar atualizar vínculo");
         }
       );
     }else{

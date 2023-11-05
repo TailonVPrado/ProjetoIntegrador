@@ -46,7 +46,7 @@ export class ScreenLinhaComponent implements OnInit{
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError(error.error.errors, "Erro ao inserir Linha");
+          this.generic.showError(error.error.errors, "Erro ao cadastrar Linha");
       }
     ).add(() =>{
       this.buttonCadastrar.isRequesting = false;
@@ -78,7 +78,7 @@ export class ScreenLinhaComponent implements OnInit{
       },
       (error) => {
         if(error.error.errors)
-          this.generic.showError( error.error.errors, 'Erro ao carregar linhas');
+          this.generic.showError( error.error.errors, 'Erro ao carregar Linhas');
       }
     ).add(() =>{
       this.buttonConsultar.isRequesting = false;
