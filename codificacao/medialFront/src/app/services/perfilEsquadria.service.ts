@@ -38,7 +38,7 @@ export class PerfilEsquadriaService {
   }
 
   updatePerfilEsquadria(perfilEsquadria: PerfilEsquadria): Observable<PerfilEsquadria> {
-    const url = `${this.apiUrl}/perfilesquadria`;
+    const url = `${this.apiUrl}/perfilesquadria/`+perfilEsquadria.idPerfilEsquadria;
     return this.http.put<PerfilEsquadria>(url, perfilEsquadria);
   }
 }

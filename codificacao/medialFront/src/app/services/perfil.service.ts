@@ -50,7 +50,7 @@ export class PerfilService {
 
   updateImage(id: number, image: string): Observable<any>{
     const url = `${this.apiUrl}/perfil/updateImage/`+id;
-    return this.http.post(url,  { image })
+    return this.http.put(url,  { image })
   }
 
   getImage(id : number): Observable<any>{
