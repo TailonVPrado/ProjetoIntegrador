@@ -154,6 +154,7 @@ export class GridObraComponent implements OnInit {
       let esquadriaFilter = new Esquadria();
       this.esquadriaObra.obra = obra;
 
+      this.esquadriasDisponiveis = new Map<number, string>();
       this.esquadriaService.getEsquadrias(esquadriaFilter).subscribe(
         (response) => {
           response.forEach((esquadria) =>{

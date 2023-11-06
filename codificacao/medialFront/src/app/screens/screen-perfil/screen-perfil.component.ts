@@ -30,6 +30,7 @@ export class ScreenPerfilComponent implements OnInit {
     // depois que fizer a implementação do login da para tirar esse timeOut
     // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
     setTimeout(() => {
+      this.linhasDisponiveis = new Map<number, string>();
       this.linhaService.getLinhas(null).subscribe(
         (linhas) => {
           linhas.forEach((linha) =>{
