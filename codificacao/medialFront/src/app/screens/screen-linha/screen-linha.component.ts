@@ -100,7 +100,7 @@ export class ScreenLinhaComponent implements OnInit{
 
       this.efetuandoAltercao = true;
     }else{
-      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+      this.generic.showWarning('Para realizar esta alteração, conclua a anterior primeiro.');
     }
   }
 

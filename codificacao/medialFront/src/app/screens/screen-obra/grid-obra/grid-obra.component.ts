@@ -69,7 +69,7 @@ export class GridObraComponent implements OnInit {
 
       this.efetuandoAltercaoObra = true;
     }else{
-      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+      this.generic.showWarning('Para realizar esta alteração, conclua a anterior primeiro.');
     }
   }
 
@@ -281,6 +281,7 @@ export class GridObraComponent implements OnInit {
       this.generic.onClickButtonEditar(esquadriaObra);
 
       this.esquadriaObraOld.esquadria.idEsquadria = esquadriaObra.esquadria.idEsquadria;
+      this.esquadriaObraOld.esquadria.dsEsquadria = esquadriaObra.esquadria.dsEsquadria;
       this.esquadriaObraOld.dsCor = esquadriaObra.dsCor;
       this.esquadriaObraOld.cdEsquadriaObra = esquadriaObra.cdEsquadriaObra;
       this.esquadriaObraOld.tmAltura = esquadriaObra.tmAltura;
@@ -288,7 +289,7 @@ export class GridObraComponent implements OnInit {
 
       this.efetuandoAltercaoEsquadriaObra = true;
     }else{
-      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+      this.generic.showWarning('Para realizar esta alteração, conclua a anterior primeiro.');
     }
   }
 
@@ -305,7 +306,9 @@ export class GridObraComponent implements OnInit {
 
         this.efetuandoAltercaoEsquadriaObra = false;
 
-        esquadriaObra.esquadria.idEsquadria =this.esquadriaObraOld.esquadria.idEsquadria;
+        esquadriaObra.esquadria.idEsquadria = this.esquadriaObraOld.esquadria.idEsquadria;
+        esquadriaObra.esquadria.dsEsquadria = this.esquadriaObraOld.esquadria.dsEsquadria;
+
         esquadriaObra.dsCor = this.esquadriaObraOld.dsCor;
         esquadriaObra.cdEsquadriaObra = this.esquadriaObraOld.cdEsquadriaObra;
         esquadriaObra.tmAltura = this.esquadriaObraOld.tmAltura;

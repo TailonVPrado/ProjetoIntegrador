@@ -151,7 +151,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       this.efetuandoAltercaoEsquadria = true;
     }else{
-      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+      this.generic.showWarning('Para realizar esta alteração, conclua a anterior primeiro.');
     }
   }
 
@@ -223,6 +223,8 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   openModalPerfilEsquadria(template: TemplateRef<any>, esquadria: Esquadria){
     if(!esquadria.properties.ativo){
+      this.perfilEsquadria = new PerfilEsquadria();
+
       this.titleModal = esquadria.dsEsquadria + '  (' + esquadria.linha.dsLinha +')'
 
       this.carregaPerfilEsquadrias(esquadria);
@@ -336,7 +338,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       this.efetuandoAltercaoPerfilEsquadria = true;
     }else{
-      this.generic.showWarning('Para realizar esta alteração conclua a anterior primeiro.');
+      this.generic.showWarning('Para realizar esta alteração, conclua a anterior primeiro.');
     }
   }
 
