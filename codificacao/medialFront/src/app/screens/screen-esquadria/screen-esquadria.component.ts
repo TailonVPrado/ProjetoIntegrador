@@ -233,6 +233,7 @@ export class ScreenEsquadriaComponent implements OnInit {
       perfilFilter.linha = esquadria.linha;
       this.perfilEsquadria.esquadria = esquadria;
 
+      this.perfilDisponiveis = new Map<number, string>();
       this.perfilService.getPerfil(perfilFilter).subscribe(
         (response) => {
           response.forEach((perfil) =>{
