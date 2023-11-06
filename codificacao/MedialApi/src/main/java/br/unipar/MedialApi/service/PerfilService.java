@@ -21,6 +21,7 @@ public class PerfilService {
 
     public Perfil insert(Perfil perfil) throws Exception{
         validaInsert(perfil);
+        perfil.setStAtivo(true);
         return perfilRepository.saveAndFlush(perfil);
     }
 
