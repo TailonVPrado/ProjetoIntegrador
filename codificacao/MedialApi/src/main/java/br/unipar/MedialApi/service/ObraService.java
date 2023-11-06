@@ -30,6 +30,7 @@ public class ObraService {
     public Obra insert(Obra obra) throws Exception{
         validaInsert(obra);
         obra.setNrVersao(1);
+        obra.setStAtivo(true);
         return obraRepository.saveAndFlush(obra);
     }
 

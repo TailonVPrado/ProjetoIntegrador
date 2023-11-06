@@ -73,6 +73,7 @@ export class ScreenObraCadastroComponent implements OnInit {
       (response) => {
         this.generic.showSuccess("Obra ("+response.dsObra+") cadastrada com sucesso!");
         this.obra = response;
+        this.obra.dtLancamento = this.generic.formataData(this.obra.dtLancamento);
         /*adiciona a esquadria no topo do grid para manipular alguma coisa, caso o usuario queira*/
         this.gridObra.splice(0,0,this.obra);
         this.gridObra[0].properties = new Map<string, Properties>();
