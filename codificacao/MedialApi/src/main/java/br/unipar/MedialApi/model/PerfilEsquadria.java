@@ -31,7 +31,7 @@ public class PerfilEsquadria {
 	@Column(name = "ID_PERFILESQUADRIA")
 	private Long idPerfilEsquadria;
 	
-	@Column(name = "QT_PERIL", nullable = false)
+	@Column(name = "QT_PERFIL", nullable = false)
 	private Integer qtPerfil;
 	
 	@Column(name = "DS_DESCONTO", length = 50, nullable = false)

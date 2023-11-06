@@ -43,7 +43,6 @@ public class PerfilController {
     }
 
     @PutMapping(path = "/updateImage/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
     public void setImagemPerfil(@PathVariable Long id,
                                 @RequestBody Map<String, String> imagem) throws Exception{
         perfilService.setImage(id, imagem);
