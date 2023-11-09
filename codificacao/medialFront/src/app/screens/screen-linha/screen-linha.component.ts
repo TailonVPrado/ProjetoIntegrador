@@ -3,7 +3,6 @@ import { LinhaService } from './../../services/linha.service';
 import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { GenericService } from 'src/app/services/generic.service';
@@ -30,7 +29,7 @@ export class ScreenLinhaComponent implements OnInit{
   }
 
   linha: Linha = new Linha();
-  inputDescricao: InputModel = new InputModel({ label: "Descrição", placeholder: "insira a descrição" });
+  inputDescricao: Properties = new Properties({ label: "Descrição", placeholder: "insira a descrição" });
   buttonCadastrar: ButtonModel = new ButtonModel({  });
   buttonConsultar: ButtonModel = new ButtonModel({ label: 'Consultar' });
 

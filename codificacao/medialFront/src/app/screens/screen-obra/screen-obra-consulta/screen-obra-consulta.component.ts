@@ -2,7 +2,6 @@ import { flatten } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Obra } from 'src/app/models/objetos/obra.model';
 import { GenericService } from 'src/app/services/generic.service';
@@ -33,8 +32,8 @@ export class ScreenObraConsultaComponent implements OnInit {
   obra: Obra = new Obra();
   gridObra: Obra[] = [];
 
-  inputDsObra = new InputModel({ label: 'Descrição', placeholder: 'Insira a descrição' });
-  inputDtLancamento = new InputModel({ label: 'Data Lcto', placeholder: 'Insira a data' });
+  inputDsObra = new Properties({ label: 'Descrição', placeholder: 'Insira a descrição' });
+  inputDtLancamento = new Properties({ label: 'Data Lcto', placeholder: 'Insira a data' });
   buttonConsultarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
   datasFiltro : Date[] = [new Date(), new Date()];
   efetuandoAltercaoObra : boolean = false;

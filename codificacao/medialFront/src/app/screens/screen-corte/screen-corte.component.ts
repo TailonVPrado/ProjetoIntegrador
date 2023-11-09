@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { EsquadriaObraAgrupadaDto } from 'src/app/models/objetos/dto/esquadriaObraAgrupadaDto.model';
 import { Obra } from 'src/app/models/objetos/obra.model';
@@ -38,11 +37,11 @@ export class ScreenCorteComponent implements OnInit {
   chkExibirObrasImpressas : boolean = false;
 
   //propiedades
-  inputDsObra = new InputModel({ label: 'Descrição', placeholder: 'Insira a descrição' });
-  inputDtLancamento = new InputModel({ label: 'Data Lcto', placeholder: 'Insira a data' });
+  inputDsObra = new Properties({ label: 'Descrição', placeholder: 'Insira a descrição' });
+  inputDtLancamento = new Properties({ label: 'Data Lcto', placeholder: 'Insira a data' });
   buttonConsultarObra: ButtonModel = new ButtonModel({ label: 'Consultar' });
   datasFiltro : Date[] = [new Date(), new Date()];
-  chkExibirObrasImpressasProperties = new InputModel({label: 'Exibir já impressos'});
+  chkExibirObrasImpressasProperties = new Properties({label: 'Exibir já impressos'});
 
   onClickConsultarObra() {
     //todo alterar para passar a empresa tbm

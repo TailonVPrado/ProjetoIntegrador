@@ -6,7 +6,6 @@ import { Perfil } from './../../models/objetos/perfil.model';
 import { LinhaService } from './../../services/linha.service';
 import { TipoBotao } from './../../models/enum/tipoBotao.model';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
@@ -47,8 +46,8 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   linhasDisponiveis : Map<number, string> = new Map<number, string>();
   esquadria : Esquadria = new Esquadria();
-  inputDsEsquadria = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
-  inputDsLinha = new InputModel({label: 'Linha', placeholder: 'Linha'});
+  inputDsEsquadria = new Properties({label: 'Descrição', placeholder: 'Insira a descrição'});
+  inputDsLinha = new Properties({label: 'Linha', placeholder: 'Linha'});
   buttonCadastrarEsquadria: ButtonModel = new ButtonModel({  });
   buttonConsultarEsquadria: ButtonModel = new ButtonModel({ label: 'Consultar' });
 
@@ -209,9 +208,9 @@ export class ScreenEsquadriaComponent implements OnInit {
   };
 
   perfilDisponiveis : Map<number, string> = new Map<number, string>();
-  inputDsPerfil = new InputModel({label: 'Perfil', placeholder: 'Insira o Perfil'});
-  inputQtdePerfil = new InputModel({label: 'Qtde', placeholder: '0'});
-  inputDsDesconto = new InputModel({label: 'Desconto', placeholder: ''});
+  inputDsPerfil = new Properties({label: 'Perfil', placeholder: 'Insira o Perfil'});
+  inputQtdePerfil = new Properties({label: 'Qtde', placeholder: '0'});
+  inputDsDesconto = new Properties({label: 'Desconto', placeholder: ''});
 
   perfilEsquadria : PerfilEsquadria = new PerfilEsquadria();
   buttonCadastrarPerfilEsquadria: ButtonModel = new ButtonModel({  });

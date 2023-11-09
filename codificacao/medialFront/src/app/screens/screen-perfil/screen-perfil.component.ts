@@ -3,7 +3,6 @@ import { Perfil } from './../../models/objetos/perfil.model';
 import { PerfilService } from './../../services/perfil.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GenericService } from 'src/app/services/generic.service';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
@@ -49,8 +48,8 @@ export class ScreenPerfilComponent implements OnInit {
   };
 
   perfil : Perfil = new Perfil();
-  inputDsPerfil = new InputModel({label: 'Descrição', placeholder: 'Insira a descrição'});
-  inputDsLinha = new InputModel({label: 'Linha', placeholder: 'Linha'});
+  inputDsPerfil = new Properties({label: 'Descrição', placeholder: 'Insira a descrição'});
+  inputDsLinha = new Properties({label: 'Linha', placeholder: 'Linha'});
 
   linhasDisponiveis : Map<number, string> = new Map<number, string>();
 

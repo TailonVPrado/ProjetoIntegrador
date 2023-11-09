@@ -8,7 +8,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EsquadriaObraService } from 'src/app/services/esquadriaObra.service';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { EsquadriaObra } from 'src/app/models/objetos/esquadriaObra.model';
-import { InputModel } from 'src/app/models/interface/input.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
 
@@ -121,17 +120,17 @@ export class GridObraComponent implements OnInit {
   esquadriaObra : EsquadriaObra = new EsquadriaObra();
   esquadriasDisponiveis : Map<number, string> = new Map<number, string>();
 
-  inputDsEsquadria = new InputModel({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
-  inputDsCor = new InputModel({label: 'Cor'})
-  inputCdEsquadriaObra = new InputModel({label: 'Código', placeholder: 'Código'});
-  inputTmAltura = new InputModel({label: 'Altura', placeholder: 'Altura'});
-  inputTmLargura = new InputModel({label: 'Largura', placeholder: 'Largura'});
+  inputDsEsquadria = new Properties({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
+  inputDsCor = new Properties({label: 'Cor'})
+  inputCdEsquadriaObra = new Properties({label: 'Código', placeholder: 'Código'});
+  inputTmAltura = new Properties({label: 'Altura', placeholder: 'Altura'});
+  inputTmLargura = new Properties({label: 'Largura', placeholder: 'Largura'});
   gridEsquadriaObra : EsquadriaObra[] = [];
   buttonCadastrarEsquadriaObra: ButtonModel = new ButtonModel({  });
 
   //checkbox para nao limpar campos da tela
   chkLimparCamposAposCadastro : boolean = true;
-  chkLimparCamposAposCadastroProperties = new InputModel({label: 'Limpar campos ao vincular nova esquadria'});
+  chkLimparCamposAposCadastroProperties = new Properties({label: 'Limpar campos ao vincular nova esquadria'});
 
   esquadriaObraOld : EsquadriaObra = new EsquadriaObra();
   efetuandoAltercaoEsquadriaObra : boolean = false;

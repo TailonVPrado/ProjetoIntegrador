@@ -18,7 +18,8 @@ export class Perfil {
     imPerfil: string = '',
     stNotContemImg: boolean = false,
     empresa: Empresa = new Empresa(),
-    linha: Linha = new Linha(), properties: Properties = new Properties({}),
+    linha: Linha = new Linha(),
+    properties: Properties = new Properties({}),
     visibilidadeBotoes: Map<string, boolean> = new Map<string, boolean>()
   ) {
     this.idPerfil = idPerfil;
