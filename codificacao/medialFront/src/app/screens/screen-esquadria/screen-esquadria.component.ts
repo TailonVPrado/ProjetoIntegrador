@@ -98,10 +98,10 @@ export class ScreenEsquadriaComponent implements OnInit {
   carregaEsquadrias() {
     this.buttonConsultarEsquadria.isRequesting = true;
     this.esquadriaService.getEsquadrias(this.esquadria).subscribe(
-      (perfis) => {
+      (esquadrias) => {
         this.gridEsquadria = [];
-        perfis.forEach((perfil, i) =>{
-          this.gridEsquadria[i] = perfil;
+        esquadrias.forEach((esquadria, i) =>{
+          this.gridEsquadria[i] = esquadria;
           this.gridEsquadria[i].properties = new Properties({ativo : false});
           this.gridEsquadria[i].visibilidadeBotoes = new Map <string, boolean>([
             [this.tipoBotao.CANCELAR, false],
