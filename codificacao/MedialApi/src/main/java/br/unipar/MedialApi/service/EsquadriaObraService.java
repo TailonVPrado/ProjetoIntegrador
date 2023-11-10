@@ -82,16 +82,12 @@ public class EsquadriaObraService {
 
         for (EsquadriaObra eo: esquadrias) {
             //insere a copia da esquadria obra
-            EsquadriaObra esquadriaatualizada = new EsquadriaObra();
-            esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
-            esquadriaatualizada.setDsCor(eo.getDsCor());
-            esquadriaatualizada.setTmAltura(eo.getTmAltura());
-            esquadriaatualizada.setTmLargura(eo.getTmLargura());
-            esquadriaatualizada.setEsquadria(eo.getEsquadria());
-            esquadriaatualizada.setObra(eo.getObra());
-            esquadriaatualizada.setStAtivo(true);
-            esquadriaatualizada.setNrVersaobra(vNrVersao);
-            perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
+            EsquadriaObra clone = eo.clone();
+
+            clone.setStAtivo(true);
+            clone.setNrVersaobra(vNrVersao);
+
+            perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
@@ -134,16 +130,11 @@ public class EsquadriaObraService {
             /* insere a copia da esquadria obra
              * -Como é um delete precisa inserir na nova versao da esquadria obra apenas os registros que o usuario NAO apagou*/
             if(!eo.getIdEsquadriaObra().equals(esquadriaObra.getIdEsquadriaObra())){
-                EsquadriaObra esquadriaatualizada = new EsquadriaObra();
-                esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
-                esquadriaatualizada.setDsCor(eo.getDsCor());
-                esquadriaatualizada.setTmAltura(eo.getTmAltura());
-                esquadriaatualizada.setTmLargura(eo.getTmLargura());
-                esquadriaatualizada.setEsquadria(eo.getEsquadria());
-                esquadriaatualizada.setObra(eo.getObra());
-                esquadriaatualizada.setStAtivo(true);
-                esquadriaatualizada.setNrVersaobra(vNrVersao);
-                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);
+                EsquadriaObra clone = eo.clone();
+
+                clone.setStAtivo(true);
+                clone.setNrVersaobra(vNrVersao);
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
@@ -198,17 +189,12 @@ public class EsquadriaObraService {
             /* insere a copia da esquadria obra
              * -Como é um update precisa verificar o Id para nao deixar o registro duplicado na nova versao da obra*/
             if(!eo.getIdEsquadriaObra().equals(esquadriaObra.getIdEsquadriaObra())){
-                EsquadriaObra esquadriaatualizada = new EsquadriaObra();
-                esquadriaatualizada.setCdEsquadriaObra(eo.getCdEsquadriaObra());
-                esquadriaatualizada.setDsCor(eo.getDsCor());
-                esquadriaatualizada.setTmAltura(eo.getTmAltura());
-                esquadriaatualizada.setTmLargura(eo.getTmLargura());
-                esquadriaatualizada.setEsquadria(eo.getEsquadria());
-                esquadriaatualizada.setObra(eo.getObra());
-                esquadriaatualizada.setStAtivo(true);
-                esquadriaatualizada.setNrVersaobra(vNrVersao);
+                EsquadriaObra clone = eo.clone();
 
-                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(esquadriaatualizada), Operacao.INSERT);
+                clone.setStAtivo(true);
+                clone.setNrVersaobra(vNrVersao);
+
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
             }else{
                 //passa a PK para null para o Spring criar uma nova entidade no bd
                 esquadriaObra.setIdEsquadriaObra(null);

@@ -63,4 +63,23 @@ public class EsquadriaObra {
 
 	@Column(name = "NR_VERSAOBRA")
 	private Integer nrVersaobra;
+
+
+	public EsquadriaObra clone(){
+		EsquadriaObra clone = new EsquadriaObra();
+
+		clone.setIdEsquadriaObra(this.idEsquadriaObra);
+		clone.setCdEsquadriaObra(this.cdEsquadriaObra);
+		clone.setTmLargura(this.tmLargura);
+		clone.setTmAltura(this.tmAltura);
+		clone.setStAtivo(this.stAtivo);
+		clone.setDtRecord(this.dtRecord);
+		clone.setDtAtualizacao(this.dtAtualizacao);
+		clone.setDsCor(this.dsCor);
+		clone.setObra(this.obra);
+		clone.setEsquadria(this.esquadria);
+		clone.setNrVersaobra(this.nrVersaobra);
+
+		return clone;
+	}
 }
