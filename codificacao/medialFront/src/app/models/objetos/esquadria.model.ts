@@ -13,8 +13,6 @@ export class Esquadria {
   constructor(
     idEsquadria: number = 0,
     dsEsquadria: string = '',
-    imPerfil: string = '',
-    stAtivo: boolean = true,
     empresa: Empresa = new Empresa(),
     linha: Linha = new Linha(),
     properties: Properties = new Properties({}),

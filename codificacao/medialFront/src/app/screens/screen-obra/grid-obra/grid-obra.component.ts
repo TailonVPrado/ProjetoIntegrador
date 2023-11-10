@@ -10,6 +10,7 @@ import { Properties } from 'src/app/models/interface/properties.model';
 import { EsquadriaObra } from 'src/app/models/objetos/esquadriaObra.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'grid-obra',
@@ -64,7 +65,7 @@ export class GridObraComponent implements OnInit {
       this.generic.onClickButtonEditar(obra, false);
       obra.properties.get('dsObra')!.ativo = true;
 
-      this.obraOld.dsObra = obra.dsObra;
+      this.obraOld = _.cloneDeep(obra);
 
       this.efetuandoAltercaoObra = true;
     }else{
@@ -72,25 +73,25 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  async onClickCancelarObra(obra : Obra){
-    if(obra.dsObra != this.obraOld.dsObra){
+  async onClickCancelarObra(idx : number){
+    if(!_.isEqual(this.gridObra[idx], this.obraOld)){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
-        this.generic.onClickButtonCancelar(obra, false);
-        obra.properties.get('dsObra')!.ativo = false;
 
-        obra.dsObra = this.obraOld.dsObra;
+        this.gridObra[idx] = _.cloneDeep(this.obraOld);
 
+        this.gridObra[idx].properties.get('dsObra')!.ativo = false;
+        this.generic.onClickButtonCancelar(this.gridObra[idx], false);
         this.efetuandoAltercaoObra = false;
       }
     }else{
-      this.generic.onClickButtonCancelar(obra, false);
-      obra.properties.get('dsObra')!.ativo = false;
+      this.generic.onClickButtonCancelar(this.gridObra[idx], false);
+      this.gridObra[idx].properties.get('dsObra')!.ativo = false;
       this.efetuandoAltercaoObra = false;
     }
   }
 
   onClickConfirmarObra(obra : Obra){
-    if(obra.dsObra != this.obraOld.dsObra){
+    if(!_.isEqual(obra, this.obraOld)){
       this.obraService.updateObra(obra).subscribe(
         (response) => {
           this.generic.showSuccess("Obra ("+obra.dsObra.trim()+") atualizada com sucesso!");
@@ -280,12 +281,7 @@ export class GridObraComponent implements OnInit {
 
       this.generic.onClickButtonEditar(esquadriaObra);
 
-      this.esquadriaObraOld.esquadria.idEsquadria = esquadriaObra.esquadria.idEsquadria;
-      this.esquadriaObraOld.esquadria.dsEsquadria = esquadriaObra.esquadria.dsEsquadria;
-      this.esquadriaObraOld.dsCor = esquadriaObra.dsCor;
-      this.esquadriaObraOld.cdEsquadriaObra = esquadriaObra.cdEsquadriaObra;
-      this.esquadriaObraOld.tmAltura = esquadriaObra.tmAltura;
-      this.esquadriaObraOld.tmLargura = esquadriaObra.tmLargura;
+      this.esquadriaObraOld = _.cloneDeep(esquadriaObra);
 
       this.efetuandoAltercaoEsquadriaObra = true;
     }else{
@@ -293,29 +289,19 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  async onClickCancelarEsquadriaObra(esquadriaObra : EsquadriaObra){
-    if(this.esquadriaObraOld.esquadria.idEsquadria != esquadriaObra.esquadria.idEsquadria ||
-       this.esquadriaObraOld.dsCor != esquadriaObra.dsCor ||
-       this.esquadriaObraOld.cdEsquadriaObra != esquadriaObra.cdEsquadriaObra ||
-       this.esquadriaObraOld.tmAltura != esquadriaObra.tmAltura ||
-       this.esquadriaObraOld.tmLargura != esquadriaObra.tmLargura ){
+  async onClickCancelarEsquadriaObra(idx : number){
+    if(!_.isEqual(this.gridEsquadriaObra[idx], this.esquadriaObraOld)){
 
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
 
-        this.generic.onClickButtonCancelar(esquadriaObra);
+        this.gridEsquadriaObra[idx] = _.cloneDeep(this.esquadriaObraOld);
 
+        this.generic.onClickButtonCancelar(this.gridEsquadriaObra[idx]);
         this.efetuandoAltercaoEsquadriaObra = false;
 
-        esquadriaObra.esquadria.idEsquadria = this.esquadriaObraOld.esquadria.idEsquadria;
-        esquadriaObra.esquadria.dsEsquadria = this.esquadriaObraOld.esquadria.dsEsquadria;
-
-        esquadriaObra.dsCor = this.esquadriaObraOld.dsCor;
-        esquadriaObra.cdEsquadriaObra = this.esquadriaObraOld.cdEsquadriaObra;
-        esquadriaObra.tmAltura = this.esquadriaObraOld.tmAltura;
-        esquadriaObra.tmLargura = this.esquadriaObraOld.tmLargura;
       }
     }else{
-      this.generic.onClickButtonCancelar(esquadriaObra);
+      this.generic.onClickButtonCancelar(this.gridEsquadriaObra[idx]);
 
       this.efetuandoAltercaoEsquadriaObra = false;
     }
@@ -323,11 +309,7 @@ export class GridObraComponent implements OnInit {
 
   onClickConfirmarEsquadriaObra(esquadriaObra : EsquadriaObra){
 
-    if(this.esquadriaObraOld.esquadria.idEsquadria != esquadriaObra.esquadria.idEsquadria ||
-      this.esquadriaObraOld.dsCor != esquadriaObra.dsCor ||
-      this.esquadriaObraOld.cdEsquadriaObra != esquadriaObra.cdEsquadriaObra ||
-      this.esquadriaObraOld.tmAltura != esquadriaObra.tmAltura ||
-      this.esquadriaObraOld.tmLargura != esquadriaObra.tmLargura ){
+    if(!_.isEqual(esquadriaObra, this.esquadriaObraOld)){
 
     this.esquadriaObraService.updateEsquadriaObra(esquadriaObra).subscribe(
       (response) => {

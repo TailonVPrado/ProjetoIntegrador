@@ -22,7 +22,7 @@
         </td>
         <td>
           <button-icon (onClick)="onClickExcluirObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-          <button-icon (onClick)="onClickCancelarObra(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+          <button-icon (onClick)="onClickCancelarObra(i)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
         </td>
         <td>
           <button-icon (onClick)="onClickEditarObra(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>
@@ -99,7 +99,7 @@
             </td>
             <td>
               <button-icon (onClick)="onClickExcluirEsquadriaObra(x, i)" nomeIcone="excluir" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-              <button-icon (onClick)="onClickCancelarEsquadriaObra(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+              <button-icon (onClick)="onClickCancelarEsquadriaObra(i)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
             </td>
             <td>
               <button-icon (onClick)="onClickEditarEsquadriaObra(x)" nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>

@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   constructor(private empresaService : EmpresaService,
               private loginService : LoginService){}
-  //todo tvp quando fazer o login precisa tirar esse workaround daqui
+  //TODO quando fazer o login precisa tirar esse workaround daqui
   ngOnInit(){
     this.empresaService.getEmpresaById(1).subscribe(
       (response) => {

@@ -8,6 +8,7 @@ import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'screen-perfil',
@@ -25,7 +26,7 @@ export class ScreenPerfilComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //todo tvp
+    //TODO
     // depois que fizer a implementação do login da para tirar esse timeOut
     // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
     setTimeout(() => {
@@ -132,9 +133,7 @@ export class ScreenPerfilComponent implements OnInit {
 
       this.generic.onClickButtonEditar(perfil);
 
-      this.perfilOld.dsPerfil = perfil.dsPerfil;
-      this.perfilOld.linha.idLinha = perfil.linha.idLinha;
-      this.perfilOld.linha.dsLinha = perfil.linha.dsLinha;
+      this.perfilOld = _.cloneDeep(perfil);
 
       this.efetuandoAltercao = true;
     }else{
@@ -142,22 +141,19 @@ export class ScreenPerfilComponent implements OnInit {
     }
   }
 
-  async onClickCancelar(perfil : Perfil){
-    if(perfil.dsPerfil != this.perfilOld.dsPerfil ||
-       perfil.linha.idLinha != this.perfilOld.linha.idLinha){
-          if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
-            this.generic.onClickButtonCancelar(perfil);
+  async onClickCancelar(idx : number){
+    if(!_.isEqual(this.gridPerfil[idx], this.perfilOld)){
+      if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
+        this.gridPerfil[idx] = _.cloneDeep(this.perfilOld);
 
-            this.efetuandoAltercao = false;
+        this.generic.onClickButtonCancelar(this.gridPerfil[idx] );
+        this.efetuandoAltercao = false;
 
-            perfil.dsPerfil = this.perfilOld.dsPerfil;
-            perfil.linha.idLinha = this.perfilOld.linha.idLinha;
-            perfil.linha.dsLinha = this.perfilOld.linha.dsLinha;
-          }
-        }else{
-          this.generic.onClickButtonCancelar(perfil);
-          this.efetuandoAltercao = false;
-        }
+      }
+    }else{
+      this.generic.onClickButtonCancelar(this.gridPerfil[idx] );
+      this.efetuandoAltercao = false;
+    }
   }
 
   async onClickExcluir(perfil : Perfil, idx : number){
@@ -176,7 +172,7 @@ export class ScreenPerfilComponent implements OnInit {
   }
 
   onClickConfirmar(perfil : Perfil){
-    if(perfil.dsPerfil != this.perfilOld.dsPerfil || this.perfil.linha.idLinha != this.perfilOld.linha.idLinha){
+    if(!_.isEqual(perfil, this.perfilOld)){
       this.perfilService.updatePerfil(perfil).subscribe(
         (response) => {
           this.generic.showSuccess("Perfil ("+perfil.dsPerfil.trim()+") atualizado com sucesso!");

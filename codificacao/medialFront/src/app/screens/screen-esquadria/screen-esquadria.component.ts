@@ -12,6 +12,7 @@ import { GenericService } from 'src/app/services/generic.service';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PerfilService } from 'src/app/services/perfil.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'screen-esquadria',
@@ -29,7 +30,7 @@ export class ScreenEsquadriaComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    //todo tvp
+    //TODO
     // depois que fizer a implementação do login da para tirar esse timeOut
     // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
     setTimeout(() => {
@@ -145,9 +146,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       this.generic.onClickButtonEditar(esquadria);
 
-      this.esquadriaOld.dsEsquadria = esquadria.dsEsquadria;
-      this.esquadriaOld.linha.idLinha = esquadria.linha.idLinha;
-      this.esquadriaOld.linha.dsLinha = esquadria.linha.dsLinha;
+      this.esquadriaOld = _.cloneDeep(esquadria);
 
       this.efetuandoAltercaoEsquadria = true;
     }else{
@@ -155,27 +154,25 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  async onClickCancelarEsquadria(esquadria : Esquadria){
-    if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
+  async onClickCancelarEsquadria(idx : number){
+    if(!_.isEqual(this.gridEsquadria[idx], this.esquadriaOld)){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
 
-        this.generic.onClickButtonCancelar(esquadria);
+        this.gridEsquadria[idx] = _.cloneDeep(this.esquadriaOld);
 
+        this.generic.onClickButtonCancelar(this.gridEsquadria[idx]);
         this.efetuandoAltercaoEsquadria = false;
 
-        esquadria.dsEsquadria = this.esquadriaOld.dsEsquadria;
-        esquadria.linha.idLinha = this.esquadriaOld.linha.idLinha;
-        esquadria.linha.dsLinha = this.esquadriaOld.linha.dsLinha;
       }
     }else{
-      this.generic.onClickButtonCancelar(esquadria);
+      this.generic.onClickButtonCancelar(this.gridEsquadria[idx]);
 
       this.efetuandoAltercaoEsquadria = false;
     }
   }
 
   onClickConfirmarEsquadria(esquadria : Esquadria){
-    if(esquadria.dsEsquadria != this.esquadriaOld.dsEsquadria || this.esquadria.linha.idLinha != this.esquadriaOld.linha.idLinha){
+    if(!_.isEqual(esquadria, this.esquadriaOld)){
       this.esquadriaService.updateEsquadria(esquadria).subscribe(
         (response) => {
           this.generic.showSuccess("Esquadria ("+ esquadria.dsEsquadria.trim()+") atualizada com sucesso!");
@@ -332,10 +329,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
       this.generic.onClickButtonEditar(perfilEsquadria);
 
-      this.perfilEsquadriaOld.perfil.idPerfil = perfilEsquadria.perfil.idPerfil;
-      this.perfilEsquadriaOld.perfil.dsPerfil = perfilEsquadria.perfil.dsPerfil;
-      this.perfilEsquadriaOld.qtPerfil = perfilEsquadria.qtPerfil;
-      this.perfilEsquadriaOld.dsDesconto = perfilEsquadria.dsDesconto;
+       this.perfilEsquadriaOld = _.cloneDeep(perfilEsquadria);
 
       this.efetuandoAltercaoPerfilEsquadria = true;
     }else{
@@ -343,24 +337,18 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
-  async onClickCancelarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
-    if( this.perfilEsquadriaOld.perfil.idPerfil != perfilEsquadria.perfil.idPerfil ||
-        this.perfilEsquadriaOld.qtPerfil != perfilEsquadria.qtPerfil ||
-        this.perfilEsquadriaOld.dsDesconto != perfilEsquadria.dsDesconto){
+  async onClickCancelarPerfilEsquadria(idx: number){
+    if( !_.isEqual(this.gridPerfilEsquadria[idx], this.perfilEsquadriaOld)){
 
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){//1 = SIM
 
-        this.generic.onClickButtonCancelar(perfilEsquadria);
+        this.gridPerfilEsquadria[idx] = _.cloneDeep(this.perfilEsquadriaOld);
 
+        this.generic.onClickButtonCancelar(this.gridPerfilEsquadria[idx]);
         this.efetuandoAltercaoPerfilEsquadria = false;
-
-        perfilEsquadria.perfil.idPerfil = this.perfilEsquadriaOld.perfil.idPerfil;
-        perfilEsquadria.perfil.dsPerfil = this.perfilEsquadriaOld.perfil.dsPerfil;
-        perfilEsquadria.qtPerfil = this.perfilEsquadriaOld.qtPerfil;
-        perfilEsquadria.dsDesconto = this.perfilEsquadriaOld.dsDesconto;
       }
     }else{
-      this.generic.onClickButtonCancelar(perfilEsquadria);
+      this.generic.onClickButtonCancelar(this.gridPerfilEsquadria[idx]);
 
       this.efetuandoAltercaoPerfilEsquadria = false;
     }
@@ -369,9 +357,7 @@ export class ScreenEsquadriaComponent implements OnInit {
 
   onClickConfirmarPerfilEsquadria(perfilEsquadria: PerfilEsquadria){
 
-    if( this.perfilEsquadriaOld.perfil.idPerfil != perfilEsquadria.perfil.idPerfil ||
-        this.perfilEsquadriaOld.qtPerfil != perfilEsquadria.qtPerfil ||
-        this.perfilEsquadriaOld.dsDesconto != perfilEsquadria.dsDesconto){
+    if( !_.isEqual(perfilEsquadria, this.perfilEsquadriaOld)){
 
       this.perfilEsquadriaService.updatePerfilEsquadria(perfilEsquadria).subscribe(
         (response) => {

@@ -21,7 +21,7 @@
           </td>
           <td>
             <button-icon (onClick)="onClickExcluir(x, i)"  nomeIcone="excluir"  [visivel]="x.visibilidadeBotoes.get(tipoBotao.EXCLUIR)" hint="Excluir"></button-icon>
-            <button-icon (onClick)="onClickCancelar(x)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
+            <button-icon (onClick)="onClickCancelar(i)" nomeIcone="cancelar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.CANCELAR)" hint="Cancelar alteração"></button-icon>
           </td>
           <td>
             <button-icon (onClick)="onClickEditar(x)"    nomeIcone="editar" [visivel]="x.visibilidadeBotoes.get(tipoBotao.EDITAR)" hint="Editar"></button-icon>

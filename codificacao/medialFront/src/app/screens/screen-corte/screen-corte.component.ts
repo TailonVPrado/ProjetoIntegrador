@@ -29,7 +29,7 @@ export class ScreenCorteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 1000);//todo tvp voltar para -15
+    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 1000);//TODO voltar para -15
   }
 
   obra: Obra = new Obra();
@@ -44,7 +44,6 @@ export class ScreenCorteComponent implements OnInit {
   chkExibirObrasImpressasProperties = new Properties({label: 'Exibir já impressos'});
 
   onClickConsultarObra() {
-    //todo alterar para passar a empresa tbm
     this.buttonConsultarObra.isRequesting = true;
     this.obraService.getObras(this.obra, this.datasFiltro, 0, this.chkExibirObrasImpressas).subscribe(
       (obras) => {

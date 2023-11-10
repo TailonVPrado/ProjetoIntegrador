@@ -1,11 +1,11 @@
-import { EmpresaService } from './../../services/empresa.service';
 import { LinhaService } from './../../services/linha.service';
-import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { GenericService } from 'src/app/services/generic.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'screen-linha',
@@ -20,7 +20,7 @@ export class ScreenLinhaComponent implements OnInit{
     private generic: GenericService) { }
 
   ngOnInit(): void {
-    //todo tvp
+    //TODO
     // depois que fizer a implementação do login da para tirar esse timeOut
     // so precisa dele porque a tela nao consegue acessar as informações de login porque carrega antes (nao adiantou por no afterViewInit)
     setTimeout(() => {
@@ -95,7 +95,7 @@ export class ScreenLinhaComponent implements OnInit{
 
       this.generic.onClickButtonEditar(linha);
 
-      this.linhaOld.dsLinha = linha.dsLinha;
+      this.linhaOld = _.cloneDeep(linha);
 
       this.efetuandoAltercao = true;
     }else{
@@ -103,24 +103,23 @@ export class ScreenLinhaComponent implements OnInit{
     }
   }
 
-  async onClickCancelar(linha : Linha){
-    if(linha.dsLinha != this.linhaOld.dsLinha){
+  async onClickCancelar(idx : number){
+    if(!_.isEqual(this.gridLinhas[idx], this.linhaOld)){
       if(await this.generic.showAlert('Deseja cancelar a alteração?','sim','não') == 1){
-        this.generic.onClickButtonCancelar(linha);
+        this.gridLinhas[idx] = _.cloneDeep(this.linhaOld);
 
-        linha.dsLinha = this.linhaOld.dsLinha;
-
+        this.generic.onClickButtonCancelar(this.gridLinhas[idx]);
         this.efetuandoAltercao = false;
       }
     }else{
-      this.generic.onClickButtonCancelar(linha);
+      this.generic.onClickButtonCancelar(this.gridLinhas[idx]);
 
       this.efetuandoAltercao = false;
     }
   }
 
   onClickConfirmar(linha : Linha){
-    if(linha.dsLinha != this.linhaOld.dsLinha){
+    if(!_.isEqual(linha, this.linhaOld)){
       this.linhaService.updateLinha(linha).subscribe(
         (response) => {
           this.generic.showSuccess("Linha ("+linha.dsLinha.trim()+") atualizada com sucesso!");
