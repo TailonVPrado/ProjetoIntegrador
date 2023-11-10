@@ -80,6 +80,9 @@ export class InputTextComponent implements AfterViewInit{
           if (this.selectedItemIndex >= 0 && this.selectedItemIndex < this.itensExibicao?.length) {
             this.selecionarItem(this.itensExibicao[this.selectedItemIndex]);
             this.exibeSugestao = false;
+          }else if(this.itensExibicao?.length == 1){
+            this.selecionarItem(this.itensExibicao[0]);
+            this.exibeSugestao = false;
           }
           break;
         default:
