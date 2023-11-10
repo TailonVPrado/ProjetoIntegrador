@@ -91,15 +91,38 @@ export class InputTextComponent implements AfterViewInit{
     }
   }
 
+  private idxRowScrrol : number = -1;
+  private pxScrool : number = 20;
   selectNextItem() {
     if (this.selectedItemIndex < this.itensExibicao?.length - 1) {
       this.selectedItemIndex++;
+      const element = document.getElementById('sujestion') as HTMLElement;
+      if (element) {
+        this.idxRowScrrol = this.idxRowScrrol+1;
+        console.log('selectNextItem: ',this.idxRowScrrol);
+        if((this.idxRowScrrol >= 4 && this.pxScrool == 20) || this.idxRowScrrol >= 5 && this.pxScrool == 25){
+          this.idxRowScrrol = 4;
+          element.scrollTop += this.pxScrool;
+          this.pxScrool = 25;
+        }
+      }
     }
   }
 
   selectPreviousItem() {
     if (this.selectedItemIndex > 0) {
       this.selectedItemIndex--;
+
+      const element = document.getElementById('sujestion') as HTMLElement;
+      if (element) {
+        this.idxRowScrrol = this.idxRowScrrol-1;
+        console.log('selectNextItem: ',this.idxRowScrrol);
+        if((this.idxRowScrrol <= 0)){
+          this.idxRowScrrol = 0;
+          element.scrollTop -= 25;
+          this.pxScrool = 20;
+        }
+      }
     }
   }
 
@@ -116,6 +139,7 @@ export class InputTextComponent implements AfterViewInit{
   }
 
   onBlur() {
+    this.idxRowScrrol = -1
     if (this.itens.length > 0) {
       /*adicionado esse timeout para nao bugar caso o usuario escolha um item com o mouse (isso garente que o evento de click sera executado),
       e para garantir que o campo de sujestao abra sempre que o campo ganhar o foco foi adionado um timeout no on focus tbm*/

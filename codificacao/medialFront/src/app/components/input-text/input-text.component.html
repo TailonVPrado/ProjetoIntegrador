@@ -11,7 +11,7 @@
     (keydown)="onKeyDown($event)"
     (focus)="onFocus()"
     (blur)="onBlur()"/>
-    <div class="item-list" *ngIf="exibeSugestao && itensExibicao.length > 0">
+    <div id="sujestion" class="item-list" *ngIf="exibeSugestao && itensExibicao.length > 0">
       <div class="item" *ngFor="let item of itensExibicao; let i = index"
            [ngClass]="{ 'selected': i === selectedItemIndex }"
            (click)="selecionarItem(item)">
