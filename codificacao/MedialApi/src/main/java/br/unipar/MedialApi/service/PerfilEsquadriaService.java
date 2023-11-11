@@ -34,7 +34,10 @@ public class PerfilEsquadriaService {
         validaInsert(perfilEsquadria);
 
         perfilEsquadria.setStAtivo(true);
-        return perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
+
+        PerfilEsquadria objRetorno =  perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
+        recalculaDescontos(objRetorno);
+        return objRetorno;
     }
 
     public List<PerfilEsquadriaDto> findAll (Long idEsquadria, Long idPerfil){
@@ -78,7 +81,17 @@ public class PerfilEsquadriaService {
 
         perfilEsquadria.setStAtivo(false);
 
-        perfilEsquadriaRepository.save(perfilEsquadria);
+        /* No delete precisa fazer um pouco diferente, porque precisamos obter o ID das esquadrias antes de apagar o objeto,
+         * por isso essa chamada fica diferente, fazendo a consulta aqui, apagando na proxima instrucao e fazendo o loop
+         * adicionando a operação a queue apos o delete*/
+        Long[] idsEsquadriaObra = esquadriaObraService.findAllEsquadriaObraContemPerfil(idPerfilEsquadria);
+
+        perfilEsquadriaRepository.saveAndFlush(perfilEsquadria);
+
+        for(int i = 0; i < idsEsquadriaObra.length; i++){
+            perfilObraService.addOperationQueue(esquadriaObraService.findById(idsEsquadriaObra[i]));
+        }
+
         return perfilEsquadria;
     }
 
@@ -161,14 +174,10 @@ public class PerfilEsquadriaService {
 
 
     private void recalculaDescontos(PerfilEsquadria perfilEsquadria) throws Exception{
-        /* Se alterou os descontos recalcula todas as obras que ainda nao foram impressas (as que ja foram
-         * impressas nao recalcula porque em teoria o arquivo ja foi gerado e ja esta em processo de corte)
-         * */
-        if(!perfilEsquadria.getDsDesconto().equals(findById(perfilEsquadria.getIdPerfilEsquadria()).getDsDesconto())){
-            Long[] idsEsquadriaObra = esquadriaObraService.findAllEsquadriaObraContemPerfil(perfilEsquadria.getIdPerfilEsquadria());
-            for(int i = 0; i < idsEsquadriaObra.length; i++){
-                perfilObraService.addOperationQueue(esquadriaObraService.findById(idsEsquadriaObra[i]));
-            }
+        /* As obras que ja foram impressas nao recalcula porque em teoria o arquivo ja foi gerado e ja esta em processo de corte)   */
+        Long[] idsEsquadriaObra = esquadriaObraService.findAllEsquadriaObraContemPerfil(perfilEsquadria.getIdPerfilEsquadria());
+        for(int i = 0; i < idsEsquadriaObra.length; i++){
+            perfilObraService.addOperationQueue(esquadriaObraService.findById(idsEsquadriaObra[i]));
         }
     }
 }

@@ -54,6 +54,7 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                    "   AND ESQUADRIAOBRA.ID_OBRA = OBRA.ID_OBRA\n" +
                    "   AND PERFILESQUADRIA.ID_ESQUADRIA = ESQUADRIA.ID_ESQUADRIA\n" +
                    "   AND NOT OBRA.ST_IMPRESSO\n" +
+                   "   AND OBRA.ST_ATIVO AND PERFILESQUADRIA.ST_ATIVO AND ESQUADRIA.ST_ATIVO" +
                    "   AND PERFILESQUADRIA.ID_PERFILESQUADRIA = :idPerfilEsquadria",
         nativeQuery = true)
     Long[] findAllEsquadriaObraContemPerfil(@Param("idPerfilEsquadria") Long idPerfilEsquadria);
