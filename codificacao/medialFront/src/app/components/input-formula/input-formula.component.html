@@ -1,0 +1,12 @@
+<div [ngClass]="{'main' : !isGrid, 'flex-container': !isGrid}">
+  <label *ngIf="!isGrid">{{properties?.label}}</label>
+  <div [ngClass]="{'input-container-shadow': !isGrid}" class="input-container">
+    <input
+    [disabled]="!properties?.ativo"
+    (keydown)="onKeyDown($event)"
+    [placeholder]="properties?.placeholder"
+    [(ngModel)]="mxModel"
+    [ngStyle]="{ 'background-color': properties?.ativo && isGrid ? '#fff' : '' }"
+    />
+  </div>
+</div>

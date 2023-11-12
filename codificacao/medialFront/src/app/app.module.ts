@@ -33,6 +33,7 @@ import { InputDateRangeComponent } from './components/input-date-range/input-dat
 import { ListBoxComponent } from './components/list-box/list-box.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ErrorInterceptor } from './intercept/error.intercept';
+import { InputFormulaComponent } from './components/input-formula/input-formula.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -56,7 +57,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     GridObraComponent,
     InputDateRangeComponent,
     ListBoxComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    InputFormulaComponent
   ],
   imports: [
     BrowserModule,

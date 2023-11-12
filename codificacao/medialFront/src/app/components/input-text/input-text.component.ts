@@ -16,17 +16,11 @@ export class InputTextComponent implements DoCheck {
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
-  @Input() campoFormula : boolean = false;
   @Input() align : string = '';
 
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;
   @Input() set mxModel(val: any) {
-    //usado para o campo de formula do sistema
-    if(this.campoFormula){
-      val = val.split(".").join(",");
-    }
-
     this.actualValue = val;
     this.mxModelChange.emit(val);
   } get mxModel() {
@@ -106,7 +100,6 @@ export class InputTextComponent implements DoCheck {
       const element = document.getElementById('sujestion') as HTMLElement;
       if (element) {
         this.idxRowScrrol = this.idxRowScrrol+1;
-        console.log('selectNextItem: ',this.idxRowScrrol);
         if((this.idxRowScrrol >= 4 && this.pxScrool == 20) || this.idxRowScrrol >= 5 && this.pxScrool == 25){
           this.idxRowScrrol = 4;
           element.scrollTop += this.pxScrool;
@@ -123,7 +116,6 @@ export class InputTextComponent implements DoCheck {
       const element = document.getElementById('sujestion') as HTMLElement;
       if (element) {
         this.idxRowScrrol = this.idxRowScrrol-1;
-        console.log('selectNextItem: ',this.idxRowScrrol);
         if((this.idxRowScrrol <= 0)){
           this.idxRowScrrol = 0;
           element.scrollTop -= 25;
