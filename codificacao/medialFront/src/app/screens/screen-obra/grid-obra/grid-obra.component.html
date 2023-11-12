@@ -46,17 +46,22 @@
     <hr style="margin-top: -5px;">
 
     <div style="margin-left: 2%;" class="left" >
+      <checkbox [properties]="chkLimparCamposAposCadastroProperties" [(mxModel)]="chkLimparCamposAposCadastro"></checkbox>
+      <input-text id="esquadriaObra-linha" style="width: 50%;" [(mxModel)]="esquadriaObra.esquadria.linha.dsLinha" [properties]="inputDsLinha"
+        [itensDisponiveis]="this.linhasDisponiveis"
+        (itemSelecionado)="linhaSelecionada($event, this.esquadriaObra)"
+        (blur)="onBlurEsquadriaObraLinha()"></input-text>
+    </div>
+    <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
       <input-text id="esquadriaObra-esquadria" style="width: 50%;" [(mxModel)]="esquadriaObra.esquadria.dsEsquadria" [properties]="inputDsEsquadria"
-      [itensDisponiveis]="this.esquadriasDisponiveis"
-      (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"></input-text>
+        [itensDisponiveis]="this.esquadriasDisponiveis"
+        (itemSelecionado)="esquadriaSelecionada($event, this.esquadriaObra)"
+        (focus)="onFocusEsquadriaObra()"></input-text>
       <list-box style="width: 30%;" [(mxModel)]="esquadriaObra.dsCor" [list]="cores" [properties]="inputDsCor"></list-box>
       <input-text  [(mxModel)]="esquadriaObra.cdEsquadriaObra" [properties]="inputCdEsquadriaObra" ></input-text>
       <input-number [(mxModel)]="esquadriaObra.tmAltura" [properties]="inputTmAltura" [decimal]="true" [align]="'right'"></input-number>
       <input-number [(mxModel)]="esquadriaObra.tmLargura" [properties]="inputTmLargura" [decimal]="true"></input-number>
       <button-default [properties]="buttonCadastrarEsquadriaObra" (onClick)="onClickCadastrarEsquadriaObra()" hint="Vincular Perfil"></button-default>
-    </div>
-    <div style="margin-left: 2%; margin-bottom: 1%;" class="left" >
-      <checkbox [properties]="chkLimparCamposAposCadastroProperties" [(mxModel)]="chkLimparCamposAposCadastro"></checkbox>
     </div>
 
     <div class="center" style="width: 95%; margin-left: 3%;">

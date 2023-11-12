@@ -1,15 +1,18 @@
-import { AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Properties } from 'src/app/models/interface/properties.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss']
 })
-export class InputTextComponent implements AfterViewInit{
+export class InputTextComponent implements DoCheck {
 
   @Output() itemSelecionado: EventEmitter<any> = new EventEmitter<any>();
+  @Output() blur = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<any>();
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
@@ -37,25 +40,29 @@ export class InputTextComponent implements AfterViewInit{
   selectedItemIndex: number = -1;
   oldValue: string | any;
   alterouItem: boolean = false;
+  itensDisponiveisOld : Map<number, string> = new Map<number, string>();
 
-  ngAfterViewInit(): void {
-    //precisa esse timeout, porque sem ele por algum motivo o INPUT itensDisponiveis ainda esta sem valores e isso faz com que nao carregue a lista
-    setTimeout(() => {
-      for (const [key, value] of this.itensDisponiveis?.entries()) {
-        this.itens.push({ id: key, descricao: value });
-      }
-      this.itensExibicao = this.itens;
-      this.filtraItens();
-    }, 200);
-  }
 
   onInput() {
     this.filtraItens();
   }
 
+  ngDoCheck(): void {
+    if(!_.isEqual(this.itensDisponiveis, this.itensDisponiveisOld)){
+      this.itens = []
+      for (const [key, value] of this.itensDisponiveis?.entries()) {
+        this.itens.push({ id: key, descricao: value });
+      }
+      this.itensDisponiveisOld = _.cloneDeep(this.itensDisponiveis);
+
+      this.itensExibicao = this.itens;
+      this.filtraItens();
+    }
+  }
+
   filtraItens(){
     this.itensExibicao = this.itens.filter(item =>
-      item.descricao.toLowerCase().includes(this.actualValue.toLowerCase())
+      item.descricao?.toLowerCase().includes(this.actualValue?.toLowerCase())
     );
   }
 
@@ -126,7 +133,11 @@ export class InputTextComponent implements AfterViewInit{
     }
   }
 
-  onFocus() {
+  onFocus($event : Event) {
+    if(this.focus){
+      this.focus.emit($event);
+    }
+
     if (this.itens.length > 0) {
       setTimeout(() => {
         this.exibeSugestao = true;
@@ -136,9 +147,14 @@ export class InputTextComponent implements AfterViewInit{
       this.alterouItem = false;
       this.selectedItemIndex = -1;
     }
+
   }
 
-  onBlur() {
+  onBlur($event : Event) {
+    if(this.blur){
+      this.blur.emit($event);
+    }
+
     this.idxRowScrrol = -1
     if (this.itens.length > 0) {
       /*adicionado esse timeout para nao bugar caso o usuario escolha um item com o mouse (isso garente que o evento de click sera executado),
@@ -148,9 +164,9 @@ export class InputTextComponent implements AfterViewInit{
         this.exibeSugestao = false;
       }, 300);
 
-      if(this.actualValue.length == 0){
+      if(this.actualValue?.length == 0){
         this.itemSelecionado.emit(null);
-      }else if(!this.alterouItem && this.actualValue.length != this.oldValue.length){
+      }else if(!this.alterouItem && this.actualValue?.length != this.oldValue?.length){
         this.mxModelChange.emit(this.oldValue);
       }
     }

@@ -1,3 +1,5 @@
+import { EsquadriaObra } from './../../../models/objetos/esquadriaObra.model';
+import { LinhaService } from './../../../services/linha.service';
 import { ObraService } from './../../../services/obra.service';
 import { Esquadria } from './../../../models/objetos/esquadria.model';
 import { EsquadriaService } from './../../../services/esquadria.service';
@@ -7,10 +9,10 @@ import { Obra } from 'src/app/models/objetos/obra.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EsquadriaObraService } from 'src/app/services/esquadriaObra.service';
 import { Properties } from 'src/app/models/interface/properties.model';
-import { EsquadriaObra } from 'src/app/models/objetos/esquadriaObra.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { GenericService } from 'src/app/services/generic.service';
 import * as _ from 'lodash';
+import { Linha } from 'src/app/models/objetos/linha.model';
 
 @Component({
   selector: 'grid-obra',
@@ -24,7 +26,8 @@ export class GridObraComponent implements OnInit {
               private modalService: BsModalService,
               private esquadriaObraService : EsquadriaObraService,
               private generic : GenericService,
-              private obraService : ObraService) { }
+              private obraService : ObraService,
+              private linhaService : LinhaService) { }
 
   ngOnInit(): void {
     this.carregaCores();
@@ -120,8 +123,11 @@ export class GridObraComponent implements OnInit {
 
   esquadriaObra : EsquadriaObra = new EsquadriaObra();
   esquadriasDisponiveis : Map<number, string> = new Map<number, string>();
+  linhasDisponiveis : Map<number, string> = new Map<number, string>();
 
   inputDsEsquadria = new Properties({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
+  inputDsLinha = new Properties({label: 'Linha', placeholder: 'Insira a Linha'});
+
   inputDsCor = new Properties({label: 'Cor'})
   inputCdEsquadriaObra = new Properties({label: 'Código', placeholder: 'Código'});
   inputTmAltura = new Properties({label: 'Altura', placeholder: 'Altura'});
@@ -151,14 +157,13 @@ export class GridObraComponent implements OnInit {
 
       this.carregaEsquadriaObra(obra);
 
-      let esquadriaFilter = new Esquadria();
       this.esquadriaObra.obra = obra;
 
-      this.esquadriasDisponiveis = new Map<number, string>();
-      this.esquadriaService.getEsquadrias(esquadriaFilter).subscribe(
+      this.linhasDisponiveis = new Map<number, string>();
+      this.linhaService.getLinhas(null).subscribe(
         (response) => {
-          response.forEach((esquadria) =>{
-            this.esquadriasDisponiveis.set(esquadria.idEsquadria, esquadria.dsEsquadria);
+          response.forEach((linha) =>{
+            this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
           })
         }
       );
@@ -201,6 +206,42 @@ export class GridObraComponent implements OnInit {
     }
   }
 
+  linhaSelecionada(id : any, esquadriaObra : EsquadriaObra){
+    if(id == null){
+      esquadriaObra.esquadria.linha = new Linha();
+    }else{
+      this.linhaService.getLinhaById(id).subscribe(
+        (linha) => {
+          esquadriaObra.esquadria.linha = linha;
+
+          this.esquadriasDisponiveis = new Map<number, string>();
+          this.esquadriaService.getEsquadrias(_.cloneDeep(esquadriaObra.esquadria) ).subscribe(
+            (response) => {
+              response.forEach((esquadria) =>{
+                this.esquadriasDisponiveis.set(esquadria.idEsquadria, esquadria.dsEsquadria);
+              })
+            }
+          );
+          document.getElementById('esquadriaObra-esquadria')?.querySelector('input')?.focus();
+        }
+      )
+    }
+  }
+
+  onBlurEsquadriaObraLinha(){
+    if(!this.esquadriaObra.esquadria.linha.dsLinha){
+      this.esquadriasDisponiveis =  new Map<number, string>();
+    }
+  }
+
+  onFocusEsquadriaObra(){
+    if(!this.esquadriaObra.esquadria.linha.dsLinha){
+      this.generic.showWarning('Informe uma linha!');
+      document.getElementById('esquadriaObra-linha')?.querySelector('input')?.focus();
+    }
+  }
+
+
   async onClickCadastrarEsquadriaObra(){
     this.buttonCadastrarEsquadriaObra.isRequesting = true;
     this.esquadriaObraService.createEsquadriaObra(this.esquadriaObra).subscribe(
@@ -235,13 +276,12 @@ export class GridObraComponent implements OnInit {
         this.esquadriaObra.idEsquadriaObra = 0;
         if(this.chkLimparCamposAposCadastro){
           /*Limpa os campos so se a checkbox de limpar campos estiver marcada*/
-          this.esquadriaObra.esquadria = new Esquadria();
+          this.esquadriaObra.esquadria.idEsquadria = 0;
+          this.esquadriaObra.esquadria.dsEsquadria = '';
           this.esquadriaObra.tmAltura = 0;
           this.esquadriaObra.tmLargura = 0;
 
-          /*seta o foco para o campo de esquadria para facilitar o cadastro da proxima*/
-          const elementRef = document.getElementById('esquadriaObra-esquadria')?.querySelector('input');
-          elementRef?.focus();
+          document.getElementById('esquadriaObra-esquadria')?.querySelector('input')?.focus();
         }
 
       },
