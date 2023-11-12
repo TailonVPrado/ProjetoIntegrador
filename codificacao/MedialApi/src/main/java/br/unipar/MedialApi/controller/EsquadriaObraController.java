@@ -1,10 +1,8 @@
 package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.EsquadriaObra;
-import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
-import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.service.EsquadriaObraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

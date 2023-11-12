@@ -359,6 +359,7 @@ public class EsquadriaObraService {
             dto.setQtde(((BigInteger) obj[5]).longValue());
             dto.setCdEsquadriaObra((String) obj[6]);
             dto.setDsEsquadria((String) obj[7]);
+            dto.setDsLinha((String) obj[8]);
 
             listaDto.add(dto);
         }

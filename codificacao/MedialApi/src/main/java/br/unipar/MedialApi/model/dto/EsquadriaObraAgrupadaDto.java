@@ -14,4 +14,5 @@ public class EsquadriaObraAgrupadaDto {
     private BigDecimal tmAltura;
     private Long qtde;
     private String cdEsquadriaObra;
+    private String dsLinha;
 }

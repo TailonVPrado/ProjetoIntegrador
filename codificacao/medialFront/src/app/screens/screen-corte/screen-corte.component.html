@@ -58,9 +58,10 @@
       <table class="custom-table" style="width: 95%;" >
         <thead>
           <tr>
-            <th class="padding" style="text-align: left;"><span>Descrição Esquadria</span></th>
-            <th class="pipe" style="text-align: center; width: 20%;"><span>Cor</span></th>
-            <th class="pipe" style="text-align: left; width: 35%; text-align: center;"><span>Código</span></th>
+            <th class="padding" style="text-align: left; width: 15%;"><span>Linha</span></th>
+            <th class="pipe" style="text-align: left;"><span>Esquadria</span></th>
+            <th class="pipe" style="text-align: center; width: 10%;"><span>Cor</span></th>
+            <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Código</span></th>
             <th class="pipe" style="text-align: left; width: 8%; text-align: right;"><span>Altura</span></th>
             <th style="text-align: left; width: 20px; text-align: center;"><span>X</span></th>
             <th style="text-align: left; width: 8%;"><span>Largura</span></th>
@@ -70,6 +71,9 @@
         <tbody>
           <tr *ngFor="let x of gridEsquadriaObra; let i = index"  >
             <td class="padding">
+              <input-text [isGrid]="true" [(mxModel)]="x.dsLinha" [properties]="x.properties"></input-text>
+            </td>
+            <td class="pipe">
               <input-text [isGrid]="true" [(mxModel)]="x.dsEsquadria" [properties]="x.properties"></input-text>
             </td>
             <td class="pipe">

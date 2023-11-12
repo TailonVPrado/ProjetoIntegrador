@@ -4,6 +4,7 @@ export class EsquadriaObraAgrupadaDto {
   idObra: number;
   idEsquadria: number;
   dsEsquadria: string;
+  dsLinha: string;
   dsCor: string;
   tmLargura: number;
   tmAltura: number;
@@ -15,6 +16,7 @@ export class EsquadriaObraAgrupadaDto {
     idObra: number = 0,
     idEsquadria: number = 0,
     dsEsquadria: string = '',
+    dsLinha: string = '',
     dsCor: string = '',
     tmLargura: number = 0,
     tmAltura: number = 0,
@@ -25,6 +27,7 @@ export class EsquadriaObraAgrupadaDto {
     this.idObra = idObra;
     this.idEsquadria = idEsquadria;
     this.dsEsquadria = dsEsquadria;
+    this.dsLinha = dsLinha;
     this.dsCor = dsCor;
     this.tmLargura = tmLargura;
     this.tmAltura = tmAltura;

@@ -20,7 +20,8 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                     "      tmAltura,\n" +
                     "      qtde,\n" +
                     "      cdEsquadriaObra,\n" +
-                    "      dsEsquadria\n" +
+                    "      dsEsquadria,\n" +
+                    "      dsLinha \n" +
                     " FROM(SELECT e.id_Obra as idObra,\n" +
                     "             e.id_Esquadria as idEsquadria,\n" +
                     "             e.ds_Cor as dsCor,\n" +
@@ -30,7 +31,12 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                     "             STRING_AGG(e.cd_EsquadriaObra, ', ') as cdEsquadriaObra,\n" +
                     "             (select esquadria.ds_esquadria\n" +
                     "                 from esquadria\n" +
-                    "               where esquadria.id_esquadria = e.id_Esquadria) as dsEsquadria\n" +
+                    "               where esquadria.id_esquadria = e.id_Esquadria) as dsEsquadria,\n" +
+                    "           (select linha.ds_linha \n" +
+                    "              from linha, \n" +
+                    "                   esquadria \n" +
+                    "             where linha.id_linha = esquadria.id_linha \n" +
+                    "               and esquadria.id_esquadria = e.id_esquadria) as dsLinha \n" +
                     "           FROM esquadriaobra e\n" +
                     "           WHERE e.id_obra = :idObra\n" +
                     "           AND e.st_Ativo = true\n" +
