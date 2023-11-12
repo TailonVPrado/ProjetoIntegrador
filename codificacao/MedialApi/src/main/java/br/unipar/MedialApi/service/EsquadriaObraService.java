@@ -85,9 +85,11 @@ public class EsquadriaObraService {
             EsquadriaObra clone = eo.clone();
 
             clone.setStAtivo(true);
-            clone.setNrVersaobra(vNrVersao);
+            clone.setIdEsquadriaObra(Long.valueOf(0));
 
-            perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
+            clone.setNrVersaobra(vNrVersao);
+            clone = esquadriaObraRepository.saveAndFlush(clone);
+            perfilObraService.addOperationQueue(clone, Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
@@ -133,6 +135,7 @@ public class EsquadriaObraService {
                 EsquadriaObra clone = eo.clone();
 
                 clone.setStAtivo(true);
+                clone.setIdEsquadriaObra(Long.valueOf(0));
                 clone.setNrVersaobra(vNrVersao);
                 perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
             }
@@ -192,6 +195,7 @@ public class EsquadriaObraService {
                 EsquadriaObra clone = eo.clone();
 
                 clone.setStAtivo(true);
+                clone.setIdEsquadriaObra(Long.valueOf(0));
                 clone.setNrVersaobra(vNrVersao);
 
                 perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
