@@ -228,7 +228,9 @@ export class GridObraComponent implements OnInit {
               })
             }
           );
-          document.getElementById(fieldFocus)?.querySelector('input')?.focus();
+          setTimeout(() => {
+            document.getElementById(fieldFocus)?.querySelector('input')?.focus();
+          }, 0);
         }
       )
     }
@@ -252,7 +254,9 @@ export class GridObraComponent implements OnInit {
               })
             }
           );
-          document.getElementById(fieldFocus)?.querySelector('input')?.focus();
+          setTimeout(() => {
+            document.getElementById(fieldFocus)?.querySelector('input')?.focus();
+          }, 0);
         }
       )
     }
