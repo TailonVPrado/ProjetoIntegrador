@@ -11,8 +11,8 @@ import * as _ from 'lodash';
 export class InputTextComponent implements DoCheck {
 
   @Output() itemSelecionado: EventEmitter<any> = new EventEmitter<any>();
-  @Output() blur = new EventEmitter<any>();
-  @Output() focus = new EventEmitter<any>();
+  @Output() mxBlur = new EventEmitter<any>();
+  @Output() mxFocus = new EventEmitter<any>();
   @Input() properties: Properties | undefined;
   @Input() isGrid: boolean = false;
   @Input() itensDisponiveis: Map<number, string> = new Map<number, string>();//= new Map<number, string>();
@@ -134,8 +134,8 @@ export class InputTextComponent implements DoCheck {
   }
 
   onFocus($event : Event) {
-    if(this.focus){
-      this.focus.emit($event);
+    if(this.mxFocus){
+      this.mxFocus.emit($event);
     }
 
     if (this.itens.length > 0) {
@@ -151,8 +151,8 @@ export class InputTextComponent implements DoCheck {
   }
 
   onBlur($event : Event) {
-    if(this.blur){
-      this.blur.emit($event);
+    if(this.mxBlur){
+      this.mxBlur.emit($event);
     }
 
     this.idxRowScrrol = -1

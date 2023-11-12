@@ -123,10 +123,12 @@ export class GridObraComponent implements OnInit {
 
   esquadriaObra : EsquadriaObra = new EsquadriaObra();
   esquadriasDisponiveis : Map<number, string> = new Map<number, string>();
+  esquadriasDisponiveisGrid : Map<number, string> = new Map<number, string>();
   linhasDisponiveis : Map<number, string> = new Map<number, string>();
+  linhasDisponiveisGrid : Map<number, string> = new Map<number, string>();
 
   inputDsEsquadria = new Properties({label: 'Esquadria', placeholder: 'Insira a Esquadria'});
-  inputDsLinha = new Properties({label: 'Linha', placeholder: 'Insira a Linha'});
+  inputDsLinha = new Properties({label: 'Linha', placeholder: 'Insira a Linha para filtrar as Esquadrias'});
 
   inputDsCor = new Properties({label: 'Cor'})
   inputCdEsquadriaObra = new Properties({label: 'Código', placeholder: 'Código'});
@@ -165,6 +167,7 @@ export class GridObraComponent implements OnInit {
           response.forEach((linha) =>{
             this.linhasDisponiveis.set(linha.idLinha, linha.dsLinha);
           })
+          this.linhasDisponiveisGrid = _.cloneDeep(this.linhasDisponiveis);
         }
       );
       this.esquadriaObra.esquadria = new Esquadria();
@@ -198,7 +201,8 @@ export class GridObraComponent implements OnInit {
 
   esquadriaSelecionada(id: any, esquadriaObra : EsquadriaObra){
     if(id == null){
-      esquadriaObra.esquadria = new Esquadria();
+      esquadriaObra.esquadria.idEsquadria = 0;
+      esquadriaObra.esquadria.dsEsquadria = '';
     }else{
       this.esquadriaService.getEsquadriaById(id).subscribe(
         (esquadria) => { esquadriaObra.esquadria = esquadria; }
@@ -206,10 +210,12 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  linhaSelecionada(id : any, esquadriaObra : EsquadriaObra){
+  linhaSelecionada(id : any, esquadriaObra : EsquadriaObra, fieldFocus : string){
     if(id == null){
       esquadriaObra.esquadria.linha = new Linha();
     }else{
+      esquadriaObra.esquadria.idEsquadria = 0;
+      esquadriaObra.esquadria.dsEsquadria = '';
       this.linhaService.getLinhaById(id).subscribe(
         (linha) => {
           esquadriaObra.esquadria.linha = linha;
@@ -222,7 +228,31 @@ export class GridObraComponent implements OnInit {
               })
             }
           );
-          document.getElementById('esquadriaObra-esquadria')?.querySelector('input')?.focus();
+          document.getElementById(fieldFocus)?.querySelector('input')?.focus();
+        }
+      )
+    }
+  }
+
+  linhaSelecionadaGrid(id : any, esquadriaObra : EsquadriaObra, fieldFocus : string){
+    if(id == null){
+      esquadriaObra.esquadria.linha = new Linha();
+    }else{
+      esquadriaObra.esquadria.idEsquadria = 0;
+      esquadriaObra.esquadria.dsEsquadria = '';
+      this.linhaService.getLinhaById(id).subscribe(
+        (linha) => {
+          esquadriaObra.esquadria.linha = linha;
+
+          this.esquadriasDisponiveisGrid = new Map<number, string>();
+          this.esquadriaService.getEsquadrias(_.cloneDeep(esquadriaObra.esquadria) ).subscribe(
+            (response) => {
+              response.forEach((esquadria) =>{
+                this.esquadriasDisponiveisGrid.set(esquadria.idEsquadria, esquadria.dsEsquadria);
+              })
+            }
+          );
+          document.getElementById(fieldFocus)?.querySelector('input')?.focus();
         }
       )
     }
@@ -234,10 +264,10 @@ export class GridObraComponent implements OnInit {
     }
   }
 
-  onFocusEsquadriaObra(){
-    if(!this.esquadriaObra.esquadria.linha.dsLinha){
+  onFocusEsquadriaObra(esquadriaObra : EsquadriaObra, fieldFocus : string){
+    if(!esquadriaObra.esquadria.linha.dsLinha){
       this.generic.showWarning('Informe uma linha!');
-      document.getElementById('esquadriaObra-linha')?.querySelector('input')?.focus();
+      document.getElementById(fieldFocus)?.querySelector('input')?.focus();
     }
   }
 
@@ -318,6 +348,16 @@ export class GridObraComponent implements OnInit {
 
   onClickEditarEsquadriaObra(esquadriaObra : EsquadriaObra){
     if(!this.efetuandoAltercaoEsquadriaObra){
+      //carrega a lista de esquadrias disponiveis
+      this.esquadriasDisponiveis = new Map<number, string>();
+      this.esquadriaService.getEsquadrias(_.cloneDeep(esquadriaObra.esquadria) ).subscribe(
+        (response) => {
+          response.forEach((esquadria) =>{
+            this.esquadriasDisponiveis.set(esquadria.idEsquadria, esquadria.dsEsquadria);
+          })
+        }
+      );
+
 
       this.generic.onClickButtonEditar(esquadriaObra);
 
