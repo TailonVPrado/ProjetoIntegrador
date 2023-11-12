@@ -170,7 +170,12 @@ export class GridObraComponent implements OnInit {
           this.linhasDisponiveisGrid = _.cloneDeep(this.linhasDisponiveis);
         }
       );
-      this.esquadriaObra.esquadria = new Esquadria();
+      this.esquadriaObra.esquadria.idEsquadria = 0;
+      this.esquadriaObra.esquadria.dsEsquadria = '';
+      this.esquadriaObra.cdEsquadriaObra= '';
+      this.esquadriaObra.tmAltura= 0;
+      this.esquadriaObra.tmLargura = 0;
+
       this.modalRef = this.modalService.show(template, this.configModal);
     }
   }
