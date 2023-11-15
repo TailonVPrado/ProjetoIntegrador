@@ -60,6 +60,10 @@
       <button-default [properties]="buttonCadastrarPerfilEsquadria" (onClick)="onClickCadastrarPerfilEsquadria()" hint="Vincular Perfil"></button-default>
     </div>
 
+    <div style=" margin-bottom: 1%; margin-right: 5%;" class="right">
+      <popover label="Sobre os Descontos" [content]="retornaHtmlPopover()"></popover>
+    </div>
+
     <div class="center" style="width: 95%; margin-left: 3%;">
       <table class="custom-table" style="width: 95%;" >
         <thead>

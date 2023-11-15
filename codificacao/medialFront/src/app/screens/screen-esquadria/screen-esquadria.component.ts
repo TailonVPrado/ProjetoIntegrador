@@ -377,4 +377,9 @@ export class ScreenEsquadriaComponent implements OnInit {
     }
   }
 
+  retornaHtmlPopover(){
+    return `<p class="popover-text-align-justify">O campo de <strong>DESCONTO </strong>Poder&aacute; ser utilizado para cadastrar uma f&oacute;rmula de desconto para o perfil da esquadria. &nbsp;<br />
+            <br>Este campo aceita apenas <strong><span class="popover-color-vermelho">n&uacute;meros </span></strong>e os seguintes caracteres: <strong><span class="popover-color-vermelho">(</span></strong>, <strong><span class="popover-color-vermelho">)</span></strong>, <strong><span class="popover-color-vermelho">+</span></strong>, <strong><span class="popover-color-vermelho">-</span></strong>, <strong><span class="popover-color-vermelho">*</span></strong>,<strong> <span class="popover-color-vermelho">/</span></strong>.&nbsp;<br />
+            <br>E por padr&atilde;o os prefixos <strong><span class="popover-color-laranja">LT</span></strong> e <strong><span class="popover-color-roxo">AT</span> </strong>sendo que <strong><span class="popover-color-laranja">LT</span> </strong>ser&aacute; utilizado para fazer refer&ecirc;ncia a <strong><span class="popover-color-laranja">LARGURA TOTAL</span>&nbsp;</strong>da esquadria medida na obra e <strong><span class="popover-color-roxo">AT</span></strong> para referenciar a <strong><span class="popover-color-roxo">ALTURA TOTAL </span></strong>da esquadria medida na obra.&nbsp;</p>`;
+  }
 }

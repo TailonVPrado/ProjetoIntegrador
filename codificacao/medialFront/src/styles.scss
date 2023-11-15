@@ -281,3 +281,20 @@ tbody tr:focus-within {
 .theme-green .bs-datepicker-body table td span.selected{
   background: #312B97;
 }
+
+
+/*ESTILOS PARA O POPOVER (precisa passar aqui porque é a unica forma de modificar algumas coisas no html passado para o popover exibir)*/
+.popover-text-align-justify{
+  text-align:justify
+}
+.popover-color-roxo{
+  color: #8e44ad;
+}
+.popover-color-laranja{
+  color: #e67e22;
+}
+
+.popover-color-vermelho{
+  color:#ff0000;
+}
+

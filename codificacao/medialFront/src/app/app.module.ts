@@ -34,6 +34,7 @@ import { ListBoxComponent } from './components/list-box/list-box.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ErrorInterceptor } from './intercept/error.intercept';
 import { InputFormulaComponent } from './components/input-formula/input-formula.component';
+import { PopoverComponent } from './components/popover/popover.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -58,7 +59,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     InputDateRangeComponent,
     ListBoxComponent,
     CheckboxComponent,
-    InputFormulaComponent
+    InputFormulaComponent,
+    PopoverComponent
   ],
   imports: [
     BrowserModule,
