@@ -1,10 +1,10 @@
-import { PerfilEsquadriaService} from './../../services/perfilEsquadria.service';
-import { PerfilEsquadria } from './../../models/objetos/perfilEsquadria.model';
-import { Esquadria } from './../../models/objetos/esquadria.model';
-import { EsquadriaService } from './../../services/esquadria.service';
-import { Perfil } from './../../models/objetos/perfil.model';
-import { LinhaService } from './../../services/linha.service';
-import { TipoBotao } from './../../models/enum/tipoBotao.model';
+import { PerfilEsquadriaService} from '../../services/perfilEsquadria.service';
+import { PerfilEsquadria } from '../../models/objetos/perfilEsquadria.model';
+import { Esquadria } from '../../models/objetos/esquadria.model';
+import { EsquadriaService } from '../../services/esquadria.service';
+import { Perfil } from '../../models/objetos/perfil.model';
+import { LinhaService } from '../../services/linha.service';
+import { TipoBotao } from '../../models/enum/tipoBotao.model';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Linha } from 'src/app/models/objetos/linha.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
@@ -15,11 +15,11 @@ import { PerfilService } from 'src/app/services/perfil.service';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'screen-esquadria',
-  templateUrl: './screen-esquadria.component.html',
-  styleUrls: ['./screen-esquadria.component.scss']
+  selector: 'tela-esquadria',
+  templateUrl: './tela-esquadria.component.html',
+  styleUrls: ['./tela-esquadria.component.scss']
 })
-export class ScreenEsquadriaComponent implements OnInit {
+export class TelaEsquadriaComponent implements OnInit {
 
   constructor(public tipoBotao : TipoBotao,
               private linhaService: LinhaService,

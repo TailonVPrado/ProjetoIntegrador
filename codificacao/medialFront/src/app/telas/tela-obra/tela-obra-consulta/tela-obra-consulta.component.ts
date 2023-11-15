@@ -8,11 +8,11 @@ import { GenericService } from 'src/app/services/generic.service';
 import { ObraService } from 'src/app/services/obra.service';
 
 @Component({
-  selector: 'screen-obra-consulta',
-  templateUrl: './screen-obra-consulta.component.html',
-  styleUrls: ['./screen-obra-consulta.component.scss']
+  selector: 'tela-obra-consulta',
+  templateUrl: './tela-obra-consulta.component.html',
+  styleUrls: ['./tela-obra-consulta.component.scss']
 })
-export class ScreenObraConsultaComponent implements OnInit {
+export class TelaObraConsultaComponent implements OnInit {
   bsValue = new Date();
   bsRangeValue: Date[];
   maxDate = new Date();

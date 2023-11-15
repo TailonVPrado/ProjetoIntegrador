@@ -1,4 +1,4 @@
-import { LinhaService } from './../../services/linha.service';
+import { LinhaService } from '../../services/linha.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
@@ -8,11 +8,11 @@ import { GenericService } from 'src/app/services/generic.service';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'screen-linha',
-  templateUrl: './screen-linha.component.html',
-  styleUrls: ['./screen-linha.component.scss']
+  selector: 'tela-linha',
+  templateUrl: './tela-linha.component.html',
+  styleUrls: ['./tela-linha.component.scss']
 })
-export class ScreenLinhaComponent implements OnInit{
+export class TelaLinhaComponent implements OnInit{
 
   constructor(
     private linhaService: LinhaService,

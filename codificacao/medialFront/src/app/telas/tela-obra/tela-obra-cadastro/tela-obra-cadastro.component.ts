@@ -8,11 +8,11 @@ import { ObraService } from "src/app/services/obra.service";
 
 
 @Component({
-  selector: 'screen-obra-cadastro',
-  templateUrl: './screen-obra-cadastro.component.html',
-  styleUrls: ['./screen-obra-cadastro.component.scss']
+  selector: 'tela-obra-cadastro',
+  templateUrl: './tela-obra-cadastro.component.html',
+  styleUrls: ['./tela-obra-cadastro.component.scss']
 })
-export class ScreenObraCadastroComponent implements OnInit {
+export class TelaObraCadastroComponent implements OnInit {
 
   constructor(public tipoBotao : TipoBotao,
               public obraService : ObraService,

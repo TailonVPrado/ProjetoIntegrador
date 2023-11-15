@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScreenLinhaComponent } from './screen-linha.component';
+import { ScreenCorteComponent } from './tela-corte.component';
 
-describe('ScreenLinhaComponent', () => {
-  let component: ScreenLinhaComponent;
-  let fixture: ComponentFixture<ScreenLinhaComponent>;
+describe('ScreenCorteComponent', () => {
+  let component: ScreenCorteComponent;
+  let fixture: ComponentFixture<ScreenCorteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScreenLinhaComponent ]
+      declarations: [ ScreenCorteComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScreenLinhaComponent);
+    fixture = TestBed.createComponent(ScreenCorteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

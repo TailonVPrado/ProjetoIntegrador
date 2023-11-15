@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScreenEsquadriaComponent } from './screen-esquadria.component';
+import { ScreenEsquadriaComponent } from './tela-esquadria.component';
 
 describe('ScreenEsquadriaComponent', () => {
   let component: ScreenEsquadriaComponent;

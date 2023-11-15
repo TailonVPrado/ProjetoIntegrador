@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScreenPerfilComponent } from './screen-perfil.component';
+import { ScreenPerfilComponent } from './tela-perfil.component';
 
 describe('ScreenPerfilComponent', () => {
   let component: ScreenPerfilComponent;

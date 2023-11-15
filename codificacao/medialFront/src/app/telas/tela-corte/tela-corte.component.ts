@@ -10,11 +10,11 @@ import { GenericService } from 'src/app/services/generic.service';
 import { ObraService } from 'src/app/services/obra.service';
 
 @Component({
-  selector: 'screen-corte',
-  templateUrl: './screen-corte.component.html',
-  styleUrls: ['./screen-corte.component.scss']
+  selector: 'tela-corte',
+  templateUrl: './tela-corte.component.html',
+  styleUrls: ['./tela-corte.component.scss']
 })
-export class ScreenCorteComponent implements OnInit {
+export class TelaCorteComponent implements OnInit {
   bsValue = new Date();
   bsRangeValue: Date[];
   maxDate = new Date();

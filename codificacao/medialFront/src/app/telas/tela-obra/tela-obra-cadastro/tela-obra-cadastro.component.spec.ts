@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScreenCorteComponent } from './screen-corte.component';
+import { ScreenObraCadastroComponent } from './tela-obra-cadastro.component';
 
-describe('ScreenCorteComponent', () => {
-  let component: ScreenCorteComponent;
-  let fixture: ComponentFixture<ScreenCorteComponent>;
+describe('ScreenObraCadastroComponent', () => {
+  let component: ScreenObraCadastroComponent;
+  let fixture: ComponentFixture<ScreenObraCadastroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScreenCorteComponent ]
+      declarations: [ ScreenObraCadastroComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScreenCorteComponent);
+    fixture = TestBed.createComponent(ScreenObraCadastroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

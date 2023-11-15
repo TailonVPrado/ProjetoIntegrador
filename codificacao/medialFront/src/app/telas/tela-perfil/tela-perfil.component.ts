@@ -1,6 +1,6 @@
-import { LinhaService } from './../../services/linha.service';
-import { Perfil } from './../../models/objetos/perfil.model';
-import { PerfilService } from './../../services/perfil.service';
+import { LinhaService } from '../../services/linha.service';
+import { Perfil } from '../../models/objetos/perfil.model';
+import { PerfilService } from '../../services/perfil.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GenericService } from 'src/app/services/generic.service';
 import { ButtonModel } from 'src/app/models/interface/button.model';
@@ -11,11 +11,11 @@ import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'screen-perfil',
-  templateUrl: './screen-perfil.component.html',
-  styleUrls: ['./screen-perfil.component.scss']
+  selector: 'tela-perfil',
+  templateUrl: './tela-perfil.component.html',
+  styleUrls: ['./tela-perfil.component.scss']
 })
-export class ScreenPerfilComponent implements OnInit {
+export class TelaPerfilComponent implements OnInit {
 
   constructor(
     private generic : GenericService,
