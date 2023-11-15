@@ -6,14 +6,16 @@ import { TelaEsquadriaComponent } from './telas/tela-esquadria/tela-esquadria.co
 import { TelaCorteComponent } from './telas/tela-corte/tela-corte.component';
 import { TelaObraCadastroComponent } from './telas/tela-obra/tela-obra-cadastro/tela-obra-cadastro.component';
 import { TelaObraConsultaComponent } from './telas/tela-obra/tela-obra-consulta/tela-obra-consulta.component';
+import { TelaInicialComponent } from './telas/tela-inicial/tela-inicial.component';
 const routes: Routes = [
-  {path: '', redirectTo: '', pathMatch: 'full' },
+  {path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path: 'home', component: TelaInicialComponent},
   {path: 'linha', component: TelaLinhaComponent},
   {path: 'perfil', component: TelaPerfilComponent},
   {path: 'esquadrias', component: TelaEsquadriaComponent},
   {path: 'obras/cadastro', component: TelaObraCadastroComponent},
   {path: 'obras/consulta', component: TelaObraConsultaComponent},
-  {path: 'cortes', component: TelaCorteComponent},
+  {path: 'cortes', component: TelaCorteComponent}
 
 ];
 

@@ -35,6 +35,7 @@ import { ErrorInterceptor } from './intercept/error.intercept';
 import { InputFormulaComponent } from './components/input-formula/input-formula.component';
 import { PopoverComponent } from './components/popover/popover.component';
 import { TelaObraConsultaComponent } from './telas/tela-obra/tela-obra-consulta/tela-obra-consulta.component';
+import { TelaInicialComponent } from './telas/tela-inicial/tela-inicial.component';
 
 defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
 
@@ -60,7 +61,8 @@ defineLocale('pt-br', ptBrLocale); // Importe a localização para o português
     ListBoxComponent,
     CheckboxComponent,
     InputFormulaComponent,
-    PopoverComponent
+    PopoverComponent,
+    TelaInicialComponent
   ],
   imports: [
     BrowserModule,
