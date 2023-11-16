@@ -1,9 +1,12 @@
 package br.unipar.MedialApi.service;
 
+import br.unipar.MedialApi.exception.ParametroNaoInformadoException;
 import br.unipar.MedialApi.exception.SemFormulaException;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.PerfilObra;
+import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
+import br.unipar.MedialApi.model.dto.PerfilObraAgrupado;
 import br.unipar.MedialApi.model.enumModel.Operacao;
 import br.unipar.MedialApi.model.modelQueue.EsquadriaObraQueue;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
@@ -12,10 +15,13 @@ import br.unipar.MedialApi.util.EmailService;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -145,4 +151,46 @@ public class PerfilObraService {
         return perfilObraRepository.findAllByEsquadriaobra(esquadriaObra);
     }
 
+    public List<PerfilObraAgrupado> findPerfilObraAgrupado(Long idEsquadria,
+                                                           Long idObra,
+                                                           String dsCor,
+                                                           Long tmLargura,
+                                                           Long tmAltura) throws Exception{
+        try{
+            if(idEsquadria == null || idEsquadria == 0){
+                throw new ParametroNaoInformadoException("ESQUADRIA");
+            }
+            if(idObra == null || idObra == 0){
+                throw new ParametroNaoInformadoException("OBRA");
+            }
+            if(tmLargura == null || tmLargura == 0){
+                throw new ParametroNaoInformadoException("LARGURA");
+            }
+            if(tmAltura == null || tmAltura == 0){
+                throw new ParametroNaoInformadoException("ALTURA");
+            }
+            if(dsCor == null || dsCor.isEmpty()){
+                throw new ParametroNaoInformadoException("COR");
+            }
+
+            List<Object[]> objs = perfilObraRepository.findPerfilObraAgrupado(idEsquadria, idObra, dsCor, tmLargura, tmAltura);
+
+            List<PerfilObraAgrupado> listaDto = new ArrayList<>();
+            for (Object[] obj: objs) {
+                PerfilObraAgrupado dto = new PerfilObraAgrupado();
+
+                dto.setDsPerfil((String) obj[0]);
+                dto.setTmPerfil((BigDecimal) obj[1]);
+                dto.setQtPerfil(((BigInteger) obj[2]).longValue());
+                dto.setCdEsquadriaObra((String) obj[3]);
+
+                listaDto.add(dto);
+            }
+            return listaDto;
+        }catch (ParametroNaoInformadoException e){
+            throw new Exception("Erro ao realizar a consulta dos perfis. Erro: "+e.getMessage()+" não informada.");
+        }catch (Exception e){
+            throw new Exception("Ocorreu um erro inesperado ao realizar a consulta dos perfis. Erro: "+e.getMessage());
+        }
+    }
 }

@@ -3,11 +3,13 @@ package br.unipar.MedialApi.service;
 import br.unipar.MedialApi.exception.EmpresaIndefinidaException;
 import br.unipar.MedialApi.model.Perfil;
 import br.unipar.MedialApi.model.dto.PerfilDto;
+import br.unipar.MedialApi.model.dto.PerfilObraAgrupado;
 import br.unipar.MedialApi.repository.PerfilRepository;
 import br.unipar.MedialApi.specification.PerfilSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

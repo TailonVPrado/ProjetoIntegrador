@@ -1,8 +1,10 @@
+import { PerfilObraService } from './../../services/perfilObra.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TipoBotao } from 'src/app/models/enum/tipoBotao.model';
 import { ButtonModel } from 'src/app/models/interface/button.model';
 import { Properties } from 'src/app/models/interface/properties.model';
+import { PerfilObraAgrupadoDto } from 'src/app/models/objetos/dto/PerfilObraAgrupadoDto.model';
 import { EsquadriaObraAgrupadaDto } from 'src/app/models/objetos/dto/esquadriaObraAgrupadaDto.model';
 import { Obra } from 'src/app/models/objetos/obra.model';
 import { EsquadriaObraService } from 'src/app/services/esquadriaObra.service';
@@ -22,7 +24,8 @@ export class TelaCorteComponent implements OnInit {
               private generic: GenericService,
               public tipoBotao: TipoBotao,
               private modalService: BsModalService,
-              private esquadriaObraService : EsquadriaObraService,)
+              private esquadriaObraService : EsquadriaObraService,
+              private perfilObraService : PerfilObraService)
   {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
@@ -122,4 +125,43 @@ export class TelaCorteComponent implements OnInit {
       }
     );
   }
+
+  //APARTIR DESTE TRECHO COMECA A LOGICA PARA CARREGAMENTO DA MODAL DOS PERFIS DA ESQUADRIA (TERCEIRA MODAL QUE A TELA DE CORTES ABRE)
+
+  gridPerfilObra : PerfilObraAgrupadoDto[] = [];
+
+  modalRefPerfilObra?: BsModalRef;
+  titleModalPerfilObra : string = '';
+  configModalPerfilObra = {
+    backdrop: true,
+    ignoreBackdropClick: true,
+    keyboard: false,
+    class: 'full-width-modal'
+  };
+  openModalPerfilObra(template: TemplateRef<any>, eo: EsquadriaObraAgrupadaDto){
+    if(!eo.properties.ativo){
+      this.titleModalPerfilObra = eo.dsEsquadria + ' (' + eo.dsLinha + ')';
+
+      this.carregaPerfilObra(eo);
+
+      this.modalRefPerfilObra = this.modalService.show(template, this.configModalPerfilObra);
+    }
+  }
+
+  carregaPerfilObra(eo : EsquadriaObraAgrupadaDto){
+    this.gridPerfilObra = [];
+    this.perfilObraService.getPerfilObraAgrupado(eo.idEsquadria, eo.idObra, eo.dsCor, eo.tmLargura, eo.tmAltura).subscribe(
+      (response)=>{
+        response.forEach((perfilObraAgrupadoDto, i) => {
+          this.gridPerfilObra[i] = perfilObraAgrupadoDto;
+          this.gridPerfilObra[i].properties = new Properties({ativo : false});
+        });
+      },
+      (error) => {
+        if(error.error.errors)
+          this.generic.showError(error.error.errors, "Erro ao consultar Perfis");
+      }
+    );
+  }
+
 }

@@ -16,8 +16,8 @@
           <th class="padding" style="text-align: left;"><span>Descrição Obra</span></th>
           <th class="pipe" style="text-align: left; width: 25%; text-align: center;"><span>Data Lcto</span></th>
           <th class="pipe" style="text-align: left; width: 5%; text-align: right;"><span>V.</span></th>
-          <th style="width:30px;"></th>
-          <th style="width:30px;"></th>
+          <th style="width:32px;"></th>
+          <th style="width:32px;"></th>
         </tr>
       </thead>
       <tbody>
@@ -69,7 +69,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of gridEsquadriaObra; let i = index"  >
+          <tr *ngFor="let x of gridEsquadriaObra; let i = index" class="click-row" (click)="openModalPerfilObra(templatePerfilObra, x)">
             <td class="padding">
               <input-text [isGrid]="true" [(mxModel)]="x.dsLinha" [properties]="x.properties"></input-text>
             </td>
@@ -79,7 +79,7 @@
             <td class="pipe">
               <input-text [isGrid]="true" [(mxModel)]="x.dsCor" [properties]="x.properties" [align]="'center'"></input-text>
             </td>
-            <td class="pipe">
+            <td class="pipe overflow-hidden">
               <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties" [align]="'center'"></input-text>
             </td>
             <td class="pipe">
@@ -100,4 +100,45 @@
     </div>
   </div>
 
+</ng-template>
+
+<ng-template #templatePerfilObra>
+  <div class="window">
+
+    <div class="title-modal" (click)="modalRefPerfilObra?.hide()">
+      <button-icon nomeIcone="voltar" [visivel]="true" hint="Voltar" (onClick)="modalRefPerfilObra?.hide()" ></button-icon>
+      <label>{{this.titleModalPerfilObra}}</label>
+    </div>
+
+    <hr style="margin-top: -5px;">
+
+    <div class="center" style="width: 95%; margin-left: 3%;">
+      <table class="custom-table" style="width: 95%;" >
+        <thead>
+          <tr>
+            <th class="padding" style="text-align: left; width: 30%;"><span>Perfil</span></th>
+            <th class="pipe" style="text-align: right; width: 15%;"><span>Tamanho </span></th>
+            <th class="pipe" style="text-align: right; width: 15%;"><span>QTDE</span></th>
+            <th class="pipe" style="text-align: left; width: 40%;"><span>Código (qtde)</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of gridPerfilObra; let i = index"  >
+            <td class="padding">
+              <input-text [isGrid]="true" [(mxModel)]="x.dsPerfil" [properties]="x.properties"></input-text>
+            </td>
+            <td class="pipe">
+              <input-text [isGrid]="true" [(mxModel)]="x.tmPerfil" [properties]="x.properties" [align]="'right'"></input-text>
+            </td>
+            <td class="pipe">
+              <input-text [isGrid]="true" [(mxModel)]="x.qtPerfil" [properties]="x.properties" [align]="'right'"></input-text>
+            </td>
+            <td class="pipe overflow-hidden">
+              <input-text [isGrid]="true" [(mxModel)]="x.cdEsquadriaObra" [properties]="x.properties"></input-text>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </ng-template>
