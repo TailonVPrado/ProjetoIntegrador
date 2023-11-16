@@ -32,7 +32,7 @@ export class TelaCorteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 1000);//TODO voltar para -15
+    this.datasFiltro[0].setDate(this.datasFiltro[0].getDate() - 15);
   }
 
   obra: Obra = new Obra();
