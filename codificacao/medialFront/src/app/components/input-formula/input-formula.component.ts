@@ -16,6 +16,7 @@ export class InputFormulaComponent {
   @Output() mxModelChange: EventEmitter<any> = new EventEmitter<any>();
   actualValue: any;
   @Input() set mxModel(val: any) {
+    val = val.split(".").join(",");
     this.actualValue = val;
     this.mxModelChange.emit(val);
   }
