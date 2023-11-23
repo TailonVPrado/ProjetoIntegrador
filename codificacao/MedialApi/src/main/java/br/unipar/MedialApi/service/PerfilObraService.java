@@ -181,7 +181,7 @@ public class PerfilObraService {
 
                 dto.setDsPerfil((String) obj[0]);
                 dto.setTmPerfil((BigDecimal) obj[1]);
-                dto.setQtPerfil(((BigInteger) obj[2]).longValue());
+                dto.setQtPerfil(((BigDecimal) obj[2]).longValue());
                 dto.setCdEsquadriaObra((String) obj[3]);
 
                 listaDto.add(dto);

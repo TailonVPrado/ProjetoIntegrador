@@ -29,12 +29,12 @@ export class InputFormulaComponent {
                        '+', '-', '*', '/',
                        '(', ')', ',', '.',
                        'ARROWLEFT', 'ARROWRIGHT', 'ARROWUP', 'ARROWDOWN',
-                       'PAGEUP', 'PAGEDOW', 'BACKSPACE', 'DELETE'];
+                       'PAGEUP', 'PAGEDOW', 'BACKSPACE', 'DELETE', 'TAB'];
   onKeyDown(event: KeyboardEvent) {
     if(!event.ctrlKey && !this.teclasDisponiveis.includes(event.key.toUpperCase())){
       event.preventDefault();
       return;
-    }else if(event.ctrlKey && !['A' ,'ARROWLEFT', 'ARROWRIGHT', 'ARROWUP', 'ARROWDOWN', 'PAGEUP', 'PAGEDOW', 'BACKSPACE', 'DELETE'].includes(event.key.toUpperCase())){
+    }else if(event.ctrlKey && !['A', 'V', 'C', 'ARROWLEFT', 'ARROWRIGHT', 'ARROWUP', 'ARROWDOWN', 'PAGEUP', 'PAGEDOW', 'BACKSPACE', 'DELETE', 'TAB'].includes(event.key.toUpperCase())){
       event.preventDefault();
       return;
     }

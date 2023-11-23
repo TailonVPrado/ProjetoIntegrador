@@ -18,8 +18,8 @@ public interface PerfilObraRepository extends JpaRepository<PerfilObra, Long>{
             "              SUM(con.qt_perfil) as qtPerfil, \n" +
             "              STRING_AGG(con.cd_esquadriaobra_list, ', ') as cdEsquadriaObra \n" +
             "         FROM (SELECT po.tm_perfil, \n" +
-            "                      pe.qt_perfil, \n" +
-            "                      eo.cd_esquadriaobra || ' (' || COUNT(*) ||'x)' AS cd_esquadriaobra_list, \n" +
+            "                      COUNT(1)*pe.qt_perfil AS qt_perfil, \n" +
+            "                      eo.cd_esquadriaobra || ' (' ||  COUNT(1)*pe.qt_perfil  ||'x)' AS cd_esquadriaobra_list, \n" +
             "                      p.ds_perfil \n" +
             "                 FROM esquadriaobra eo, \n" +
             "                       perfilobra po, \n" +
@@ -46,7 +46,9 @@ public interface PerfilObraRepository extends JpaRepository<PerfilObra, Long>{
             "                       eo.cd_esquadriaobra, \n" +
             "                       p.ds_perfil) AS con \n" +
             "        GROUP BY con.tm_perfil, \n" +
-            "                 con.ds_perfil \n",
+            "                 con.ds_perfil \n" +
+            "        order by con.ds_perfil asc,\n" +
+            "    \t           con.tm_perfil desc",
             nativeQuery = true)
     List<Object[]> findPerfilObraAgrupado(@Param("idEsquadria") Long idEsquadria,
                                           @Param("idObra") Long idObra,

@@ -170,12 +170,26 @@ public class ObraService {
 
     public InputStream gerarRelatorio(Long id) {
         try {
-            ClassPathResource resource = new ClassPathResource("relatorios/rel_cortes.jasper");
+            // Compile sub-relatório
+            ClassPathResource subreportResource1 = new ClassPathResource("relatorios/relMedial_subreport_cabecalho.jrxml");
+            InputStream subreportInputStream1 = subreportResource1.getInputStream();
+            JasperReport subreport1 = JasperCompileManager.compileReport(subreportInputStream1);
+
+            ClassPathResource subreportResource2 = new ClassPathResource("relatorios/relMedial_subreport_cabecalhoPrincipal.jrxml");
+            InputStream subreportInputStream2 = subreportResource2.getInputStream();
+            JasperReport subreport2 = JasperCompileManager.compileReport(subreportInputStream2);
+
+            ClassPathResource resource = new ClassPathResource("relatorios/rel_cortes.jrxml");
             InputStream inputStream = resource.getInputStream();
+
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("P_ID_OBRA", id );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, getConexao());
+            parametros.put("P_SUBREPORT_CABECALHOPAGINA", subreport1 );
+            parametros.put("P_SUBREPORT_CABECALHO", subreport2 );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, getConexao());
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             JRPdfExporter exporter = new JRPdfExporter();
