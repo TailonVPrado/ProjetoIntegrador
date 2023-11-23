@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relMedial_subreport_cabecalho" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b3c5c6ae-bc9d-4585-b8cc-b74d8d70d3e0">
+	<property name="ireport.zoom" value="1.7715610000000044"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_ID_OBRA" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select empresa.nm_empresa,
+	   obra.ds_obra,
+	   TO_CHAR(obra.dt_lancamento, 'DD/MM/YYYY') dt_lancamento,
+	   to_char(now(), 'DD/MM/YYYY HH24:MI:SS') dt_impressao,
+	   obra.nr_versao
+  from empresa,
+  	   obra
+ where obra.id_obra = $P{P_ID_OBRA}
+ group by empresa.nm_empresa,
+ 	   obra.ds_obra,
+ 	   obra.dt_lancamento,
+	   obra.nr_versao]]>
+	</queryString>
+	<field name="nm_empresa" class="java.lang.String"/>
+	<field name="ds_obra" class="java.lang.String"/>
+	<field name="dt_lancamento" class="java.lang.String"/>
+	<field name="dt_impressao" class="java.lang.String"/>
+	<field name="nr_versao" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="78" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cd957ca7-725b-4fe9-b76f-906d2353e25d" x="175" y="0" width="203" height="39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nm_empresa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="eabca0fe-8576-437f-b7bb-a28cb23edfb5" x="0" y="77" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="13c8aa17-8f57-4967-8835-cc760cea950f" x="0" y="0" width="378" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Obra: " + $F{ds_obra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1480093b-38bb-4d75-aa80-4c64664c831c" x="0" y="19" width="176" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" Data Lcto Obra: " + $F{dt_lancamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c1d5b74-d061-46de-8703-6c95cc61a718" x="0" y="38" width="176" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" Data Impressão: " + $F{dt_impressao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="62c4169c-3af3-4b9c-b214-539e7a6f6a1d" x="0" y="57" width="176" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" Versão: " + $F{nr_versao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

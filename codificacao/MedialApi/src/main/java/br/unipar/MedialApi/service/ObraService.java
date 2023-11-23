@@ -7,16 +7,32 @@ import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.repository.ObraRepository;
 import br.unipar.MedialApi.specification.ObraSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.sql.DataSource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.*;
 
 @Service
 public class ObraService {
@@ -151,4 +167,44 @@ public class ObraService {
             perfilObraService.addOperationQueue(esquadriaObra);
         }
     }
+
+    public InputStream gerarRelatorio(Long id) {
+        try {
+            ClassPathResource resource = new ClassPathResource("relatorios/rel_cortes.jasper");
+            InputStream inputStream = resource.getInputStream();
+
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("P_ID_OBRA", id );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, getConexao());
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            JRPdfExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(byteArrayOutputStream));
+
+            exporter.exportReport();
+
+            return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static  Connection conn = null;
+    public static Connection getConexao() {
+        try {
+            if(conn == null || conn.isClosed()){
+                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Medial",
+                        "postgres",
+                        "123");
+            }
+            return conn;
+        }catch (Exception e) {
+            conn = null;
+        }
+        return null;
+    }
+
 }

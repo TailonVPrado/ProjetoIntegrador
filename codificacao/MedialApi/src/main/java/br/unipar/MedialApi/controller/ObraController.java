@@ -2,10 +2,16 @@ package br.unipar.MedialApi.controller;
 
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.service.ObraService;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +57,26 @@ public class ObraController {
     @GetMapping(path = "/{id}")
     public Obra findById(@PathVariable Long id) throws Exception{
         return obraService.findById(id);
+    }
+
+    @GetMapping("/gerarRelatorio/{id}")
+    public ResponseEntity<InputStreamResource> gerarRelatorio(@PathVariable Long id) {
+        InputStream relatorioStream = obraService.gerarRelatorio(id);
+
+        if (relatorioStream != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "relatorio.pdf");
+
+            InputStreamResource inputStreamResource = new InputStreamResource(relatorioStream);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(inputStreamResource);
+        } else {
+            // Trate o caso em que o relatório não pode ser gerado
+            return ResponseEntity.status(500).build();
+        }
     }
 
 }

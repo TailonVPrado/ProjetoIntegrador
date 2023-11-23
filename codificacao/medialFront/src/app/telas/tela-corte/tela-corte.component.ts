@@ -91,6 +91,7 @@ export class TelaCorteComponent implements OnInit {
   }
 
   onClickImprimir(obra : Obra){
+    this.obraService.gerarRelatorio(obra);
   }
 
   /**/
