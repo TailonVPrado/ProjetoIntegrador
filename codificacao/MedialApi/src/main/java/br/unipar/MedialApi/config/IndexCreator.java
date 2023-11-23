@@ -22,7 +22,7 @@ public class IndexCreator implements ApplicationRunner {
 
         /* SEQUENCIA DE PARAMETROS:
          *
-         * { COLUNA, TABELA, NOME_DO_INDICE }
+         * { TABELA, COLUNA, NOME_DO_INDICE }
          *
          */
         String[][] indexesToCreate = {
@@ -36,6 +36,9 @@ public class IndexCreator implements ApplicationRunner {
                 {"obra"            , "st_impresso", "obra_stImpresso"},
                 {"esquadriaobra"   , "st_ativo"   , "esquadriaobra_stAtivo"},
                 {"perfilobra"      , "st_ativo"   , "perfilobra_stAtivo"},
+                {"esquadriaobra"   , "tm_largura" , "esquadriaobra_tmLargura"},
+                {"esquadriaobra"   , "tm_altura"  , "esquadriaobra_tmAltura"},
+                {"esquadriaobra"   , "ds_cor"     , "esquadriaobra_dsCor"}
         };
 
         for (String[] indexInfo : indexesToCreate) {
