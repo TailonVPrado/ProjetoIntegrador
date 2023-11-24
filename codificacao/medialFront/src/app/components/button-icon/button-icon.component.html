@@ -1,3 +1,3 @@
-<button class="imagem blue-tone-image" *ngIf="visivel" style="background-image: url('/assets/images/button_icon/{{nomeIcone}}.png');"
+<button class="imagem blue-tone-image" *ngIf="visivel" style="background-image: url('/assets/images/button_icon/{{nomeIcone}}.{{formatoImagem}}');"
   [tooltip]="hint ? hint :''" [delay]="500" (click)="click($event)" [ngClass]="{'imagePeB' : notContainImageAtAddImagem}"></button>
 

@@ -6,9 +6,9 @@
 	<parameter name="P_ID_OBRA" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\tailon.prado\\Desktop\\trabalhos faculdade\\Projeto Integrado\\codificacao\\MedialApi\\src\\main\\resources\\relatorios\\"]]></defaultValueExpression>
-	</parameter>
+<!--	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">-->
+<!--		<defaultValueExpression><![CDATA["C:\\Users\\tailon.prado\\Desktop\\trabalhos faculdade\\Projeto Integrado\\codificacao\\MedialApi\\src\\main\\resources\\relatorios\\"]]></defaultValueExpression>-->
+<!--	</parameter>-->
 	<parameter name="P_SUBREPORT_CABECALHOPAGINA" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="P_SUBREPORT_CABECALHO" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>

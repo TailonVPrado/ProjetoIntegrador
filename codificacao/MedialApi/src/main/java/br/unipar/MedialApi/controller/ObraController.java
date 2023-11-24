@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -60,23 +61,18 @@ public class ObraController {
     }
 
     @GetMapping("/gerarRelatorio/{id}")
-    public ResponseEntity<InputStreamResource> gerarRelatorio(@PathVariable Long id) {
+    public ResponseEntity<InputStreamResource> gerarRelatorio(@PathVariable Long id) throws Exception{
         InputStream relatorioStream = obraService.gerarRelatorio(id);
 
-        if (relatorioStream != null) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("attachment", "relatorio.pdf");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "relatorio.pdf");
 
-            InputStreamResource inputStreamResource = new InputStreamResource(relatorioStream);
+        InputStreamResource inputStreamResource = new InputStreamResource(relatorioStream);
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(inputStreamResource);
-        } else {
-            // Trate o caso em que o relatório não pode ser gerado
-            return ResponseEntity.status(500).build();
-        }
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(inputStreamResource);
     }
 
 }

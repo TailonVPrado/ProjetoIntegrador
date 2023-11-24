@@ -57,27 +57,10 @@ export class ObraService {
     return this.http.put<Obra>(url, null);
   }
 
-  gerarRelatorio(obra : Obra) {
+  gerarRelatorio(obra : Obra): Observable<any>  {
     const url = `${this.apiUrl}/obra/gerarRelatorio/`+obra.idObra;
 
-    // Faz a solicitação HTTP usando o HttpClient
-    // Faz a solicitação HTTP usando o HttpClient
-    this.http.get(url, { responseType: 'blob' }).subscribe(
-      (blob: Blob) => {
-        // Cria uma URL temporária para o Blob
-        const url = window.URL.createObjectURL(blob);
-
-        // Abre uma nova guia com a URL
-        window.open(url, '_blank');
-
-        // Libera a URL temporária quando a guia é fechada
-        window.URL.revokeObjectURL(url);
-      },
-      (error: any) => {
-        console.error('Erro:', error);
-      }
-    );
+    return this.http.get(url, { responseType: 'blob' });
   }
 
 }
-"C:\\Users\\tailon.prado\\Desktop\\trabalhos faculdade\\Projeto Integrado\\codificacao\\MedialApi\\src\\main\\resources\\relatorios"

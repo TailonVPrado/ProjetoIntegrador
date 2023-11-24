@@ -57,7 +57,7 @@ export class TelaCorteComponent implements OnInit {
 
           this.gridObra[i].properties = new Map<string, Properties>();
           for(let name in this.gridObra[i]){
-            this.gridObra[i].properties.set(name, new Properties({ativo : false}));
+            this.gridObra[i].properties.set(name, new Properties({ativo : false, isRequesting : false}));
           }
           // this.gridObra[i].properties = new Properties({ativo : false});
           this.gridObra[i].visibilidadeBotoes = new Map <string, boolean>([
@@ -91,7 +91,54 @@ export class TelaCorteComponent implements OnInit {
   }
 
   onClickImprimir(obra : Obra){
-    this.obraService.gerarRelatorio(obra);
+    let propertiesObra = obra.properties.get('dsObra');
+
+
+    if(propertiesObra?.isRequesting){
+      return; // se estiver executando esse relatorio retorna sem fazer mais nada;
+    }
+
+    this.generic.showInformation("Gerando relatório");
+
+    if (propertiesObra) {
+      propertiesObra.isRequesting = true;
+    }
+
+
+    this.obraService.gerarRelatorio(obra).subscribe(
+      (blob) => {
+
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+
+        window.URL.revokeObjectURL(url);
+
+        this.generic.showSuccess("Relatório gerado com sucesso");
+
+        obra.stImpresso = true;
+      },
+      (error) => {
+        console.log(error);
+        if(error.error instanceof Blob){
+          error.error.text().then((errorText : any) => {
+            try {
+                const errorObject = JSON.parse(errorText.replace(/\\/g, ''));
+                this.generic.showError(errorObject.errors.join(), "Erro ao realizar relatório de cortes");
+            } catch (jsonParseError) {
+                this.generic.showError("Erro ao exportar relatório de cortes");
+            }
+          });
+        }else{
+          console.error('Erro inesperado ao exportar relatório de cortes', error)
+          this.generic.showError("Ocorreu um erro incesperado ao exportar o relatório de cortes. Entre em contato com os administradores do sistema.");
+        }
+
+      }
+    ).add(() =>{
+      if (propertiesObra) {
+        propertiesObra.isRequesting = false;
+      }
+    });
   }
 
   /**/

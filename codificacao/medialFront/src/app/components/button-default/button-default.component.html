@@ -2,6 +2,7 @@
   [ngClass]="{'imagem': !properties?.label && !properties?.isRequesting, 'loading' : properties?.isRequesting}"
   [tooltip]="hint ? hint :''"
   [delay]="500"
+  *ngIf="properties?.visivel"
   (click)="click($event)">
   <div ></div>
   {{properties?.label}}

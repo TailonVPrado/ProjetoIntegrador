@@ -167,6 +167,14 @@
 				<reportElement uuid="7a46e72a-547c-4e88-af19-6114aeefbaa3" x="0" y="0" width="21" height="21"/>
 				<imageExpression><![CDATA[$F{im_perfil}]]></imageExpression>
 			</image>
+			<rectangle radius="0">
+				<reportElement uuid="c096a64e-d742-49de-9f59-77b1a106203a" x="397" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#FF0000">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 	</detail>
 	<columnFooter>

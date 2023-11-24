@@ -6,32 +6,28 @@ import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.repository.ObraRepository;
 import br.unipar.MedialApi.specification.ObraSpecification;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -168,51 +164,60 @@ public class ObraService {
         }
     }
 
-    public InputStream gerarRelatorio(Long id) {
-        try {
-            // Compile sub-relatório
-            ClassPathResource subreportResource1 = new ClassPathResource("relatorios/relMedial_subreport_cabecalho.jrxml");
-            InputStream subreportInputStream1 = subreportResource1.getInputStream();
-            JasperReport subreport1 = JasperCompileManager.compileReport(subreportInputStream1);
+    public InputStream gerarRelatorio(Long id) throws Exception{
 
-            ClassPathResource subreportResource2 = new ClassPathResource("relatorios/relMedial_subreport_cabecalhoPrincipal.jrxml");
-            InputStream subreportInputStream2 = subreportResource2.getInputStream();
-            JasperReport subreport2 = JasperCompileManager.compileReport(subreportInputStream2);
-
-            ClassPathResource resource = new ClassPathResource("relatorios/rel_cortes.jrxml");
-            InputStream inputStream = resource.getInputStream();
-
-
-            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("P_ID_OBRA", id );
-            parametros.put("P_SUBREPORT_CABECALHOPAGINA", subreport1 );
-            parametros.put("P_SUBREPORT_CABECALHO", subreport2 );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, getConexao());
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            JRPdfExporter exporter = new JRPdfExporter();
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(byteArrayOutputStream));
-
-            exporter.exportReport();
-
-            return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if(esquadriaObraRepository.countEsquadriaObraInObra(id) <= 0){
+            throw new Exception("Esta obra não contêm perfis para corte. Efetue o recalculo da obra ou verifique a parametrização de suas esquadrias.");
         }
+
+        //compilando o subreport do cabecalho
+        ClassPathResource subReportResourceCabecalhoPagina = new ClassPathResource("relatorios/cortes/rel_cortes_subreport_cabecalho_pagina.jrxml");
+        InputStream subReportStreamCabecalhoPagina = subReportResourceCabecalhoPagina.getInputStream();
+        JasperReport subReportCabecalhoPagina = JasperCompileManager.compileReport(subReportStreamCabecalhoPagina);
+
+        //compilando o subreport do cabecalho do details
+        ClassPathResource subreportResourceCabecalhoDetail = new ClassPathResource("relatorios/cortes/rel_cortes_subreport_cabecalho_detail.jrxml");
+        InputStream subreportStreamCabecalhoDetail = subreportResourceCabecalhoDetail.getInputStream();
+        JasperReport subreportCabecalhoDetail = JasperCompileManager.compileReport(subreportStreamCabecalhoDetail);
+
+        //compilando o subreport principal
+        ClassPathResource resource = new ClassPathResource("relatorios/cortes/rel_cortes.jrxml");
+        InputStream inputStream = resource.getInputStream();
+        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("P_ID_OBRA", id );
+        parametros.put("P_SUBREPORT_CABECALHOPAGINA", subReportCabecalhoPagina );
+        parametros.put("P_SUBREPORT_CABECALHO", subreportCabecalhoDetail );
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, getConexao());
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        JRPdfExporter exporter = new JRPdfExporter();
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(byteArrayOutputStream));
+
+        exporter.exportReport();
+
+        //se deu tudo certo atualiza o status da impressao da obra para true;
+        Obra obra = findById(id);
+        obra.setStImpresso(true);
+        obraRepository.saveAndFlush(obra);
+
+        return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
     }
 
-    private static  Connection conn = null;
-    public static Connection getConexao() {
+
+    @Value("${spring.datasource.url}")
+    private String urlBd;
+    @Value("${spring.datasource.username}")
+    private String usernameBd;
+    @Value("${spring.datasource.password}")
+    private String passwordBd;
+    private Connection conn = null;
+    public Connection getConexao() {
         try {
             if(conn == null || conn.isClosed()){
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Medial",
-                        "postgres",
-                        "123");
+                conn = DriverManager.getConnection(urlBd, usernameBd, passwordBd);
             }
             return conn;
         }catch (Exception e) {
@@ -220,5 +225,4 @@ public class ObraService {
         }
         return null;
     }
-
 }

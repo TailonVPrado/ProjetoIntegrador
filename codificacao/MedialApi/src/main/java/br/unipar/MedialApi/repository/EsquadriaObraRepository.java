@@ -40,6 +40,9 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                     "           FROM esquadriaobra e\n" +
                     "           WHERE e.id_obra = :idObra\n" +
                     "           AND e.st_Ativo = true\n" +
+                    "           AND exists (select 1\n" +
+                    "                 from perfilobra p\n" +
+                    "                where p.id_esquadriaobra = E.id_esquadriaobra)\n" +
                     "           GROUP BY e.id_Obra,\n" +
                     "                 e.id_Esquadria,\n" +
                     "                 e.ds_Cor,\n" +
@@ -64,4 +67,14 @@ public interface EsquadriaObraRepository extends JpaRepository<EsquadriaObra, Lo
                    "   AND PERFILESQUADRIA.ID_PERFILESQUADRIA = :idPerfilEsquadria",
         nativeQuery = true)
     Long[] findAllEsquadriaObraContemPerfil(@Param("idPerfilEsquadria") Long idPerfilEsquadria);
+
+    @Query(value = "SELECT COUNT(1) " +
+                   "  FROM ESQUADRIAOBRA " +
+                   " WHERE ESQUADRIAOBRA.ID_OBRA = :idObra" +
+                   "   AND ESQUADRIAOBRA.ST_ATIVO " +
+                   "   AND EXISTS (SELECT 1 " +
+                   "                 FROM PERFILOBRA P " +
+                   "                WHERE P.ID_ESQUADRIAOBRA = ESQUADRIAOBRA.ID_ESQUADRIAOBRA)",
+        nativeQuery = true)
+    Long countEsquadriaObraInObra(@Param("idObra")Long idObra);
 }
