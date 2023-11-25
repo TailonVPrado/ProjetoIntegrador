@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relMedial_subreport_cabecalhoPrincipal" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4d5b849d-a1b1-467e-aed7-4e292832432e">
-	<property name="ireport.zoom" value="2.1435888100000313"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="3.797498335832475"/>
+	<property name="ireport.x" value="578"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="P_ID_ESQUADRIA" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -83,57 +83,84 @@
 	<columnHeader>
 		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8b25b3c4-6cb2-4f7a-b2c2-fbd1a94b859a" mode="Opaque" x="107" y="0" width="127" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="8b25b3c4-6cb2-4f7a-b2c2-fbd1a94b859a" mode="Opaque" x="107" y="0" width="127" height="24" backcolor="#CCCCCC"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[DESCRIÇÃO PERFIL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7f585b87-64fb-4fdb-a8d5-443f4550f1bb" mode="Opaque" x="234" y="0" width="221" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="7f585b87-64fb-4fdb-a8d5-443f4550f1bb" mode="Opaque" x="234" y="0" width="221" height="24" backcolor="#CCCCCC"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[CÓDIGO (QUANTIDADE)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9300d521-d23d-438e-adc9-bef363af1435" mode="Opaque" x="455" y="0" width="100" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="9300d521-d23d-438e-adc9-bef363af1435" mode="Opaque" x="455" y="0" width="95" height="24" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[TAMANHO ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="40110440-b969-4704-b952-ef35afcbf334" mode="Opaque" x="0" y="0" width="15" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="40110440-b969-4704-b952-ef35afcbf334" mode="Opaque" x="0" y="0" width="15" height="24" backcolor="#CCCCCC"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="88ac6e23-c2ed-4d47-8275-f529ae60a191" mode="Opaque" x="14" y="0" width="36" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="88ac6e23-c2ed-4d47-8275-f529ae60a191" mode="Opaque" x="14" y="0" width="36" height="24" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" QTDE PERFIL"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="8ed70293-3c17-4d9c-8c0b-f6d17f8cd595" mode="Opaque" x="50" y="0" width="57" height="24" backcolor="#F0F0F0"/>
+				<reportElement uuid="8ed70293-3c17-4d9c-8c0b-f6d17f8cd595" mode="Opaque" x="50" y="0" width="57" height="24" backcolor="#CCCCCC"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[LINHA]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="233ddc3c-cf65-4208-a687-23d90a3a104c" mode="Opaque" x="550" y="0" width="5" height="24" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement uuid="3c173307-0b5d-45ff-a112-7ebd521f3efe" x="14" y="0" width="36" height="15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+			<rectangle radius="0">
+				<reportElement uuid="c096a64e-d742-49de-9f59-77b1a106203a" x="0" y="0" width="554" height="21" forecolor="#FAFAFA" backcolor="#F5F5F5">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="###0.0;-###0.0">
+				<reportElement uuid="1a430f45-5ac7-499d-b641-0aa6203ac800" x="455" y="0" width="95" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{qt_perfil}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tm_perfil}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="2be386db-f62b-46dd-81d1-71a0d400b416" x="234" y="0" width="221" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cd_esquadriaobra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cfbb4e89-0392-4004-990c-acf4497e5944" x="107" y="0" width="127" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ds_perfil}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="cb5badf2-d9c3-4509-923b-e92b5a62a595" x="50" y="0" width="57" height="15"/>
@@ -143,38 +170,16 @@
 				<textFieldExpression><![CDATA[$F{ds_linha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="cfbb4e89-0392-4004-990c-acf4497e5944" x="107" y="0" width="127" height="15"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="3c173307-0b5d-45ff-a112-7ebd521f3efe" x="14" y="0" width="36" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ds_perfil}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="2be386db-f62b-46dd-81d1-71a0d400b416" x="234" y="0" width="221" height="15"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cd_esquadriaobra}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0.0;-###0.0">
-				<reportElement uuid="1a430f45-5ac7-499d-b641-0aa6203ac800" x="455" y="0" width="95" height="15"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{tm_perfil}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{qt_perfil}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
 				<reportElement uuid="7a46e72a-547c-4e88-af19-6114aeefbaa3" x="0" y="0" width="21" height="21"/>
 				<imageExpression><![CDATA[$F{im_perfil}]]></imageExpression>
 			</image>
-			<rectangle radius="0">
-				<reportElement uuid="c096a64e-d742-49de-9f59-77b1a106203a" x="397" y="1" width="100" height="20" forecolor="#FFFFFF" backcolor="#FF0000">
-					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></printWhenExpression>
-				</reportElement>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</rectangle>
 		</band>
 	</detail>
 	<columnFooter>
