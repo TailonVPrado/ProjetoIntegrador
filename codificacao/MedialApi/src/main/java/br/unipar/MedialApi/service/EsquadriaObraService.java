@@ -4,7 +4,7 @@ import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.Obra;
 import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.enumModel.CorEnum;
-import br.unipar.MedialApi.model.enumModel.Operacao;
+import br.unipar.MedialApi.model.enumModel.OperacaoEnum;
 import br.unipar.MedialApi.model.enumModel.OrderByEnum;
 import br.unipar.MedialApi.repository.EsquadriaObraRepository;
 import br.unipar.MedialApi.specification.EsquadriaObraSpecification;
@@ -63,7 +63,7 @@ public class EsquadriaObraService {
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
 
             EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
-            perfilObraService.addOperationQueue(retorno, Operacao.INSERT);//calcula os descontos dos perfis
+            perfilObraService.addOperationQueue(retorno, OperacaoEnum.INSERT);//calcula os descontos dos perfis
 
             return retorno;
         }else{
@@ -89,19 +89,19 @@ public class EsquadriaObraService {
 
             clone.setNrVersaobra(vNrVersao);
             clone = esquadriaObraRepository.saveAndFlush(clone);
-            perfilObraService.addOperationQueue(clone, Operacao.INSERT);//salva e ja coloca na fila para gerar os descontos
+            perfilObraService.addOperationQueue(clone, OperacaoEnum.INSERT);//salva e ja coloca na fila para gerar os descontos
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
 
-            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
+            perfilObraService.addOperationQueue(eo, OperacaoEnum.DELETE);
         }
         //insere a nova esqaudriaObra
         esquadriaObra.setStAtivo(true);
         esquadriaObra.setNrVersaobra(vNrVersao);
         EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
-        perfilObraService.addOperationQueue(retorno, Operacao.INSERT);
+        perfilObraService.addOperationQueue(retorno, OperacaoEnum.INSERT);
         return retorno;
     }
 
@@ -111,7 +111,7 @@ public class EsquadriaObraService {
         Obra obra = obraService.findById(esquadriaObra.getObra().getIdObra());
         if(!obra.isStImpresso()){
             esquadriaObra.setStAtivo(false);
-            perfilObraService.addOperationQueue(esquadriaObra, Operacao.DELETE);
+            perfilObraService.addOperationQueue(esquadriaObra, OperacaoEnum.DELETE);
             return esquadriaObraRepository.saveAndFlush(esquadriaObra);
         }else{
             return excluiEsquadriaEmObraImpressa(esquadriaObra);
@@ -137,13 +137,13 @@ public class EsquadriaObraService {
                 clone.setStAtivo(true);
                 clone.setIdEsquadriaObra(Long.valueOf(0));
                 clone.setNrVersaobra(vNrVersao);
-                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), OperacaoEnum.INSERT);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
-            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
+            perfilObraService.addOperationQueue(eo, OperacaoEnum.DELETE);
         }
         esquadriaObra.setNrVersaobra(vNrVersao);
         return esquadriaObra;
@@ -198,7 +198,7 @@ public class EsquadriaObraService {
                 clone.setIdEsquadriaObra(Long.valueOf(0));
                 clone.setNrVersaobra(vNrVersao);
 
-                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), Operacao.INSERT);
+                perfilObraService.addOperationQueue(esquadriaObraRepository.saveAndFlush(clone), OperacaoEnum.INSERT);
             }else{
                 //passa a PK para null para o Spring criar uma nova entidade no bd
                 esquadriaObra.setIdEsquadriaObra(null);
@@ -206,13 +206,13 @@ public class EsquadriaObraService {
                 validaUpdate(esquadriaObra);
                 esquadriaObra = esquadriaObraRepository.saveAndFlush(esquadriaObra);
 
-                perfilObraService.addOperationQueue(esquadriaObra, Operacao.INSERT);
+                perfilObraService.addOperationQueue(esquadriaObra, OperacaoEnum.INSERT);
             }
 
             //desabilita a esquadriaObra anterior para manter versionamento da obra
             eo.setStAtivo(false);
             esquadriaObraRepository.saveAndFlush(eo);
-            perfilObraService.addOperationQueue(eo, Operacao.DELETE);
+            perfilObraService.addOperationQueue(eo, OperacaoEnum.DELETE);
         }
         return esquadriaObra;
     }
@@ -336,7 +336,7 @@ public class EsquadriaObraService {
             esquadriaObra.setIdEsquadriaObra(null);//seta para null para criar uma nova esquadriaObra
             esquadriaObra.setNrVersaobra(obra.getNrVersao());
             EsquadriaObra retorno = esquadriaObraRepository.saveAndFlush(esquadriaObra);
-            perfilObraService.addOperationQueue(retorno, Operacao.INSERT);
+            perfilObraService.addOperationQueue(retorno, OperacaoEnum.INSERT);
             return retorno;
         }else{
             esquadriaObra.setIdEsquadriaObra(null);

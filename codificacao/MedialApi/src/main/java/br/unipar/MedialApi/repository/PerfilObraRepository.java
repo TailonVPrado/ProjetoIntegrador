@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -53,6 +54,6 @@ public interface PerfilObraRepository extends JpaRepository<PerfilObra, Long>{
     List<Object[]> findPerfilObraAgrupado(@Param("idEsquadria") Long idEsquadria,
                                           @Param("idObra") Long idObra,
                                           @Param("dsCor") String dsCor,
-                                          @Param("tmLargura") Long tmLargura,
-                                          @Param("tmAltura") Long tmAltura);
+                                          @Param("tmLargura") BigDecimal tmLargura,
+                                          @Param("tmAltura") BigDecimal tmAltura);
 }

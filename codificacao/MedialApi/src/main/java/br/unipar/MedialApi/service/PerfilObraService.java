@@ -5,9 +5,8 @@ import br.unipar.MedialApi.exception.SemFormulaException;
 import br.unipar.MedialApi.model.EsquadriaObra;
 import br.unipar.MedialApi.model.PerfilEsquadria;
 import br.unipar.MedialApi.model.PerfilObra;
-import br.unipar.MedialApi.model.dto.EsquadriaObraAgrupadaDto;
 import br.unipar.MedialApi.model.dto.PerfilObraAgrupado;
-import br.unipar.MedialApi.model.enumModel.Operacao;
+import br.unipar.MedialApi.model.enumModel.OperacaoEnum;
 import br.unipar.MedialApi.model.modelQueue.EsquadriaObraQueue;
 import br.unipar.MedialApi.repository.PerfilEsquadriaRepository;
 import br.unipar.MedialApi.repository.PerfilObraRepository;
@@ -15,12 +14,10 @@ import br.unipar.MedialApi.util.EmailService;
 import br.unipar.MedialApi.util.NumericExpressionEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,12 +41,12 @@ public class PerfilObraService {
     @Async
     public void addOperationQueue(EsquadriaObra esquadriaObra){
         /*em casos de update precisa deletar e inserir o novo, e por isso nao passa argumentos para esse emtodo e ele passa o DELETE e INSERT para o metodo principal*/
-        addOperationQueue(esquadriaObra, Operacao.DELETE);
-        addOperationQueue(esquadriaObra, Operacao.INSERT);
+        addOperationQueue(esquadriaObra, OperacaoEnum.DELETE);
+        addOperationQueue(esquadriaObra, OperacaoEnum.INSERT);
     }
 
     @Async
-    public void addOperationQueue(EsquadriaObra esquadriaObra, Operacao operacao){
+    public void addOperationQueue(EsquadriaObra esquadriaObra, OperacaoEnum operacao){
         EsquadriaObraQueue esquadriaObraQueue = new EsquadriaObraQueue();
         esquadriaObraQueue.setEsquadriaObra(esquadriaObra);
         esquadriaObraQueue.setOperacao(operacao);
@@ -77,9 +74,9 @@ public class PerfilObraService {
             try {
                 EsquadriaObraQueue operacao = fila.take();
                 // Execute a operação com base no tipo (insert or update)
-                if (operacao.getOperacao() == Operacao.INSERT) {
+                if (operacao.getOperacao() == OperacaoEnum.INSERT) {
                     calculaPerfilObra(operacao.getEsquadriaObra());
-                } else if (operacao.getOperacao() == Operacao.DELETE) {
+                } else if (operacao.getOperacao() == OperacaoEnum.DELETE) {
                     deletePerfilObra(operacao.getEsquadriaObra());
                 }
             } catch (InterruptedException e) {
@@ -154,8 +151,8 @@ public class PerfilObraService {
     public List<PerfilObraAgrupado> findPerfilObraAgrupado(Long idEsquadria,
                                                            Long idObra,
                                                            String dsCor,
-                                                           Long tmLargura,
-                                                           Long tmAltura) throws Exception{
+                                                           BigDecimal tmLargura,
+                                                           BigDecimal tmAltura) throws Exception{
         try{
             if(idEsquadria == null || idEsquadria == 0){
                 throw new ParametroNaoInformadoException("ESQUADRIA");
@@ -163,10 +160,10 @@ public class PerfilObraService {
             if(idObra == null || idObra == 0){
                 throw new ParametroNaoInformadoException("OBRA");
             }
-            if(tmLargura == null || tmLargura == 0){
+            if(tmLargura == null || tmLargura == BigDecimal.ZERO){
                 throw new ParametroNaoInformadoException("LARGURA");
             }
-            if(tmAltura == null || tmAltura == 0){
+            if(tmAltura == null || tmAltura == BigDecimal.ZERO){
                 throw new ParametroNaoInformadoException("ALTURA");
             }
             if(dsCor == null || dsCor.isEmpty()){

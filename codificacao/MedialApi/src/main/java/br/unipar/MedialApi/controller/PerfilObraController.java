@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -25,8 +26,8 @@ public class PerfilObraController {
     public List<PerfilObraAgrupado> findPerfilObraAgrupado(@RequestParam(required = false) Long idEsquadria,
                                                            @RequestParam(required = false) Long idObra,
                                                            @RequestParam(required = false) String dsCor,
-                                                           @RequestParam(required = false) Long tmLargura,
-                                                           @RequestParam(required = false) Long tmAltura) throws Exception{
+                                                           @RequestParam(required = false) BigDecimal tmLargura,
+                                                           @RequestParam(required = false) BigDecimal tmAltura) throws Exception{
         return perfilObraService.findPerfilObraAgrupado(idEsquadria, idObra, dsCor, tmLargura, tmAltura);
     }
 }
