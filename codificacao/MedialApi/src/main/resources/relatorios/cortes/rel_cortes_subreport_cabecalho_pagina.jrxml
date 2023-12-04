@@ -13,6 +13,7 @@
   from empresa,
   	   obra
  where obra.id_obra = $P{P_ID_OBRA}
+   and obra.id_empresa = empresa.id_empresa
  group by empresa.nm_empresa,
  	   obra.ds_obra,
  	   obra.dt_lancamento,
