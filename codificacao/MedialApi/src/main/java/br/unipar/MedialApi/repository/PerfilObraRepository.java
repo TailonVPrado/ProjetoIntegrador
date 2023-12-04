@@ -32,11 +32,11 @@ public interface PerfilObraRepository extends JpaRepository<PerfilObra, Long>{
             "                   AND pe.id_perfil = p.id_perfil \n" +
             "                   AND eo.id_esquadria = e.id_esquadria \n" +
             "                   AND pe.id_esquadria = e.id_esquadria \n" +
-            "                   AND e.st_ativo \n" +
+            "                   /*AND e.st_ativo*/ \n" +
             "                   AND eo.st_ativo \n" +
             "                   AND po.st_ativo \n" +
             "                   AND pe.st_ativo \n" +
-            "                   AND p.st_ativo \n" +
+            "                   /*AND p.st_ativo \n*/" +
             "                   AND eo.id_esquadria = :idEsquadria  \n" +
             "                   AND eo.id_obra = :idObra \n" +
             "                   AND eo.ds_cor = :dsCor \n" +
