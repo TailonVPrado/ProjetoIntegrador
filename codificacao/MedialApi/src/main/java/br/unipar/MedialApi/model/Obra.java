@@ -1,6 +1,8 @@
 package br.unipar.MedialApi.model;
 
 import java.sql.Date;
+
+import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@ApiModel(description = "Classe modelo para representar uma obra")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

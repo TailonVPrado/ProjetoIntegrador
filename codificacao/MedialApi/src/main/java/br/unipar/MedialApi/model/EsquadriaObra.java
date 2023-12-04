@@ -9,6 +9,7 @@ import br.unipar.MedialApi.model.enumModel.CorEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@ApiModel(description = "Classe modelo para representar o vinculo de uma esquadria com uma obra")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

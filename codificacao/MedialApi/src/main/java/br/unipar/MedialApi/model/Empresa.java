@@ -11,12 +11,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import io.swagger.annotations.ApiModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@ApiModel(description = "Classe modelo para representar uma empresa")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -1,9 +1,10 @@
 package br.unipar.MedialApi.model.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.math.BigDecimal;
-
+@ApiModel(description = "Classe para tranferencia de dados do objeto EsquadriaObra")
 @Data
 public class EsquadriaObraAgrupadaDto {
     private Long idObra;
